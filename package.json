@@ -1,0 +1,23 @@
+{
+  "name": "sold_alt",
+  "version": "1.0.0",
+  "description": "TCC",
+  "main": "src/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^2.0.0"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkhonda/Sold_Alt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gkhonda/Sold_Alt/issues"
+  },
+  "homepage": "https://github.com/gkhonda/Sold_Alt#readme"
+}
