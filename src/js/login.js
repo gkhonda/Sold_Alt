@@ -1,8 +1,8 @@
 // import { ipcRenderer } from 'electron';
 
-// This is the renderer 
+// This is the renderer
 
-const remote = require('electron').remote
+const { ipcRenderer, remote } = require('electron')
 
 const path = require('path')
 const url = require('url')
@@ -23,7 +23,7 @@ const {ipcRenderer} = require('electron')
 
 ipcRenderer.send('login', "Helloooooooooo main.js")
 
-// Expect the response from the main process    
+// Expect the response from the main process
 ipcRenderer.on('toLogin', (e, args) => {
     console.log(args)
 })
@@ -63,5 +63,3 @@ $("#btnLogin").on("click", function (e) {
 
 
 })
-
-
