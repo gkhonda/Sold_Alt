@@ -47,4 +47,8 @@ ipcMain.on('menu_admin', (e, args) => {
 })
 
 
-// ipcMain.send('popup', args)
+// Comunicacao menu normal
+ipcMain.on('menu_admin', (e, args) => {
+  console.log('hapeeeeee')
+  mainMenu_admin.createWindow(args)
+})

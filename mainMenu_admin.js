@@ -9,16 +9,15 @@ exports.win
 exports.createWindow = (args) => {
 
     const windowOptions = {
-        width: 128,
-        height: 256,
+        width: 512,
+        height: 220,
         autoHideMenuBar: true,
         frame : false,
         }
 
     this.win = window.createWindow(windowOptions)
 
-
-    this.win.showUrl('src/html/menu_admin.html', args, () => {
+    this.win.showUrl('src/html/menu_adm.html', args, () => {
         console.log('the window should be showing with the contents of the URL now')
     })
     // Handling closing 
