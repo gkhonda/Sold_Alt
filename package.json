@@ -1,7 +1,7 @@
 {
-  "name": "sold_alt",
+  "name": "electron_sold_alt",
   "version": "1.0.0",
-  "description": "TCC",
+  "description": "",
   "main": "main.js",
   "dependencies": {
     "electron-prebuilt": "^1.2.3",
@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gkhonda/Sold_Alt.git"
+    "url": "git+https://github.com/gkhonda/electron_sold_alt"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gkhonda/Sold_Alt/issues"
+    "url": "https://github.com/gkhonda/electron_sold_alt/issues"
   },
-  "homepage": "https://github.com/gkhonda/Sold_Alt#readme"
+  "homepage": "https://github.com/gkhonda/electron_sold_alt#readme"
 }

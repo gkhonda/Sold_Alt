@@ -1,8 +1,12 @@
 // import { ipcRenderer } from 'electron';
 
-// This is the renderer 
+// This is the renderer
 
+<<<<<<< HEAD
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
+=======
+const { ipcRenderer, remote } = require('electron')
+>>>>>>> 032e547d080d8592001500057dd51e1a0f221354
 
 const path = require('path')
 const url = require('url')
@@ -11,13 +15,18 @@ const winAlert = require('../../mainAlert')
 
 // const modalWindow = require('./modalWindow')
 
+<<<<<<< HEAD
 let win, new_win
 
 // Para manipular a Janela Atual
 win = getCurrentWindow()
+=======
+// Send message to main process on channel login
+>>>>>>> 032e547d080d8592001500057dd51e1a0f221354
 
 const {ipcRenderer} = require('electron')
 
+<<<<<<< HEAD
 // Send message to main process on channel login
 
 // Essa função é chamada ao clicar no botao
@@ -88,3 +97,40 @@ $(".form-control").keypress(function(event) {
 });
 
 
+=======
+// Expect the response from the main process
+ipcRenderer.on('toLogin', (e, args) => {
+  console.log(args)
+})
+
+// Essa função é chamada ao clicar no botao
+$("#btnLogin").on("click", function (e)
+{
+  // Para manipular a Janela Atual
+  win = remote.getCurrentWindow()
+  // Cria um objeto com os dados do forms
+  var data = $('#form').serializeArray().reduce(function(obj, item) {
+    obj[item.name] = item.value;
+    return obj;
+  }, {});
+  // Cria um post request pro endereço (local), que ta rodando o meu Django
+  $.post( "http://127.0.0.1:8000/login/", data).done(function(back) {
+    console.log(back)
+    if(back['isAuth'] == false) {
+      console.log("Not Auth babyyyyyy")
+    } else if (back['Permission'] == "Administrador") {
+      win.loadURL((url.format({
+        pathname: path.join(__dirname, '../html/menu.html'),
+        protocol: 'file:',
+        slashes: true
+    })))
+    } else {
+      win.loadURL((url.format({
+        pathname: path.join(__dirname, '../html/login.html'),
+        protocol: 'file:',
+        slashes: true
+      })))
+    }
+  });
+})
+>>>>>>> 032e547d080d8592001500057dd51e1a0f221354
