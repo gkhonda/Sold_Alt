@@ -1,0 +1,36 @@
+html {
+    height: 100%;
+}
+
+body{
+    height: 100%
+}
+
+.div {
+    width: 100%;
+    height: 100%;
+    background-color: palegreen;
+}
+
+.admin {
+    height: 100%;
+    width: 50%;
+    float: left;
+    background-color: rebeccapurple;
+    /* text-align: center; */
+    margin: auto;
+}
+
+.admin img{
+    /* position: fixed; */
+    /* display: block; */
+    margin: 5em auto;
+}
+
+.sail{
+    height: 100%;
+    width: 50%;
+    float: right !important;
+    position: relative;
+    background-color: red;
+}

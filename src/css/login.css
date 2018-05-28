@@ -2,7 +2,6 @@ body {
     background-color: #000;
   }
 
-
 .login {
     z-index: 1;
     position: relative;
@@ -35,8 +34,6 @@ img {
     -webkit-filter: drop-shadow(5px 5px 5px  #ff8a37);
     filter: drop-shadow(5px 5px 5px  #ff8a37);
 }
-
-
 
 .slideshow { 
     position: fixed;

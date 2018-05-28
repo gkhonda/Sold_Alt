@@ -5,7 +5,9 @@
   "main": "main.js",
   "dependencies": {
     "electron-prebuilt": "^1.2.3",
-    "jquery": "^3.3.1"
+    "electron-window": "^0.8.1",
+    "jquery": "^3.3.1",
+    "query-string": "^6.1.0"
   },
   "devDependencies": {
     "electron": "^2.0.0"

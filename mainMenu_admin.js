@@ -6,24 +6,21 @@ const window = require('electron-window')
 
 exports.win 
 
-exports.createWindow = () => {
+exports.createWindow = (args) => {
 
     const windowOptions = {
-        width: 1000,
-        height: 800,
-        minWidth: 350,
-        minHeight: 300,
+        width: 128,
+        height: 256,
         autoHideMenuBar: true,
-    }
+        frame : false,
+        }
 
     this.win = window.createWindow(windowOptions)
 
-    // Load main window content
-    this.win.showUrl('src/html/login.html', '', () => {
+
+    this.win.showUrl('src/html/menu_admin.html', args, () => {
         console.log('the window should be showing with the contents of the URL now')
     })
-
-
     // Handling closing 
 
     this.win.on('closed', () => {
