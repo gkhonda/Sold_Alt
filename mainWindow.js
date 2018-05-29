@@ -6,7 +6,7 @@ const window = require('electron-window')
 
 exports.win
 
-exports.createWindow = () => {
+exports.createWindow = (url_) => {
 
     const windowOptions = {
         width: 1000,
@@ -19,7 +19,7 @@ exports.createWindow = () => {
     this.win = window.createWindow(windowOptions)
 
     // Load main window content
-    this.win.showUrl('src/html/login.html', '', () => {
+    this.win.showUrl(url_, '', () => {
         console.log('the window should be showing with the contents of the URL now')
     })
 

@@ -52,7 +52,8 @@ var login = function() {
             'message' : 'Acesso negado',
             'text' : "Usuário ou senha incorretos"})
         } else if (back['Permission'] == "Administrador") {
-            ipcRenderer.send('menu_admin', {'s':'s'})
+            ipcRenderer.send('menu_admin', '')
+            win.close()
         } else {
             win.showUrl('src/html/login.html', back, () => {
                 console.log('window is now visible!')

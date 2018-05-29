@@ -13,7 +13,9 @@ const url = require('url')
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', mainWindow.createWindow)
+app.on('ready', () => {
+  mainWindow.createWindow('src/html/login.html')
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -42,13 +44,11 @@ ipcMain.on('login', (e, args) => {
 
 // Comunicacao menu
 ipcMain.on('menu_admin', (e, args) => {
-  console.log('hapeeeeee')
   mainMenu_admin.createWindow(args)
 })
 
 
 // Comunicacao menu normal
-ipcMain.on('menu_admin', (e, args) => {
-  console.log('hapeeeeee')
-  mainMenu_admin.createWindow(args)
+ipcMain.on('menu', (e, args) => {
+  mainWindow.createWindow('src/html/menu.html')
 })
