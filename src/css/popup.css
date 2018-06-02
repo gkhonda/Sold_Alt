@@ -1,0 +1,69 @@
+/* Define as classes para as quais temos reação:
+    - Rindo -> informar que algo foi feito com sucesso. Ex: venda cadastrada!
+    - Sorriso -> Dar um alertinha. Ex: Lembre de preencher o campo tal
+    - Triste -> Não foi possível realizar a operação. Ex: Senha errada, sem net.
+*/
+
+.happy {
+    background-color: #00BF46;
+    margin: 0 auto;
+    text-align: center;
+    
+}
+
+.happy img {
+    content:url(../images/laugh.png);
+}
+
+
+.sad {
+    background-color: red;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sad img {
+    content:url(../images/sad.png);
+}
+
+
+
+.medio {
+    content: center;
+    background-color: #FFBF46;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.medio img{
+    background-color: #FFBF46;
+    content:url(../images/smile.png);
+}
+
+
+
+h2 {
+    color: #808080;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 1.5em;
+    text-align: center;
+}
+
+p {
+    color: #808080;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 2em;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.btn {
+    padding: auto;
+    width: 25%;
+    color: white;
+}
+
+div {
+    text-align: center;
+}
+

@@ -21,16 +21,15 @@
 
         <form id="form">
 
-            <div class="form-group">
+            <div class="form-group" id='div-user'>
                 <label for="name">Usuário</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Usuário">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Usuário" aria-describedby="helpBlock">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="div-password">
                 <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Senha">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Senha" aria-describedby="helpBlock">
             </div>
-            <!-- <div class="inputs">
-        </div> -->
+
 
         <p class="btn btn-lg orange" id="btnLogin"> Enviar </p>
     </form>
