@@ -3,23 +3,51 @@
 	<head>
         <title>Pueri Store - Venda e Gerenciamento</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/add_product.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"> -->
-
+        <link rel="stylesheet" type="text/css" href="../css/add_product.css" >
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
 
-	<body>
+<body>
 
-	<p>Hello</p>
-	<p>FROM THE OTHER SIIIIIIIIIDER</p>
-	<button id='b'>press</button>
-	<script type="text/javascript">
-		console.log('HELLO')
-	</script>
-	</body>
+	<div class="container">
+		<h1>Insira um produto</h1>
+		<form>
+			<label for="name">Nome:</label>
+			<input type="text" name="name" id="name">
+			<p></p>
+
+			<label for="size">Tamanho</label>
+			<select id="size">
+				<option disabled selected>Tamanho</option>
+				<option>00</option>
+				<option>02</option>
+				<option>04</option>
+				<option>06</option>
+				<option>08</option>
+				<option>10</option>
+				<option>12</option>
+				<option>14</option>
+				<option>PP</option>
+				<option>P</option>
+				<option>M</option>
+				<option>G</option>
+				<option>GG</option>
+			</select>
+			<p></p>
+
+			<label for="price_in">Preço de custo:</label>
+			<input type="text" name="price_in" id="price_in">
+			<p></p>
+
+			<label for="price_out">Preço de venda</label>
+			<input type="text" name="price_out" id="price_out">
+			<p></p>
+
+			<button>Enter</button>
+		</form>
+	</div>
+
+</body>
 
 
 
