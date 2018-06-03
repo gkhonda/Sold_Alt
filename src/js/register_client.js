@@ -24,10 +24,74 @@ var format = function(mask, document)
 }
 
 // Função que fará comunicação com o módulo django
-function register_client()
+var register_client = function()
 {
-	// TODO montar no django primeiro depois ver como montar
-	return
+	// Remove as classes de erro - caso elas estejam lá ainda.
+  $('#helpBlock').remove()
+  $('div').removeClass('has-error')
+
+	// cria objeto com os dados do form
+	var data = $('#form').serializeArray().reduce(function(obj, item)
+	{
+		obj[item.name] = item.value;
+		return obj;
+	}, {})
+
+	// Verifica cpf e nome não estão em branco
+	if (!data['cpf'])
+	{
+		$('#div-cpf')
+			.addClass('has-error')
+			.append('<span id="helpBlock" class="help-block"> CPF não pode estar em branco.</span>')
+		return	
+	}
+
+	if (data['cpf'].length < 14)
+	{
+		$('#div-cpf')
+			.addClass('has-error')
+			.append('<span id="helpBlock" class="help-block"> CPF está incompleto.</span>')
+		return	
+	}
+
+	if (!data['complete_name'])
+	{
+		$('#div-complete_name')
+			.addClass('has-error')
+			.append('<span id="helpBlock" class="help-block"> Nome não pode estar em branco.</span>')
+		return
+	}
+
+	// Cria o post request
+	$.post("http://127.0.0.1:8000/register_client/", data).done(function(back)
+	{
+		if (back['Error'] === true)
+		{
+			ipcRenderer.send('login',
+				{'type' : 'sad',
+				'message' : 'Já existe um cliente com este CPF.',
+				'text' : 'Digite um CPF válido'})
+			return
+		}
+		else if (back['Submitted'] === true)
+		{
+			ipcRenderer.send('login',
+				{'type' : 'happy',
+				'message' : 'Cliente Cadastrado com Sucesso!',
+				'text' : 'Aperte Ok para fechar'})
+			return
+		}
+		else
+		{
+			win.showUrl('src/html/register_client.html', back)
+		}
+	}).fail(function()
+	{
+		ipcRenderer.send('login', 
+                {'type' : 'sad', 
+                'message' : 'Erro na comunicação com o servidor.',
+                'text' : "Verifique sua conexão com a internet."})
+	})
 }
 
 
@@ -47,11 +111,11 @@ $("#cep").keypress(function() {
 })
 
 // Chama quando clica
-$("#btnLogin").on("click", function (e) {
+$("#btnSend").on("click", function (e) {
     register_client()
 })
 
 // Chama quando aperta enter
 $(".form-control").keypress(function(event) {
-    if (event.which == 13) register_client();
-});
+    if (event.which == 13) register_client()
+})
