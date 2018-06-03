@@ -1,0 +1,32 @@
+.register_client {
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  margin: 5em;
+  border-radius: 20px;
+  background-color: white;
+  -webkit-filter: drop-shadow(5px 5px 5px  black);
+  filter: drop-shadow(5px 5px 5px  black);
+}
+
+#register_client-header h1{
+  position: relative;
+  color: white;
+  margin : 0 0 0 0;
+  padding: .25em 0 .25em 0;
+  background-color:  #ff8a37;
+  border-radius: 20px 20px 0 0;
+  font-family: serif;
+}
+
+.form-group {
+  position: relative;
+  margin: 0 auto 2em auto;
+  width: 80%;
+}
+
+.orange {
+  background-color:  #ff8a37;
+  color: white;
+  margin: 1em auto;
+}
