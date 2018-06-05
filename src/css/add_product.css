@@ -1,3 +1,47 @@
-.all {
-	background-color: blue;
+#all {
+	margin: 100px auto;
+	width: 80%;
+	height: 80%; 
+	border-radius: 0 0 15% 15%;
+	border-bottom: 2px solid #ff8a37;
+	border-right: 2px solid #ff8a37;
+	border-left: 2px solid #ff8a37;
+}
+
+img {
+  position: relative;
+  -webkit-filter: drop-shadow(5px 5px 5px  #ff8a37);
+  filter: drop-shadow(5px 5px 5px  #ff8a37);
+}
+
+h1 {
+	background-color: #ff8a37;
+	border: 2px solid #ff8a37;
+	border-radius: 15%;
+	text-align: center;
+	margin: 0;
+	width: 100%;
+}
+
+.data {
+	width: 70em;
+}
+
+
+#body-form {
+	text-align: center;
+	padding: 0 20px;
+	padding-bottom: 20px;
+}
+
+input, label, select {
+	display: block;
+}
+
+form {
+	padding-left: 20px;
+}
+
+form div {
+	padding-bottom: 20px;
 }
