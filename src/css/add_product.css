@@ -1,30 +1,32 @@
 #all {
-	margin: 100px auto;
-	width: 80%;
-	height: 80%; 
-	border-radius: 0 0 15% 15%;
+	margin: 0 auto; 
+	border-radius: 5% 5% 15% 15%;
 	border-bottom: 2px solid #ff8a37;
 	border-right: 2px solid #ff8a37;
 	border-left: 2px solid #ff8a37;
+	filter: drop-shadow(5px 5px 5px  black); 
+	padding: 0 10% 15% 10%;
 }
 
+
 img {
-  position: relative;
-  -webkit-filter: drop-shadow(5px 5px 5px  #ff8a37);
-  filter: drop-shadow(5px 5px 5px  #ff8a37);
+	position: relative;
+	-webkit-filter: drop-shadow(5px 5px 5px  #ff8a37);
+	filter: drop-shadow(5px 5px 5px  #ff8a37);
 }
 
 h1 {
 	background-color: #ff8a37;
 	border: 2px solid #ff8a37;
-	border-radius: 15%;
+	border-radius: 15% 15% 0 0;
 	text-align: center;
-	margin: 0;
 	width: 100%;
+	padding: 0;
+	margin: 0 50px;
 }
 
 .data {
-	width: 70em;
+	width: 100%;
 }
 
 
@@ -38,10 +40,10 @@ input, label, select {
 	display: block;
 }
 
-form {
-	padding-left: 20px;
-}
-
 form div {
 	padding-bottom: 20px;
+}
+
+button {
+	color: 	#ff8a37;
 }
