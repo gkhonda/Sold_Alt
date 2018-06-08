@@ -21,20 +21,30 @@ $('.btn').on('click', function(){
 	var size = $('#size').val();
 	var price_in = $('#price_in').val();
 	var price_out = $('#price_out').val();
-	console.log(name.charCodeAt(0))
 	if (name === '' || size === null || prices.cost === 0 || prices.sell === 0){
 		$('#sent').text('Preencha todos os campos');
-		$('#sent').addClass('has-error');
-		$('#sent').fadeIn(100);
+		if ($('#sent').hasClass('hasnt-error')){
+			$('#sent').removeClass('hasnt-error');
+		}
+		if (!$('#sent').hasClass('has-error')){
+			$('#sent').addClass('has-error');
+		}
+		if ($('#sent').css('display') === 'none'){
+			$('#sent').fadeIn(100);
+		}
 	}
 	else {
 		$('#sent').text('Produto enviado com sucesso');
-		$('#sent').addClass('hasnt-error');
-		$('#sent').fadeIn(100);
+		if ($('#sent').hasClass('has-error')){
+			$('#sent').removeClass('has-error');
+		}
+		if (!$('#sent').hasClass('hasnt-error')){
+			$('#sent').addClass('hasnt-error');
+		}
+		if ($('#sent').css('display') === 'none'){
+			$('#sent').fadeIn(100);
+		}
 		//add to database
-	}
-	if(isNaN(name)){
-		console.log('opa')
 	}
 })
 
@@ -63,5 +73,7 @@ $('.prices input').on('keyup', function(event) {
 });
 
 $('.data').on('click', function() {
-	$('#sent').fadeOut(100);
+	if ($('#sent').css('display') !== 'none'){
+			$('#sent').fadeOut(100);
+	}
 })
