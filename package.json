@@ -10,7 +10,7 @@
     "query-string": "^6.1.0"
   },
   "devDependencies": {
-    "electron": "^2.0.0"
+    "electron": "^2.0.2"
   },
   "scripts": {
     "start": "electron ."

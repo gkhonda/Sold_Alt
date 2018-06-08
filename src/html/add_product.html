@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="../css/add_product.css" >
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script type="text/javascript" src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+        <!-- <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js'></script> -->
     </head>
 
 <body>
@@ -15,12 +16,12 @@
 		<div id="body-form">
 			<img src="../images/pueri.png" alt="">
 			<form class="form-group">
-				<div class="product">
+				<div id="product">
 					<label for="name">Nome:</label>
-					<input type="text" name="name" id="name" class="data">
+					<input type="text" name="name" id="name" class="data" placeholder="nome">
 				</div>
 
-				<div class="dropdown">
+				<div id="dropdown">
 					<label for="size">Tamanho</label>
 					<select id="size" class="data">
 						<option disabled selected>Tamanho</option>
@@ -42,15 +43,17 @@
 
 				<div class="prices" id="price_in_div">
 					<label for="price_in">Preço de custo:</label>
-					<input type="text" name="price_in" id="price_in" class="data">
+					<input type="text" name="price_in" id="price_in" class="data" placeholder="R$00,00">
 				</div>
 
 				<div class="prices" id="price_out_div">
 					<label for="price_out">Preço de venda</label>
-					<input type="text" name="price_out" id="price_out" class="data">
+					<input type="text" name="price_out" id="price_out" class="data" placeholder="R$00,00">
 				</div>
 
-				<button class="	btn btn-group">Enviar</button>
+				<p id="sent"></p>
+
+				<p class="btn btn-lg orange">Enviar</p>
 		
 			</form>
 		</div>

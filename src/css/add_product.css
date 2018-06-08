@@ -44,6 +44,15 @@ form div {
 	padding-bottom: 20px;
 }
 
-button {
-	color: 	#ff8a37;
+.orange {
+	background-color: #ff8a37;
+	color: #fff;
+}
+
+.has-error {
+	color: red;
+}
+
+.hasnt-error {
+	color: green;
 }
