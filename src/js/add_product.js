@@ -1,14 +1,14 @@
-// const {BrowserWindow, getCurrentWindow} = require('electron').remote
+const {BrowserWindow, getCurrentWindow} = require('electron').remote
 
-// const path = require('path')
-// const url = require('url')
+const path = require('path')
+const url = require('url')
 
-// let win, new_win
+let win, new_win
 
-// // Para manipular a Janela Atual
-// win = getCurrentWindow()
+// Para manipular a Janela Atual
+win = getCurrentWindow()
 
-// const {ipcRenderer} = require('electron')
+const {ipcRenderer} = require('electron')
 
 var prices = {
 	cost : 0,
@@ -16,7 +16,7 @@ var prices = {
 };
 
 
-$('.btn').on('click', function(){
+function sendInfo() {
 	var name = $('#name').val();
 	var size = $('#size').val();
 	var price_in = $('#price_in').val();
@@ -46,6 +46,17 @@ $('.btn').on('click', function(){
 		}
 		//add to database
 	}
+}
+
+
+$('.btn').on('click', function(){
+	sendInfo();
+})
+
+$('.data').on('keypress', function(event) {
+	if (event.which == 13) {
+		sendInfo();
+	}
 })
 
 $('.prices input').on('keyup', function(event) {
@@ -65,7 +76,7 @@ $('.prices input').on('keyup', function(event) {
 		}
 		$(this).val('R$' + prices[whichPrice] / 100);
 	}
-	else {
+	else if (event.which > 31 && event.which !== 127) { //printable chars
 		var input = $(this).val();
 		input = input.slice(0,-1);
 		$(this).val(input);
