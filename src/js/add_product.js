@@ -19,10 +19,15 @@ var prices = {
 function sendInfo() {
 	var name = $('#name').val();
 	var size = $('#size').val();
-	var price_in = $('#price_in').val();
-	var price_out = $('#price_out').val();
-	if (name === '' || size === null || prices.cost === 0 || prices.sell === 0){
-		$('#sent').text('Preencha todos os campos');
+	var price_in = prices.cost / 100;
+	var price_out = prices.sell / 100;
+	if (name === '' || size === null || price_in === 0 || price_out === 0 || price_in > price_out){
+		if (name === '' || size === null || price_in === 0 || price_out === 0){
+			$('#sent').text('Preencha todos os campos');
+		}
+		else {
+			$('#sent').text('O preço de custo não pode ser maior que o de venda')
+		}
 		if ($('#sent').hasClass('hasnt-error')){
 			$('#sent').removeClass('hasnt-error');
 		}
