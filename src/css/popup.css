@@ -12,7 +12,7 @@
 }
 
 .happy img {
-    content:url(../images/laugh.png);
+    content:url(../../public/images/laugh.png);
 }
 
 
@@ -23,7 +23,7 @@
 }
 
 .sad img {
-    content:url(../images/sad.png);
+    content:url(../../public/images/sad.png);
 }
 
 
@@ -37,7 +37,7 @@
 
 .medio img{
     background-color: #FFBF46;
-    content:url(../images/smile.png);
+    content:url(../../public/images/smile.png);
 }
 
 
@@ -45,14 +45,14 @@
 h2 {
     color: #808080;
     font-family: 'Times New Roman', Times, serif;
-    margin: 1.5em;
+    margin: 1em;
     text-align: center;
 }
 
 p {
     color: #808080;
     font-family: 'Times New Roman', Times, serif;
-    margin: 2em;
+    margin: 1em;
     text-align: center;
     font-size: 1.5em;
 }

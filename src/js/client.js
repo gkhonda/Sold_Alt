@@ -24,7 +24,7 @@ var format = function(mask, document)
 }
 
 // Função que fará comunicação com o módulo django
-var register_client = function()
+var create_client = function()
 {
 	// Remove as classes de erro - caso elas estejam lá ainda.
   $('#helpBlock').remove()
@@ -62,8 +62,8 @@ var register_client = function()
 		return
 	}
 
-	// Cria o post request
-	$.post("http://127.0.0.1:8000/register_client/", data).done(function(back)
+	// Cria o post request para criar cliente
+	$.post("http://127.0.0.1:8000/client/create", data).done(function(back)
 	{
 		if (back['Error'] === true)
 		{
@@ -83,7 +83,7 @@ var register_client = function()
 		}
 		else
 		{
-			win.showUrl('src/html/register_client.html', back)
+			win.showUrl('src/html/create_client.html', back)
 		}
 	}).fail(function()
 	{
@@ -93,7 +93,6 @@ var register_client = function()
                 'text' : "Verifique sua conexão com a internet."})
 	})
 }
-
 
 // Formata cpf
 $("#cpf").keypress(function() {
@@ -110,12 +109,27 @@ $("#cep").keypress(function() {
 	format("#####-###", this)
 })
 
-// Chama quando clica
-$("#btnSend").on("click", function (e) {
-    register_client()
+// Botão de criar cliente
+$("#btnCreate").on("click", function (e) {
+  create_client()
+})
+
+// Botão de ler um cliente
+$("#btnRead").on("click", function(e) {
+	return
+})
+
+// Botão de atualizar um cliente
+$("#btnUpdate").on("click", function(e) {
+	return
+})
+
+// Botão de deletar um cliente
+$("#btnDelete").on("click", function(e) {
+	return
 })
 
 // Chama quando aperta enter
 $(".form-control").keypress(function(event) {
-    if (event.which == 13) register_client()
+    if (event.which == 13) create_client()
 })

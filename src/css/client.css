@@ -1,4 +1,4 @@
-.register_client {
+.client {
   z-index: 1;
   position: relative;
   text-align: center;
@@ -9,7 +9,7 @@
   filter: drop-shadow(5px 5px 5px  black);
 }
 
-#register_client-header h1{
+#client-header h1{
   position: relative;
   color: white;
   margin : 0 0 0 0;
@@ -21,7 +21,7 @@
 
 .form-group {
   position: relative;
-  margin: 0 auto 2em auto;
+  margin: 0 auto 0.5em auto;
   width: 80%;
 }
 

@@ -5,22 +5,23 @@
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/register_client.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../public/css/fontawesome-all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/client.css">
+  
 
 </head>
 
-<!-- Forms para passar cpf (PK), nome completo, email, cep -->
+<!-- Forms para passar cpf, nome completo, email, cep -->
 
   <body>
 
-    <div class="register_client">
-    	<div id="register_client-header">
+    <div class="client">
+    	<div id="client-header">
       	<h1>Registrar Cliente</h1>
       </div>
 
-      <img src="../images/pueri.png" alt="">
+      <img src="../../public/images/pueri.png" alt="">
 
       <form id="form">
 
@@ -38,14 +39,14 @@
       	</div>
       	<div class="form-group" id="div-telephone">
         	<label for="telephone">Telefone</label>
-        	<input type="text" class="form-control" id="telephone" name="telephone" placeholder="DDD + Telefone" aria-describedby="helpBlock" maxlength="13">
+        	<input type="text" class="form-control" id="telephone" name="telephone" placeholder="DDD + Telefone" aria-describedby="helpBlock" maxlength="12">
       	</div>
       	<div class="form-group" id="div-cep">
         	<label for="cep">CEP</label>
         	<input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" aria-describedby="helpBlock" maxlength="9">
       	</div>
 
-      	<p class="btn btn-lg orange" id="btnSend"> Enviar </p>
+      	<p class="btn btn-lg orange" id="btnCreate"> Enviar </p>
     	</form>
 
     </div>
@@ -57,7 +58,7 @@
 	    $ = require('jquery')
 
 	    // You can also require other files to run in this process
-      require('../js/register_client.js')
+      require('../js/client.js')
 
 	  </script>
   </body>
