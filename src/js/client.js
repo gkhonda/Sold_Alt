@@ -24,7 +24,7 @@ var format = function(mask, document)
 }
 
 // Função que fará comunicação com o módulo django
-var create_client = function()
+var client_create = function()
 {
 	// Remove as classes de erro - caso elas estejam lá ainda.
   $('#helpBlock').remove()
@@ -83,7 +83,7 @@ var create_client = function()
 		}
 		else
 		{
-			win.showUrl('src/html/create_client.html', back)
+			win.showUrl('src/html/client_create.html', back)
 		}
 	}).fail(function()
 	{
@@ -92,6 +92,85 @@ var create_client = function()
                 'message' : 'Erro na comunicação com o servidor.',
                 'text' : "Verifique sua conexão com a internet."})
 	})
+}
+
+// Função que consulta o cliente no BD, se sucesso retorna um json com os dados indexados do cliente
+// (id, cpf, name, email, tel, cep)
+var client_read = function()
+{
+	// cria objeto com os dados do form
+	var data = $('#form').serializeArray().reduce(function(obj, item)
+	{
+		obj[item.name] = item.value;
+		return obj;
+	}, {})
+
+	// Cria o get request para pegar o cliente
+	$.get("http://127.0.0.1:8000/client/read", data).done(function(back)
+	{
+		if (back['Error'] === true)
+		{
+			ipcRenderer.send('login',
+				{'type' : 'sad',
+				'message' : 'Cliente não encontrado.',
+				'text' : 'Verifique o CPF ou o nome'})
+			return
+		}
+		else if (back['Exists'] === true)
+		{
+			// NEEDS MORE WORK
+			client = {'id': back['id'],
+												'cpf': back['cpf'],
+												'name': back['name'],
+												'email': back['email'],
+												'tel': back['tel'],
+												'cep': back['cep']}
+			console.log(client)		
+			return
+		}
+		else
+		{
+			win.showUrl('src/html/client_read.html', back)
+		}
+	}).fail(function()
+	{
+		ipcRenderer.send('login', 
+                {'type' : 'sad', 
+                'message' : 'Erro na comunicação com o servidor.',
+                'text' : "Verifique sua conexão com a internet."})
+	})
+	console.log(client)
+	return client
+}
+
+var client_delete = function()
+{
+	// chama client_read para pegar os dados da entrada NOT WORKING
+	var client = client_read()
+	$.get("http://127.0.0.1:8000/client/delete", client['id']).done(function(back)
+	{
+		if (back['Error'] === true)
+		{
+			ipcRenderer.send('login',
+				{'type' : 'sad',
+				'message' : 'Erro ao tentar deletar cliente.',
+				'text' : 'Verifique o CPF ou o nome'})
+			return
+		}
+		else if (back['Deleted'] === true)
+		{
+			ipcRenderer.send('login', 
+                {'type' : 'happy', 
+                'message' : 'Cliente deletado com sucesso.',
+                'text' : "Aperte Ok para continuar"})
+		}
+	}).fail(function()
+	{
+		ipcRenderer.send('login', 
+                {'type' : 'sad', 
+                'message' : 'Erro na comunicação com o servidor.',
+                'text' : "Verifique sua conexão com a internet."})
+	})	
 }
 
 // Formata cpf
@@ -111,25 +190,25 @@ $("#cep").keypress(function() {
 
 // Botão de criar cliente
 $("#btnCreate").on("click", function (e) {
-  create_client()
+  client_create()
 })
 
 // Botão de ler um cliente
 $("#btnRead").on("click", function(e) {
-	return
-})
-
-// Botão de atualizar um cliente
-$("#btnUpdate").on("click", function(e) {
-	return
+	client_read()
 })
 
 // Botão de deletar um cliente
 $("#btnDelete").on("click", function(e) {
-	return
+	client_delete()
 })
 
 // Chama quando aperta enter
 $(".form-control").keypress(function(event) {
-    if (event.which == 13) create_client()
+    if (event.which == 13)
+    {
+    	if ($("#btnCreate").length > 0) client_create()
+    	else if ($("#btnRead").length > 0) client_read()
+    	else if ($("#btnDelete").length > 0) client_delete()
+    }
 })

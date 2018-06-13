@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pueri Store - Consultar Cliente</title>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../public/css/fontawesome-all.css">
+  <link rel="stylesheet" href="../css/client.css">
+  
+</head>
+
+<!-- Forms para consultar cliente usando cpf e/ou nome completo, retorna um json com os dados -->
+
+  <body>
+
+    <div class="client">
+    	<div id="client-header">
+      	<h1>Consultar Cliente</h1>
+        <p>Digite o CPF ou o nome completo para buscar as informações do cliente.</p>
+      </div>
+
+      <img src="../../public/images/pueri.png" alt="">
+
+      <form id="form">
+
+      	<div class="form-group" id='div-cpf'>
+        	<label for="cpf">CPF</label>
+        	<input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" aria-describedby="helpBlock" maxlength="14">
+      	</div>
+      	<div class="form-group" id="div-complete_name">
+        	<label for="complete_name">Nome Completo</label>
+        	<input type="text" class="form-control" id="complete_name" name="complete_name" placeholder="Nome Completo" aria-describedby="helpBlock">
+      	</div>
+
+      	<p class="btn btn-lg orange" id="btnRead"> Consultar </p>
+    	</form>
+
+    </div>
+
+
+	  <script>
+
+	    // Jquery
+	    $ = require('jquery')
+
+	    // You can also require other files to run in this process
+      require('../js/client.js')
+
+	  </script>
+  </body>
+
+</html>
