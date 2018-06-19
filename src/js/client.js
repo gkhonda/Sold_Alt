@@ -3,6 +3,8 @@ const {BrowserWindow, getCurrentWindow} = require('electron').remote
 const path = require('path')
 const url = require('url')
 
+require('electron-window').parseArgs()
+
 let win, new_win
 
 // Para manipular a Janela Atual
@@ -96,8 +98,12 @@ var client_create = function()
 
 // Função que consulta o cliente no BD, se sucesso retorna um json com os dados indexados do cliente
 // (id, cpf, name, email, tel, cep)
-var client_read = function()
+var client_read = function(button)
 {
+	// Remove as classes de erro - caso elas estejam lá ainda.
+  $('#helpBlock').remove()
+  $('div').removeClass('has-error')
+
 	// cria objeto com os dados do form
 	var data = $('#form').serializeArray().reduce(function(obj, item)
 	{
@@ -118,19 +124,18 @@ var client_read = function()
 		}
 		else if (back['Exists'] === true)
 		{
-			// NEEDS MORE WORK
-			client = {'id': back['id'],
-												'cpf': back['cpf'],
-												'name': back['name'],
-												'email': back['email'],
-												'tel': back['tel'],
-												'cep': back['cep']}
-			console.log(client)		
-			return
+			if (button === "Read") return //TODO
+
+			else if (button === "Update")
+			{
+				win.showUrl('src/html/client_update.html', back)
+				return
+			}
 		}
 		else
 		{
 			win.showUrl('src/html/client_read.html', back)
+			return
 		}
 	}).fail(function()
 	{
@@ -139,15 +144,84 @@ var client_read = function()
                 'message' : 'Erro na comunicação com o servidor.',
                 'text' : "Verifique sua conexão com a internet."})
 	})
-	console.log(client)
-	return client
+}
+
+var client_update = function()
+{
+	// cria objeto com os dados do form
+	var data = $('#form').serializeArray().reduce(function(obj, item)
+	{
+		obj[item.name] = item.value;
+		return obj;
+	}, {})
+
+		// Verifica cpf e nome não estão em branco
+	if (!data['cpf'])
+	{
+		$('#div-cpf')
+			.addClass('has-error')
+			.append('<span id="helpBlock" class="help-block"> CPF não pode estar em branco.</span>')
+		return	
+	}
+
+	if (data['cpf'].length < 14)
+	{
+		$('#div-cpf')
+			.addClass('has-error')
+			.append('<span id="helpBlock" class="help-block"> CPF está incompleto.</span>')
+		return	
+	}
+
+	if (!data['complete_name'])
+	{
+		$('#div-complete_name')
+			.addClass('has-error')
+			.append('<span id="helpBlock" class="help-block"> Nome não pode estar em branco.</span>')
+		return
+	}
+
+	// Cria o post request para alterar cliente
+	$.post("http://127.0.0.1:8000/client/update", data).done(function(back)
+	{
+		if (back['Error'] === true)
+		{
+			ipcRenderer.send('login',
+				{'type' : 'sad',
+				'message' : 'Erro ao alterar cliente.',
+				'text' : 'Verifique as informações digitadas.'})
+			return
+		}
+		else if (back['Updated'] === true)
+		{
+			ipcRenderer.send('login',
+				{'type' : 'happy',
+				'message' : 'Cliente Alterado com Sucesso!',
+				'text' : 'Aperte Ok para fechar'})
+			return
+		}
+		else
+		{
+			win.showUrl('src/html/client_update.html', back)
+		}
+	}).fail(function()
+	{
+		ipcRenderer.send('login', 
+                {'type' : 'sad', 
+                'message' : 'Erro na comunicação com o servidor.',
+                'text' : "Verifique sua conexão com a internet."})
+	})
 }
 
 var client_delete = function()
 {
-	// chama client_read para pegar os dados da entrada NOT WORKING
-	var client = client_read()
-	$.get("http://127.0.0.1:8000/client/delete", client['id']).done(function(back)
+	// cria objeto com os dados do form
+	var data = $('#form').serializeArray().reduce(function(obj, item)
+	{
+		obj[item.name] = item.value;
+		return obj;
+	}, {})
+
+	$.get("http://127.0.0.1:8000/client/delete", data).done(function(back)
 	{
 		if (back['Error'] === true)
 		{
@@ -195,7 +269,17 @@ $("#btnCreate").on("click", function (e) {
 
 // Botão de ler um cliente
 $("#btnRead").on("click", function(e) {
-	client_read()
+	client_read("Read")
+})
+
+// Botão que checa o input para fazer alteração
+$("#btnReadUpdate").on("click", function(e) {
+	client_read("Update")
+})
+
+// Botão que realiza a alteração
+$("#btnUpdate").on("click", function(e) {
+	client_update()
 })
 
 // Botão de deletar um cliente
@@ -208,7 +292,7 @@ $(".form-control").keypress(function(event) {
     if (event.which == 13)
     {
     	if ($("#btnCreate").length > 0) client_create()
-    	else if ($("#btnRead").length > 0) client_read()
+    	else if($("#btnUpdate").length > 0) client_update()
     	else if ($("#btnDelete").length > 0) client_delete()
     }
 })
