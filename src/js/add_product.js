@@ -49,7 +49,44 @@ function sendInfo() {
 		if ($('#sent').css('display') === 'none'){
 			$('#sent').fadeIn(100);
 		}
-		//add to database
+
+		var data = {
+			'name' : name,
+			'size' : size,
+			'price_cost' : price_in,
+			'price_sell' : price_out
+		}
+		
+		//send to back-end
+		$.post("http://127.0.0.1:8000/client/create", data).done(function(back)
+		{
+			if (back['Error'] === true)
+			{
+				ipcRenderer.send('login',
+					{'type' : 'sad',
+					'message' : "Já existe um produto com esse nome",
+					'text' : 'Digite outro produto!'})
+				return
+			}
+			else if (back['Submitted'] === true)
+			{
+				ipcRenderer.send('login',
+					{'type' : 'happy',
+					'message' : 'Produto Cadastrado com Sucesso!',
+					'text' : 'Aperte Ok para fechar'})
+				return
+			}
+			else
+			{
+				win.showUrl('src/html/add_product.html', back)
+			}
+		}).fail(function()
+		{
+			ipcRenderer.send('login', 
+	                {'type' : 'sad', 
+	                'message' : 'Erro na comunicação com o servidor.',
+	                'text' : "Verifique sua conexão com a internet."})
+		})
 	}
 }
 
