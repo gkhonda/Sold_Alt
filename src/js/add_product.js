@@ -49,7 +49,19 @@ function sendInfo() {
 		if ($('#sent').css('display') === 'none'){
 			$('#sent').fadeIn(100);
 		}
-		//add to database
+		
+
+
+		var data = {
+			'name' : name,
+			'size' : size,
+			'price_cost' : price_in,
+			'price_sell' : price_out
+		}
+
+		$.post("http://127.0.0.1:8000/product/create", data).done(function(back){
+			console.log(back);
+		})
 	}
 }
 
