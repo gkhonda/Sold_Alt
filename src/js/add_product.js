@@ -58,7 +58,7 @@ function sendInfo() {
 		}
 		
 		//send to back-end
-		$.post("http://127.0.0.1:8000/client/create", data).done(function(back)
+		$.post("http://127.0.0.1:8000/product/create", data).done(function(back)
 		{
 			if (back['Error'] === true)
 			{
