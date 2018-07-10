@@ -30,7 +30,8 @@
 
 .navbar-default {
   background-color: orange !important;
-  margin: -2px !important;
+  margin: -1px !important;
+  max-width: 100%;
 }
 
 nav img {
@@ -97,18 +98,18 @@ nav img {
 
 
 .slideshow li:nth-child(1) {
-  background-image: url(../../public/images/1.jpg)
+  background-image: url(../images/1.jpg)
 }
 .slideshow li:nth-child(2) {
-  background-image: url(../../public/images/2.jpg);
+  background-image: url(../images/2.jpg);
   animation-delay: 5s;
 }
 .slideshow li:nth-child(3) {
-  background-image: url(../../public/images/3.jpg);
+  background-image: url(../images/3.jpg);
   animation-delay: 10s;
 }
 .slideshow li:nth-child(4) {
-  background-image: url(../../public/images/4.jpg);
+  background-image: url(../images/4.jpg);
   animation-delay: 15s;
 }
 
