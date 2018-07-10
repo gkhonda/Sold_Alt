@@ -1,0 +1,202 @@
+/* Propriedades do html */
+
+html {
+    font-family: Roboto;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: Roboto;
+    background-image: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #dd5100);
+    width: 100%;
+}
+
+/* Titulos */
+
+h1 {
+	background-color: #e77000;
+	color: white;
+	margin: 0;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	font-size: 24px;
+    font-weight: normal;
+    border-radius: 3px;
+}
+
+/* Limita tamanho da tabela */
+
+.table-size {
+    height: 300px;
+    overflow: auto;
+    background: white;
+}
+
+table {
+    width: 100%;
+    font-size: 0.8em;
+}
+
+.row {
+    max-width: 100%
+}
+
+tr .del {
+	background-color: #e74c3c;
+	/* height: 10px; */
+	margin-right: 0px;
+    text-align: center;
+	color: white;
+	width: 0px;
+	display: inline-block;
+	opacity: 0;
+	transition: .2s linear;
+}
+
+.col-md-6 {
+    width: 45% !important;
+}
+
+
+tr:hover .del {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+	opacity: 1.0;
+}
+
+/* Para a tabela não mudar com textos muito grandes */
+
+.table .text {
+  position: relative;
+  border-radius: 5px;
+}
+
+.table .text .text-el {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: absolute;
+  left: .75em;
+  right: 0;
+}
+
+.text:before {
+  content: '';
+  display: inline-block;
+}
+  
+.panel {
+    margin-bottom: 0 !important;
+}
+
+.panel-heading {
+    width: 100%;
+    margin-top: -52px;
+    z-index: 100;
+}
+
+.col-md-6 {
+    width: 40%;
+    /* height: 100%; */
+    margin: 40px 20px 10px 30px;
+    background-color: transparent;
+}
+
+.panel-block {
+    background: white;
+    height: 120px;
+}
+
+.panel-block img {
+    height: 60px;
+    width: 60px;
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 10px;
+    float: left;
+}
+
+
+.h2 {
+    display: block;
+    font-size: 13px;
+    padding: 0 0 5px 0 ;
+    color: lightslategray;
+}
+
+.select {
+    font-size: 15px;
+}
+
+.first-side {
+    float: left;
+    width: 50%;
+    height: 80%;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.second-size {
+    width: 20%;
+    height: 80%;
+    margin-top: 2em !important;
+    float: right;
+    align-content: center;
+    display: block;
+    margin: 3px;
+}
+
+.second-size button {
+    margin-top: .5em;
+}
+
+.second-size a{
+    margin: 25px;
+}
+
+.number-input {
+    width: 130px !important;
+    color: lightslategray;
+}
+
+
+.field {
+    display: inline-block;
+}
+
+.is-small {
+    width: 1em !important;
+
+}
+
+.pesquisa {
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+
+.is-right {
+    right: 10px !important;
+}
+
+.produto {
+    margin-top: 50px;
+}
+
+.form-group {
+    margin-bottom: 0 !important;
+}
+
+.codigo {
+    width: 50px;
+    font-size: 12px;
+}
+
+.finish-sale {
+    float: right;
+}
+
+.to-right {
+    width: 45%;
+}

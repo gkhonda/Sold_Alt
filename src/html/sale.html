@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/sale.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+</head>
+<body class="body">
+
+    <!-- Divide a tela em 2 partes -->
+    <div class="row">
+
+        <!-- Parte da esquerda -->
+        <div class="col-md-6">
+            <h1>Adicione o produto</h1>
+        <!-- Painel -->
+            <div class="panel-block">
+                <img src="../images/tshirt.png" id="imgProduct">
+                <div class="first-side">
+                    <span class="h2" id="productDesc">CAMISETA MANGA CURTA 00</span>
+                    <div class="input-group number-input">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="quant[2]">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </span>
+                        <input type="text" name="quant[2]" class="form-control input-number quantity" value="1" min="1" max="100">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="second-size">
+                    <input type="text" id="productId" value="1" class="form-control codigo">
+                    <button type="button" class="btn btn-default" id="btnAdd">
+                        Add
+                    </button>
+                </div>
+            </div>
+            <div class="produto">
+                <h1>Produto</h1>
+                <div class="table-size">
+                    
+                    <table class="table table-hover" id="tableSearch">
+                        <div class="field pesquisa">
+                                <div class="form-group">
+                                    <label class="sr-only" for="inputSearch">Pesquisar</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inputSearch" placeholder="Amount">
+                                        <div class="input-group-addon"><span class="icon is-small is-right">
+                                                <i class="fas fa-search"></i>
+                                        </span>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <thead>
+                            <tr>
+                                <th><abbr title="Codigo">C</abbr></th>
+                                <th>Descricao</th>
+                                <th>Tamanho</th>
+                                <th>R$</abbr></th>
+                            </tr>
+                        </thead>
+                        <tbody class="search-table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        
+        
+        <div class="col-md-6 to-right">
+                <h1>Vendas</h1>
+                <div class="table-size">
+                <table class="table">
+                        <thead>
+                        <tr>
+                            <th><abbr title="Codigo">C</abbr></th>
+                            <th>Descricao</th>
+                            <th><abbr title="Tamanho">T</abbr></th>
+                            <th><abbr title="Quantidade">Qnt</abbr></th>
+                            <th>R$</abbr></th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th><abbr title="Position"></abbr></th>
+                            <th></th>
+                            <th></th>
+                            <th>Total: </th>
+                            <th id="totalValue">0,00</th>
+                        </tr>
+                        </tfoot>
+                        <tbody id="saleTable">        
+                        </tbody>
+                    </table>
+                    </div>
+                <a class="btn btn-default finish-sale">Finaliza venda</a>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    // Jquery
+
+    $ = require('jquery')
+
+    // You can also require other files to run in this process
+    require('../js/sale.js')
+  </script>
+
+</body>
+</html>
