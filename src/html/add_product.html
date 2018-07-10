@@ -15,14 +15,14 @@
 			<div id="logo">
 				<img src="../../public/images/pueri.png" alt="">
 			</div>
-			<form class="form-group">
-				<div id="product">
+			<form>
+				<div id="product" class='data-div'>
 					<label for="name">Nome:</label>
 					<input type="text" name="name" id="name" class="data" placeholder="nome">
 				</div>
 
-				<div id="dropdown">
-					<label for="size">Tamanho</label>
+				<div id="dropdown" class="data-div">
+					<label for="size">Tamanho:</label>
 					<select id="size" class="data">
 						<option disabled selected>Tamanho</option>
 						<option>00</option>
@@ -41,19 +41,20 @@
 					</select>
 				</div>
 
-				<div class="prices" id="price_in_div">
+				<div class="prices data-div" id="price_in_div">
 					<label for="price_in">Preço de custo:</label>
 					<input type="text" name="price_in" id="price_in" class="data" placeholder="R$00,00">
 				</div>
 
-				<div class="prices" id="price_out_div">
-					<label for="price_out">Preço de venda</label>
+				<div class="prices data-div" id="price_out_div">
+					<label for="price_out">Preço de venda:</label>
 					<input type="text" name="price_out" id="price_out" class="data" placeholder="R$00,00">
 				</div>
 
-				<p id="sent"></p>
-
-				<p class="btn btn-lg orange">Enviar</p>
+				<div id='output'>
+					<p id="sent"></p>
+					<p class="btn btn-lg orange">Enviar</p>
+				</div>
 		
 			</form>
 		</div>
