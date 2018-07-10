@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../public/css/fontawesome-all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../public/css/fontawesome-all.css">
   <link rel="stylesheet" href="../css/client.css">
   
 
@@ -18,7 +18,7 @@
 
     <div class="client">
     	<div id="client-header">
-      	<h1>Registrar Cliente</h1>
+      	<h1>Alterar Cliente</h1>
       </div>
 
       <img src="../../public/images/pueri.png" alt="">
@@ -46,7 +46,7 @@
         	<input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" aria-describedby="helpBlock" maxlength="9">
       	</div>
 
-      	<p class="btn btn-lg orange" id="btnCreate"> Enviar </p>
+      	<p class="btn btn-lg orange" id="btnUpdate"> Enviar </p>
     	</form>
 
     </div>
@@ -60,6 +60,18 @@
 	    // You can also require other files to run in this process
       require('../js/client.js')
 
+      // formata o html para conter as infos do cliente nos inputs
+      var formatInput = function(data)
+      {
+        var client = data['Client']
+        $('#cpf').val(client['cpf'])
+        $('#complete_name').val(client['name'])
+        $('#email').val(client['email'])
+        $('#telephone').val(client['tel'])
+        $('#cep').val(client['cep'])
+      }
+
+      window.onload = formatInput(__args__)
 	  </script>
   </body>
 
