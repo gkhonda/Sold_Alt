@@ -207,9 +207,14 @@ $('.finish-sale').on('click', function() {
 	console.log(venda)
 	console.log(tabela)
 
-	win = getCurrentWindow()
+	// win = getCurrentWindow()
 
-	win.showUrl('src/html/finish_sale.html', '', () => {
-	})
+	// win.showUrl('src/html/finish_sale.html', '', () => {
+	// })
+
+	ipcRenderer.send('payment', 
+            venda)
+
+
 })
 

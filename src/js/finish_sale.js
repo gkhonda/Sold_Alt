@@ -19,7 +19,12 @@ var dict_of_values = {
 
 var to_pay = 32.00;
 
+var received = 0;
+var to_receive = to_pay;
+var change = 0;
+
 $("#to-pay").text(to_pay.toFixed(2))
+$("#to-receive").text(to_pay.toFixed(2))
 
 var add_payment = function(){
 
@@ -30,7 +35,28 @@ var add_payment = function(){
     if (preco === preco) {
         $('#saleTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>'+ codigo +'</td>' +
 		'<td>' + tipo + '</td>' + 
-		'<td>' + (preco).toFixed(2) + '</td></tr>')
+        '<td>' + (preco).toFixed(2) + '</td></tr>')
+        
+        received += preco;
+        to_receive = to_pay - received;
+
+        console.log(to_receive)
+        if (to_receive < 0){
+            change = -to_receive
+            to_receive = 0;
+        }
+
+        $('#received').text(received.toFixed(2))
+        $('#to-receive').text(to_receive.toFixed(2))
+        $('#change').text(change.toFixed(2))
+
+        if (received >= to_pay) {
+            $('#red').removeClass("red")
+            $('#red').addClass("green")
+        } else {
+            $('#red').removeClass("green")
+            $('#red').addClass("red")
+        }
     }
 }
 
@@ -54,3 +80,7 @@ $("#lblQuantidade").keypress(function(event) {
         $("#lblQuantidade").val('')
     }
 });
+
+// $('#btn-end-sale').on('click', function(){
+
+// })
