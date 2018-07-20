@@ -14,7 +14,7 @@ const url = require('url')
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  mainWindow.createWindow('src/html/login.html')
+  mainWindow.createWindow('src/html/finish_sale.html')
 })
 
 // Quit when all windows are closed.
