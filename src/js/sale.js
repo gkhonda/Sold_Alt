@@ -212,8 +212,12 @@ $('.finish-sale').on('click', function() {
 	// win.showUrl('src/html/finish_sale.html', '', () => {
 	// })
 
-	ipcRenderer.send('payment', 
-            venda)
+	$('html,body').animate({
+        scrollTop: $(".second-page").offset().top},
+        'slow');
+
+	// ipcRenderer.send('payment', 
+    //         venda)
 
 
 })

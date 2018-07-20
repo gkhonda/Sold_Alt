@@ -64,7 +64,7 @@ img {
     margin-top: 3%;
 }
 
-.table-size {
+.table-size #payment{
     height: 150px;
     overflow: auto;
     background: white;

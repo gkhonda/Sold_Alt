@@ -14,7 +14,7 @@ exports.createWindow = (url_) => {
         minWidth: 350,
         minHeight: 300,
         autoHideMenuBar: true,
-        fullscreen: true,
+        // fullscreen: true,
     }
 
     this.win = window.createWindow(windowOptions)
