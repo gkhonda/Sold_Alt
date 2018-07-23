@@ -52,9 +52,3 @@ ipcMain.on('menu_admin', (e, args) => {
 ipcMain.on('menu', (e, args) => {
   mainWindow.createWindow('src/html/menu.html')
 })
-
-// Comunicacao menu normal
-ipcMain.on('menu', (e, args) => {
-  childWindow = new BrowserWindow()
-  mainWindow.createWindow('src/html/menu.html')
-})

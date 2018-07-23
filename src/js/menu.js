@@ -9,25 +9,26 @@ win = getCurrentWindow()
   console.log(window.__args__)
 
 $('#sale').on('click', function(e) {
-    win.showUrl('src/html/sale.html', '', () => {
-      })
-})
-
-$('#sangria').on('click', function(e) {
-
-  // Cria o get request para pegar os produtos
+    // Cria o get request para pegar os produtos
 	$.get("http://127.0.0.1:8000/product/read").done(function(back) {
 		if (back['Error'] === true)
 		{
-      console.log('oi')
+      ipcRenderer.send('login',
+				{'type' : 'sad',
+				'message' : 'Erro.',
+				'text' : 'Não foi possível encontrar produtos no BD'})
+			return
 		}
 		else
 		{
-      console.log(back)
-      console.log(back['Product'])
       win.showUrl('src/html/sale.html', back)
 		}
 	}).fail(function() {
-		console.log('fail')
+		ipcRenderer.send('login',
+				{'type' : 'sad',
+				'message' : 'Erro.',
+				'text' : 'Verifique a conexão'})
 	})
 })
+
+$('#sangria').on('click', function(e) {})
