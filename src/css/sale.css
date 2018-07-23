@@ -6,8 +6,11 @@ html {
 
 body {
     font-family: Roboto;
-    background-image: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #dd5100);
+    /* background-image: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #dd5100); */
+    /* background-image: linear-gradient(to bottom, #f3d1b2, #f5c395, #f6b579, #f6a75e, #f59841); */
+    background-image: linear-gradient(to right, #fefefe, #d3d3d3, #a9a9a9, #828181, #5c5b5b);
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 header {
@@ -242,18 +245,15 @@ img {
     padding-left: 6%;
 }
 
-
 .vendas {
     margin-left: 6%;
     margin-top: 3%;
 }
 
-
 .green {
     color: green;
     font-size: 2em; 
 }
-
 
 .red {
     color: red;

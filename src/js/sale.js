@@ -1,77 +1,44 @@
+require('electron-window').parseArgs()
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
 
+let win, new_win
+
+console.log(window.__args__['Product'])
+
+// Para manipular a Janela Atual
+win = getCurrentWindow()
 // Variaveis auxiliares
+var to_pay;
+var received = 0;
+var to_receive;
+var change = 0;
 
-// Guarda o produto atual, iniciando pelo código mais baixo
-// Depois, isso tudo será pego do BD
+// Página superior
 
-var current_product = {
-	'Codigo' : 1,
-	'Produto' : 'CAMISETA MANGA CURTA',
-	'Tamanho' : 'M',
-	'Preco' : "30.00"
-}
+// Lista de names
+var list_of_products = window.__args__['Product']
 
 var product_dictionary = {}
+var current_sale = {}
 
-// Alguns produtos pegos pelo BD
-var a = {
-	'Codigo' : 1,
-	'Produto' : 'CAMISETA MANGA CURTA',
-	'Tamanho' : '00',
-	'Preco' : "30.00",
-	'src' : "../images/tshirt.png"
-}
-
-var b = {
-	'Codigo' : 2,
-	'Produto' : 'CAMISETA MANGA CURTA',
-	'Tamanho' : 'G',
-	'Preco' : "30.00",
-	'src' : "../images/tshirt.png"
-}
-
-var c = {
-	'Codigo' : 3,
-	'Produto' : 'CAMISETA MANGA CURTA',
-	'Tamanho' : 'M',
-	'Preco' : "30.00",
-	'src' : "../images/tshirt.png"
-}
-
-var d = {
-	'Codigo' : 4,
-	'Produto' : 'BERMUDA',
-	'Tamanho' : 'PP',
-	'Preco' : "12.23",
-	'src' : "../images/bermuda.png"
-}
-
-// var e = {
-// 	'Codigo' : 4,
-// 	'Produto' : 'BERMUDA',
-// 	'Tamanho' : 'PP',
-// 	'Preco' : "67.50"
-// }
-
-// Lista de produtos
-var list_of_products = [a, b, c, d]
-
-// Coloca os produtos na tabela
+// Coloca os names na tabela
 list_of_products.forEach(function(p) {
-	$('.search-table').append('<tr class="table-search"><td>'+p.Codigo+'</td><td>'+p.Produto+'</td><td>'+p.Tamanho+'</td><td>'+p.Preco+'</td></tr>')
-	product_dictionary[p.Codigo] = p
+	$('.search-table').append('<tr class="table-search"><td>'+p.id+'</td><td>'+p.name+'</td><td>'+p.size+'</td><td>'+p.price_sell+'</td></tr>')
+	product_dictionary[p.id] = p
 })
 
+// Faz o painel ser preenchido
 var update_div = function(product) {
-	$('#productId').val(product.Codigo);
-	$('#productDesc').text(product.Produto + ' ' + product.Tamanho);
+	$('#productId').val(product.id);
+	$('#productDesc').text(product.name + ' ' + product.size);
 	$('#imgProduct').attr("src", product.src)
 }
 
 
-// Apaga produto da compra
-$("tbody").on('click', "tr td .del", function (e) {
+// Apaga name da compra
+$("#saleTable").on('click', "tr td .del", function (e) {
+	// Pega o código e deleta ele
+	delete current_sale[$(this).parent().html()[$(this).parent().html().length-1]]
 	$(this).parent().parent().remove();
 	e.stopPropagation();
 	atualiza_venda(5)
@@ -89,6 +56,7 @@ $('.btn-success').click(function(e){
 		// Increment
 });
 
+// Diminui
 $('.btn-danger').click(function(e){
 	// Stop acting like a button
 	e.preventDefault();
@@ -103,15 +71,11 @@ $('.btn-danger').click(function(e){
 
 // Pega da tabela
 $('.table-search').on('click', function(e) {
-
 	var product = []
-
 	$(this).find('td').each(function(){
 		product.push($(this).html())
 	})
-
 	update_div(product_dictionary[product[0]])
-
 	e.preventDefault();
 });
 
@@ -125,10 +89,12 @@ $("#inputSearch").on("keyup", function() {
     });
 });
 
+// Adiciona item (click)
 $("#btnAdd").on("click", function() {
-	add_item()
+	add_item();
 });
 
+// Adiciona item (enter)
 $("#productId").on("keyup", function(e) {
 	if (e.which == 13) add_item()
 	if (product_dictionary[$(this).val()] != undefined) {
@@ -148,30 +114,44 @@ var atualiza_venda = function(table_lenght) {
 		})
 	})
 
-	$('#totalValue').text((price).toFixed(2))
+	$('#totalValueSale').text((price).toFixed(2))
 
 }
 
+// Função que adiciona o item.
 var add_item = function() {
 	var id = $('#productId').val()
 	var qnt = parseInt($('.quantity').val());
-	if (product_dictionary[id] !== undefined){
-		var p = product_dictionary[id]
-		$('#saleTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>2</td>' +
-		'<td class="text"><span class="text-el">' + p.Produto + '</span></td>' +
-		'<td>' + p.Tamanho + '</td>' + 
-		'<td>' + qnt + '</td>' + 
-		'<td>' + (p.Preco * qnt).toFixed(2) + '</td></tr>')
-		
-		atualiza_venda(5)
 
-		$('.quantity').val(1)
+	if (product_dictionary[id] !== undefined){
+
+		if(current_sale[id] !== undefined) {
+			current_sale[id] += qnt;
+		} else {
+			current_sale[id] = qnt;
+		}
+
+		$("#saleTable tr").remove();
+
+		for (id in current_sale) {
+			var p = product_dictionary[id]
+			$('#saleTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>'+ id +'</td>' +
+			'<td class="text"><span class="text-el">' + p.name + '</span></td>' +
+			'<td>' + p.size + '</td>' + 
+			'<td>' + current_sale[id] + '</td>' + 
+			'<td>' + (p.price_sell *current_sale[id]).toFixed(2) + '</td></tr>')
+			
+			atualiza_venda(5)
+
+			$('.quantity').val(1)
+		}
 
 	} else {
 		alert("Verifique se o id é válido")
 	}
 }
 
+// Finaliza de adicionar os itens (parte de cima), e move para o pagamento
 $('.finish-sale').on('click', function() {
 
 	var name
@@ -181,44 +161,167 @@ $('.finish-sale').on('click', function() {
 	tabela = {}
 
 	venda = {
-		'Total' : $('#totalValue').text(),
+		'Total' : $('#totalValueSale').text(),
 		'Vendedor' : 'Mike',
 	}
 
-	$("#saleTable").find('tr').each(function(){
-		$(this).find('td').each(function(index){
+	// $("#saleTable").find('tr').each(function(){
+	// 	$(this).find('td').each(function(index){
 
-			if (index == 1) {
-				name = $(this).text()
-			}
+	// 		if (index == 1) {
+	// 			name = $(this).text()
+	// 		}
 
-			if (index == 3) {
-				qnt = parseFloat($(this).html())
-			}
+	// 		if (index == 3) {
+	// 			qnt = parseFloat($(this).html())
+	// 		}
 
-			if (index == 4) {
-				price = parseFloat($(this).html())
-			}
-		})
+	// 		if (index == 4) {
+	// 			price = parseFloat($(this).html())
+	// 		}
+	// 	})
 
-		tabela[name] = [qnt, price]
-	})
+	// 	tabela[name] = [qnt, price]
+	// })
+
+	to_pay = parseFloat($('#totalValueSale').text());
+	$("#to-pay").text(to_pay.toFixed(2))
+	$("#to-receive").text(to_pay.toFixed(2))
+	received = 0;
+	to_receive = to_pay;
+	change = 0;
+	
 
 	console.log(venda)
-	console.log(tabela)
-
-	// win = getCurrentWindow()
-
-	// win.showUrl('src/html/finish_sale.html', '', () => {
-	// })
+	console.log(current_sale)
 
 	$('html,body').animate({
         scrollTop: $(".second-page").offset().top},
         'slow');
 
-	// ipcRenderer.send('payment', 
-    //         venda)
-
-
 })
+
+// Aqui começa a parte de baixo
+
+// Inicia com dinheiro como método de pagamente
+var payment_method = 1
+
+var dict_of_values = {
+    1 : 'Dinheiro',
+    2 : 'Cheque',
+    3 : 'Debito',
+    4 : 'Credito',
+    5: 'Transferencia'
+}
+
+current_payment = {}
+
+var add_payment = function(){
+
+    var tipo = dict_of_values[payment_method]
+	var price_sell = parseFloat($("#lblQuantidade").val())
+
+    if (price_sell === price_sell) {
+
+		if(current_payment[payment_method] !== undefined) {
+			current_payment[payment_method] += price_sell;
+		} else {
+			current_payment[payment_method] = price_sell;
+		}
+
+		$("#paymentTable tr").remove();
+
+		for (id in current_payment) {
+
+			$('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>'+ id +'</td>' +
+			'<td>' + dict_of_values[id] + '</td>' + 
+			'<td>' + (current_payment[id]).toFixed(2) + '</td></tr>')
+
+		}
+
+        received += price_sell;
+        to_receive = to_pay - received;
+
+        if (to_receive < 0){
+            change = -to_receive
+            to_receive = 0;
+        }
+
+        $('#received').text(received.toFixed(2))
+        $('#to-receive').text(to_receive.toFixed(2))
+        $('#change').text(change.toFixed(2))
+
+        if (received >= to_pay) {
+            $('#red').removeClass("red")
+            $('#red').addClass("green")
+        } else {
+            $('#red').removeClass("green")
+            $('#red').addClass("red")
+		}
+		
+		$('#totalValuePayment').text((received).toFixed(2))
+	}
+}
+
+$("#paymentTable").on('click', "tr td .del", function (e) {
+	// Pega o código e deleta ele
+	console.log(current_payment[$(this).parent().html()[$(this).parent().html().length-1]])
+	delete current_payment[$(this).parent().html()[$(this).parent().html().length-1]]
+	$(this).parent().parent().remove();
+
+	$("#paymentTable tr").remove();
+
+	received = 0;
+
+	for (id in current_payment) {
+
+		$('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>'+ id +'</td>' +
+		'<td>' + dict_of_values[id] + '</td>' + 
+		'<td>' + (current_payment[id]).toFixed(2) + '</td></tr>')
+
+		received += current_payment[id]
+
+	}
+
+	to_receive = to_pay - received;
+
+	if (to_receive < 0){
+		change = -to_receive
+		to_receive = 0;
+	}
+
+	$('#received').text(received.toFixed(2))
+	$('#to-receive').text(to_receive.toFixed(2))
+	$('#change').text(change.toFixed(2))
+
+	
+
+	e.stopPropagation();
+})
+
+
+$(".btn-toolbar .btn").click(function(){
+    $('.btn').removeClass('active');
+    $(this).addClass('active'); 
+    payment_method = $(this).attr('value')
+});
+
+
+$("#add-payment").on('click', function(e) {
+    add_payment();
+    $("#lblQuantidade").val('')
+});
+
+$("#lblQuantidade").keypress(function(event) {
+    if (event.which == 13) {
+        add_payment();
+        $("#lblQuantidade").val('')
+    }
+});
+
+$('#back-sale').click(function(){
+	$('html,body').animate({
+        scrollTop: $(".first-page").offset().top},
+        'slow');
+});
 
