@@ -1,9 +1,13 @@
 require('electron-window').parseArgs()
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
+const {ipcRenderer} = require('electron')
 
 let win, new_win
 
 console.log(window.__args__['Product'])
+
+const remote = require('electron').remote
+console.log(remote.getGlobal('Vendedor'))
 
 // Para manipular a Janela Atual
 win = getCurrentWindow()
@@ -323,5 +327,32 @@ $('#back-sale').click(function(){
 	$('html,body').animate({
         scrollTop: $(".first-page").offset().top},
         'slow');
+});
+
+$('#end-sale').click(function(){
+	if (to_receive != 0) {
+		ipcRenderer.send('login',
+				{'type' : 'ok-face',
+				'message' : 'Termine a venda!',
+				'text' : 'Adicione as formas de pagamento para o valor total da venda'})
+			return
+	} else {
+		$.post("http://127.0.0.1:8000/sale/create", current_sale).done(function(back) {
+			if (back['Error'] === true) {
+				ipcRenderer.send('login',
+							{'type' : 'sad',
+							'message' : 'Erro.',
+							'text' : 'Não foi possível encontrar produtos no BD'})
+				return
+			} else {
+				console.log('Yeeey')
+				}
+		}).fail(function() {
+			ipcRenderer.send('login',
+					{'type' : 'sad',
+					'message' : 'Erro.',
+					'text' : 'Verifique a conexão'})
+		})
+	}
 });
 

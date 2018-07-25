@@ -11,9 +11,6 @@ $('#message').text(message)
 
 $('#text').text(text)
 
-
-
-
 $("button").on('click', function (e) {
     window.close();
 })

@@ -9,6 +9,9 @@ const mainMenu_admin = require('./mainMenu_admin')
 const path = require('path')
 const url = require('url')
 
+global['Vendedor'] = ''
+global['Vendedor_id'] = 0
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -44,6 +47,8 @@ ipcMain.on('login', (e, args) => {
 
 // Comunicacao menu
 ipcMain.on('menu_admin', (e, args) => {
+  global['Vendedor'] = args['User']
+  global['Vendedor_id'] = args['User_id']
   mainMenu_admin.createWindow(args)
 })
 

@@ -6,11 +6,46 @@ html {
 
 body {
     font-family: Roboto;
-    /* background-image: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #dd5100); */
+    background-image: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #e77000);
     /* background-image: linear-gradient(to bottom, #f3d1b2, #f5c395, #f6b579, #f6a75e, #f59841); */
-    background-image: linear-gradient(to right, #fefefe, #d3d3d3, #a9a9a9, #828181, #5c5b5b);
+    /* background-image: linear-gradient(to right, #fefefe, #d3d3d3, #a9a9a9, #828181, #5c5b5b); */
     background-repeat: no-repeat;
     overflow: hidden;
+}
+
+.navbar-default {
+    background-color: #e77000 !important;
+    margin: -1px !important;
+    max-width: 100%;
+    border-color: #e77000;
+}
+
+.navbar-brand {
+    padding: 20% 20%;
+}
+
+.navbar-text {
+    color: white !important;
+    font-size: 1.25em !important;
+}
+
+.navbar-right {
+    margin-right: 15px !important;
+    margin-bottom: 3px !important;
+    margin-top: 3px !important;
+}
+
+.lalala {
+    font-size: 1em;
+    margin-bottom: 3px !important;
+    margin-top: 3px !important;
+    background: transparent;
+    color: white ;
+    border-color: white !important;
+}
+
+nav img {
+    width: 30px;    
 }
 
 header {
@@ -33,8 +68,7 @@ h1 {
 /* Colunas da página de cima */
 
 .up-page{
-    width: 40%;
-    margin: 40px 20px 10px 30px;
+    padding: 40px 10px 10px 30px;
     background-color: transparent;
 }
 
@@ -47,7 +81,7 @@ h1 {
 }
 
 #product{
-    height: 300px;
+    height: 250px;
     overflow: auto;
     background: white;
 }
@@ -208,11 +242,17 @@ tr:hover .del {
 /* Botao da sale */
 
 .finish-sale {
-    float: right;
+    margin-top: 2em;
+    width: 100%;
+    background: #e77000;
+    color: white;
+    border-color: #e77000; 
 }
 
-.to-right {
-    width: 45%;
+.finish-sale:hover {
+    background: #e77000;
+    color: white;
+    border-color: #e77000;  
 }
 
 /* Pagina 2 */
@@ -246,8 +286,8 @@ img {
 }
 
 .vendas {
-    margin-left: 6%;
-    margin-top: 3%;
+    padding-left: 6%;
+    padding-top: 3%;
 }
 
 .green {
@@ -258,11 +298,6 @@ img {
 .red {
     color: red;
     font-size: 2em; 
-}
-
-.col-md-6 {
-    max-width: 42%;
-    text-align: center;
 }
 
 .right {
@@ -299,4 +334,8 @@ h3 span {
 .active {
     border-radius: 5px !important;
     border: 2px solid green !important;
+}
+
+.money-labels {
+    padding-right: 5%;
 }

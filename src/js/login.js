@@ -4,10 +4,14 @@
 
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
 
+const remote = require('electron').remote
+
 const path = require('path')
 const url = require('url')
 
 let win, new_win
+
+console.log(remote.getGlobal('Vendedor_id'))
 
 // Para manipular a Janela Atual
 win = getCurrentWindow()
@@ -54,7 +58,7 @@ var login = function() {
             'message' : 'Acesso negado',
             'text' : "Usuário ou senha incorretos"})
         } else if (back['Permission'] == "Administrador") {
-            ipcRenderer.send('menu_admin', '')
+            ipcRenderer.send('menu_admin', back)
             win.close()
         } else {
             win.showUrl('src/html/login.html', back, () => {
