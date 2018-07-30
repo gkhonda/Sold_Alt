@@ -4,6 +4,7 @@
     <title></title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../../public/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="../css/sale.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
@@ -12,6 +13,48 @@
 
     <header class="first-page">
 
+        <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2 class="modal-h2">Consultar Cliente</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-size">
+                                <table class="table" id="client-table">
+                                    <div class="field pesquisa">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="inputSearch">Pesquisar</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="inputSearch-client" placeholder="Nome completo ou CPF">
+                                                <div class="input-group-addon">
+                                                    <span class="icon is-small is-right"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <thead>
+                                    <tr>
+                                            <th><abbr title="Id">Id</abbr></th>
+                                            <th>Nome</th>
+                                            <th>CPF</abbr></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="customerTable">        
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <p class="btn btn-lg orange" id="btnAddNewCustomer"> Adicionar Novo </p>
+                    <p class="btn btn-lg orange" id="btnRead"> Adicionar a venda </p>
+                </div>
+            </div>
+                
+        </div>
+
         <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -19,8 +62,8 @@
                         <img alt="Brand" src="../../public/images/man.png">
                     </a>
                 </div>
-                <p class="navbar-text">Signed in as Mark Otto</p>
-                <p class="navbar-text navbar-right"><a class="btn lalala">+</a></p>
+                <p class="navbar-text"><span id="span-id-customer">4</span> - <span id="spam-name-customer">Cliente (Não Identificado)</span></p>
+                <p class="navbar-text navbar-right"><a class="btn add-client">+</a></p>
                 </div>
             </nav>
 

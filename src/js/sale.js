@@ -38,6 +38,9 @@ var update_div = function(product) {
 	$('#imgProduct').attr("src", product.src)
 }
 
+$('.add-client').click(function(){
+	$('#myModal').css('display', 'block');
+})
 
 // Apaga name da compra
 $("#saleTable").on('click', "tr td .del", function (e) {
@@ -169,25 +172,6 @@ $('.finish-sale').on('click', function() {
 		'Vendedor' : 'Mike',
 	}
 
-	// $("#saleTable").find('tr').each(function(){
-	// 	$(this).find('td').each(function(index){
-
-	// 		if (index == 1) {
-	// 			name = $(this).text()
-	// 		}
-
-	// 		if (index == 3) {
-	// 			qnt = parseFloat($(this).html())
-	// 		}
-
-	// 		if (index == 4) {
-	// 			price = parseFloat($(this).html())
-	// 		}
-	// 	})
-
-	// 	tabela[name] = [qnt, price]
-	// })
-
 	to_pay = parseFloat($('#totalValueSale').text());
 	$("#to-pay").text(to_pay.toFixed(2))
 	$("#to-receive").text(to_pay.toFixed(2))
@@ -298,8 +282,6 @@ $("#paymentTable").on('click', "tr td .del", function (e) {
 	$('#to-receive').text(to_receive.toFixed(2))
 	$('#change').text(change.toFixed(2))
 
-	
-
 	e.stopPropagation();
 })
 
@@ -342,10 +324,13 @@ $('#end-sale').click(function(){
 				ipcRenderer.send('login',
 							{'type' : 'sad',
 							'message' : 'Erro.',
-							'text' : 'Não foi possível encontrar produtos no BD'})
+							'text' : 'Não foi possível realizar a venda.'})
 				return
 			} else {
-				console.log('Yeeey')
+				ipcRenderer.send('login',
+							{'type' : 'happy',
+							'message' : 'Sucesso!',
+							'text' : 'Venda cadastrada!'})
 				}
 		}).fail(function() {
 			ipcRenderer.send('login',
@@ -355,4 +340,86 @@ $('#end-sale').click(function(){
 		})
 	}
 });
+
+//  Aqui começa a parte do Modal : consultar cliente
+
+var update_table = function(list_of_clients) {
+	$("#customerTable tr").remove()
+	list_of_clients.forEach(function(c) {
+		$('#customerTable').append('<tr class="table-search"><td>'+c.id+'</td><td>'+c.name+'</td><td>'+c.cpf+'</td></tr>')
+	})
+}
+
+$('.close').click(function() {
+	$('#myModal').css('display', 'none');
+})
+
+$("#btnRead").on("click", function(e) {
+	var client = {}
+	client['id'] = $('.selected').find('td:eq(0)').text()
+	client['name'] = $('.selected').find('td:eq(1)').text()
+
+	if (client.id === "") {
+		ipcRenderer.send('login', 
+            {'type' : 'ok-face', 
+            'message' : 'Cuidado',
+            'text' : "Não esqueça de selecionar um cliente na tabela"})
+	} else {
+		$('#span-id-customer').text(client.id);
+		$('#spam-name-customer').text(client.name);
+		$('#myModal').css('display', 'none');
+
+	}
+
+})
+
+$("#btnAddNewCustomer").on("click", function(e) {
+	ipcRenderer.send('new-client', '')
+})
+
+// Colore a tabela com o elemente clickado
+$("#client-table").on('click', 'tr', function(){
+    $(this).addClass("selected").siblings().removeClass("selected");
+});
+
+
+// Formata cpf
+$("#inputSearch-client").keyup(function() {
+	if($('#inputSearch-client').val().length > 2) {
+		client_read("Read")
+	}
+
+})
+
+var client_read = function(button) {
+
+	// cria objeto com os dados do form
+	var data = {}
+	data['cpf'] = $('#inputSearch-client').val()
+
+	// Cria o get request para pegar o cliente
+	$.get("http://127.0.0.1:8000/client/read", data).done(function(back)
+	{
+		if (back['Error'] === true) {
+			return
+		} else if (back['Exists'] === true) {
+			if (button === "Read") {
+				update_table(back['Clients'])
+				return
+			}  else if (button === "Update") {
+				win.showUrl('src/html/client_update.html', back)
+				return
+			}
+		} else {
+			win.showUrl('src/html/client_read.html', back)
+			return
+		}
+	}).fail(function() {
+		ipcRenderer.send('login', 
+                {'type' : 'sad', 
+                'message' : 'Erro na comunicação com o servidor.',
+                'text' : "Verifique sua conexão com a internet."})
+	})
+}
+
 

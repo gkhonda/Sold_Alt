@@ -35,7 +35,7 @@ body {
     margin-top: 3px !important;
 }
 
-.lalala {
+.add-client {
     font-size: 1em;
     margin-bottom: 3px !important;
     margin-top: 3px !important;
@@ -99,6 +99,13 @@ table {
     font-size: 0.8em;
 }
 
+.table-size {
+    margin: auto;
+    height: 300px;
+    overflow: auto;
+    background: white;
+}
+
 .row {
     max-width: 100%
 }
@@ -147,7 +154,6 @@ tr:hover .del {
 .panel-heading {
     width: 100%;
     margin-top: -52px;
-    z-index: 100;
 }
 
 .panel-block {
@@ -338,4 +344,82 @@ h3 span {
 
 .money-labels {
     padding-right: 5%;
+}
+
+
+/* The Modal (background) */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-h2 {
+    color: white;
+    text-align: center;
+    align-self: center;
+    font-size: 4em;
+    padding: .25em;
+}
+
+.orange {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.orange:hover {
+    background: white;
+    color: #e77000;
+}
+
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+    background-color: #e77000;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #e77000;
+    color: white;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+#customerTable tr:hover {
+    background: lightgray;
+    cursor: pointer;
+  }
+  
+.selected {
+    background: lightgreen;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
 }

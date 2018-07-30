@@ -11,6 +11,8 @@ const url = require('url')
 
 global['Vendedor'] = ''
 global['Vendedor_id'] = 0
+global['Cliente'] = 'Cliente'
+global['Cliente_id'] = 4
 
 
 // This method will be called when Electron has finished
@@ -50,6 +52,17 @@ ipcMain.on('menu_admin', (e, args) => {
   global['Vendedor'] = args['User']
   global['Vendedor_id'] = args['User_id']
   mainMenu_admin.createWindow(args)
+})
+
+// Comunicacao add-client
+ipcMain.on('add-client-to-sale', (e, args) => {
+  global['Cliente'] = args['name']
+  global['Client_id'] = args['id']
+})
+
+// Tela de login
+ipcMain.on('new-client', (e, args) => {
+  mainWindow.createWindow('src/html/client_create.html')
 })
 
 
