@@ -4,10 +4,7 @@ const {ipcRenderer} = require('electron')
 
 let win, new_win
 
-console.log(window.__args__['Product'])
-
 const remote = require('electron').remote
-console.log(remote.getGlobal('Vendedor'))
 
 // Para manipular a Janela Atual
 win = getCurrentWindow()
@@ -169,7 +166,8 @@ $('.finish-sale').on('click', function() {
 
 	venda = {
 		'Total' : $('#totalValueSale').text(),
-		'Vendedor' : 'Mike',
+		'Vendedor' : remote.getGlobal('Vendedor_id'),
+		'Cliente' : $('#span-id-customer').text()
 	}
 
 	to_pay = parseFloat($('#totalValueSale').text());
@@ -178,10 +176,6 @@ $('.finish-sale').on('click', function() {
 	received = 0;
 	to_receive = to_pay;
 	change = 0;
-	
-
-	console.log(venda)
-	console.log(current_sale)
 
 	$('html,body').animate({
         scrollTop: $(".second-page").offset().top},
@@ -289,7 +283,7 @@ $("#paymentTable").on('click', "tr td .del", function (e) {
 $(".btn-toolbar .btn").click(function(){
     $('.btn').removeClass('active');
     $(this).addClass('active'); 
-    payment_method = $(this).attr('value')
+	payment_method = $(this).attr('value')
 });
 
 
@@ -319,7 +313,14 @@ $('#end-sale').click(function(){
 				'text' : 'Adicione as formas de pagamento para o valor total da venda'})
 			return
 	} else {
-		$.post("http://127.0.0.1:8000/sale/create", current_sale).done(function(back) {
+		send = {
+			'a' : 2,
+			'sale_details' : venda,
+			'sale_itens' : current_sale,
+			'sale_payments' : current_payment
+		}
+		$.post("http://127.0.0.1:8000/sale/create", JSON.stringify(send)
+		).done(function(back) {
 			if (back['Error'] === true) {
 				ipcRenderer.send('login',
 							{'type' : 'sad',
