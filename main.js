@@ -19,7 +19,7 @@ global['Cliente_id'] = 4
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  mainWindow.createWindow('src/html/login.html')
+  mainWindow.createWindow('src/html/add_product.html')
 })
 
 // Quit when all windows are closed.

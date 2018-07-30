@@ -5,11 +5,10 @@ html {
 }
 
 body {
-    font-family: Roboto;
-    background-image: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #e77000);
+    font-family: Roboto, serif;
     /* background-image: linear-gradient(to bottom, #f3d1b2, #f5c395, #f6b579, #f6a75e, #f59841); */
     /* background-image: linear-gradient(to right, #fefefe, #d3d3d3, #a9a9a9, #828181, #5c5b5b); */
-    background-repeat: no-repeat;
+    background: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #e77000) no-repeat;
     overflow: hidden;
 }
 
@@ -40,12 +39,12 @@ body {
     margin-bottom: 3px !important;
     margin-top: 3px !important;
     background: transparent;
-    color: white ;
+    color: white;
     border-color: white !important;
 }
 
 nav img {
-    width: 30px;    
+    width: 30px;
 }
 
 header {
@@ -55,38 +54,38 @@ header {
 /* Titulos */
 
 h1 {
-	background-color: #e77000;
-	color: white;
-	margin: 0;
-	padding: 10px 20px;
-	text-transform: uppercase;
-	font-size: 24px;
+    background-color: #e77000;
+    color: white;
+    margin: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-size: 24px;
     font-weight: normal;
     border-radius: 3px;
 }
 
 /* Colunas da página de cima */
 
-.up-page{
+.up-page {
     padding: 40px 10px 10px 30px;
     background-color: transparent;
 }
 
 /* Limita tamanho da tabela */
 
-#sale{
+#sale {
     height: 400px;
     overflow: auto;
     background: white;
 }
 
-#product{
+#product {
     height: 250px;
     overflow: auto;
     background: white;
 }
 
-#payment{
+#payment {
     height: 150px;
     overflow: auto;
     background: white;
@@ -111,42 +110,42 @@ table {
 }
 
 tr .del {
-	background-color: #e74c3c;
-	margin-right: 0px;
+    background-color: #e74c3c;
+    margin-right: 0;
     text-align: center;
-	color: white;
-	width: 0px;
-	display: inline-block;
-	opacity: 0;
-	transition: .2s linear;
+    color: white;
+    width: 0;
+    display: inline-block;
+    opacity: 0;
+    transition: .2s linear;
 }
 
 tr:hover .del {
     width: 20px;
     height: 20px;
     margin-right: 10px;
-	opacity: 1.0;
+    opacity: 1.0;
 }
 
 /* Para a tabela não mudar com textos muito grandes */
 
 .table .text {
-  position: relative;
-  border-radius: 5px;
+    position: relative;
+    border-radius: 5px;
 }
 
 .table .text .text-el {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  position: absolute;
-  left: .75em;
-  right: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    left: .75em;
+    right: 0;
 }
 
 .text:before {
-  content: '';
-  display: inline-block;
+    content: '';
+    display: inline-block;
 }
 
 /* Painel - Adicionar o Produto */
@@ -173,7 +172,7 @@ tr:hover .del {
 .h2 {
     display: block;
     font-size: 13px;
-    padding: 0 0 5px 0 ;
+    padding: 0 0 5px 0;
     color: lightslategray;
 }
 
@@ -192,11 +191,11 @@ tr:hover .del {
 .second-size {
     width: 20%;
     height: 80%;
-    margin-top: 2em !important;
     float: right;
     align-content: center;
     display: block;
     margin: 3px;
+    margin-top: 2em !important;
 }
 
 .second-size button {
@@ -204,7 +203,7 @@ tr:hover .del {
     float: left;
 }
 
-.second-size a{
+.second-size a {
     margin: 25px;
 }
 
@@ -212,7 +211,6 @@ tr:hover .del {
     width: 130px !important;
     color: lightslategray;
 }
-
 
 .field {
     display: inline-block;
@@ -252,13 +250,13 @@ tr:hover .del {
     width: 100%;
     background: #e77000;
     color: white;
-    border-color: #e77000; 
+    border-color: #e77000;
 }
 
 .finish-sale:hover {
     background: #e77000;
     color: white;
-    border-color: #e77000;  
+    border-color: #e77000;
 }
 
 /* Pagina 2 */
@@ -274,7 +272,7 @@ img {
     margin: .3em;
 }
 
-.btn-toolbar{
+.btn-toolbar {
     padding-left: 5%;
     padding-right: 5%;
     width: 100%;
@@ -282,9 +280,9 @@ img {
     align-content: center;
 }
 
-.opt{
+.opt {
     width: 17.5% !important;
-    margin: 1.25% !important;    
+    margin: 1.25% !important;
 }
 
 .form-inline {
@@ -298,12 +296,12 @@ img {
 
 .green {
     color: green;
-    font-size: 2em; 
+    font-size: 2em;
 }
 
 .red {
     color: red;
-    font-size: 2em; 
+    font-size: 2em;
 }
 
 .right {
@@ -328,7 +326,7 @@ h3 span {
     margin-bottom: 10px;
 }
 
-.final-btn a{
+.final-btn a {
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -346,7 +344,6 @@ h3 span {
     padding-right: 5%;
 }
 
-
 /* The Modal (background) */
 
 .modal {
@@ -358,7 +355,7 @@ h3 span {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 .modal-h2 {
@@ -388,7 +385,9 @@ h3 span {
 }
 
 /* Modal Body */
-.modal-body {padding: 2px 16px;}
+.modal-body {
+    padding: 2px 16px;
+}
 
 /* Modal Footer */
 .modal-footer {
@@ -404,7 +403,7 @@ h3 span {
     padding: 0;
     border: 1px solid #888;
     width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     animation-name: animatetop;
     animation-duration: 0.4s
 }
@@ -412,14 +411,20 @@ h3 span {
 #customerTable tr:hover {
     background: lightgray;
     cursor: pointer;
-  }
-  
+}
+
 .selected {
     background: lightgreen;
 }
 
 /* Add Animation */
 @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
