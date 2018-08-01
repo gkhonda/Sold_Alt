@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/withdraw.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="row">
+
+    <div id="all">
+        <h1> Sangria - <span>Dinheiro</span></h1>
+        <div id="body-form">
+            <h2>R$ 1300,00 *</h2>
+            <form>
+                <div class="form-group" id='div-user'>
+                    <label for="name">Valor</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="R$00,00" aria-describedby="helpBlock">
+                </div>
+                
+                <div id='output'>
+                    <p id="sent"></p>
+                    <p class="btn btn-lg orange">Enviar</p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    // Jquery
+
+    $ = require('jquery');
+
+    // You can also require other files to run in this process
+    require('../js/withdraw.js')
+</script>
+</body>
+</html>

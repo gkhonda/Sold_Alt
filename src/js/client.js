@@ -7,6 +7,8 @@ require('electron-window').parseArgs()
 
 let win, new_win
 
+const remote = require('electron').remote
+
 // Para manipular a Janela Atual
 win = getCurrentWindow()
 
@@ -101,44 +103,32 @@ var client_create = function()
 var client_read = function(button)
 {
 	// Remove as classes de erro - caso elas estejam lá ainda.
-  $('#helpBlock').remove()
-  $('div').removeClass('has-error')
+  	$('#helpBlock').remove()
+ 	 $('div').removeClass('has-error')
+
 
 	// cria objeto com os dados do form
-	var data = $('#form').serializeArray().reduce(function(obj, item)
-	{
-		obj[item.name] = item.value;
-		return obj;
-	}, {})
+	var data = {}
+	data['cpf'] = $('#inputSearch').val()
 
 	// Cria o get request para pegar o cliente
 	$.get("http://127.0.0.1:8000/client/read", data).done(function(back)
 	{
-		if (back['Error'] === true)
-		{
-			ipcRenderer.send('login',
-				{'type' : 'sad',
-				'message' : 'Cliente não encontrado.',
-				'text' : 'Verifique o CPF ou o nome'})
+		if (back['Error'] === true) {
 			return
-		}
-		else if (back['Exists'] === true)
-		{
-			if (button === "Read") return //TODO
-
-			else if (button === "Update")
-			{
+		} else if (back['Exists'] === true) {
+			if (button === "Read") {
+				update_table(back['Clients'])
+				return
+			}  else if (button === "Update") {
 				win.showUrl('src/html/client_update.html', back)
 				return
 			}
-		}
-		else
-		{
+		} else {
 			win.showUrl('src/html/client_read.html', back)
 			return
 		}
-	}).fail(function()
-	{
+	}).fail(function() {
 		ipcRenderer.send('login', 
                 {'type' : 'sad', 
                 'message' : 'Erro na comunicação com o servidor.',
@@ -247,9 +237,27 @@ var client_delete = function()
 	})	
 }
 
+// Função que adiciona clientes das consultas a tabela
+
+var update_table = function(list_of_clients) {
+	$("#customerTable tr").remove()
+	list_of_clients.forEach(function(c) {
+		$('#customerTable').append('<tr class="table-search"><td>'+c.id+'</td><td>'+c.name+'</td><td>'+c.cpf+'</td></tr>')
+	})
+}
+
+// Colore a tabela com o elemente clickado
+$("table").on('click', 'tr', function(){
+    $(this).addClass("selected").siblings().removeClass("selected");
+});
+
+
 // Formata cpf
-$("#cpf").keypress(function() {
-	format("###.###.###-##", this)
+$("#inputSearch").keyup(function() {
+	if($('#inputSearch').val().length > 2) {
+		client_read("Read")
+	}
+
 })
 
 // Formata telefone
@@ -269,7 +277,11 @@ $("#btnCreate").on("click", function (e) {
 
 // Botão de ler um cliente
 $("#btnRead").on("click", function(e) {
-	client_read("Read")
+	var client = {}
+	client['id'] = $('.selected').find('td:eq(0)').text()
+	client['name'] = $('.selected').find('td:eq(1)').text()
+	ipcRenderer.send('add-client-to-sale', client)
+	win.close()
 })
 
 // Botão que checa o input para fazer alteração

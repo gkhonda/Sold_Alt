@@ -5,10 +5,11 @@
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../public/css/fontawesome-all.css">
+	<link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="../../public/css/fontawesome-all.css"> -->
   <link rel="stylesheet" href="../css/client.css">
-  
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
 </head>
 
 <!-- Forms para consultar cliente usando cpf e/ou nome completo, retorna um json com os dados -->
@@ -18,30 +19,41 @@
     <div class="client">
     	<div id="client-header">
       	<h1>Consultar Cliente</h1>
-        <p>Digite o CPF ou o nome completo, aperte em Consultar para consultar o cliente ou aperte em alterar para alterar o cliente.</p>
+        <p>Digite o CPF ou o nome do cliente. A partir da terceira letra, a busca é feita automaticamente para você.</p>
       </div>
 
       <img src="../../public/images/pueri.png" alt="">
+		
+			<div class="table-size" id="payment">
+			<table class="table">
+						<div class="field pesquisa">
+								<div class="form-group">
+										<label class="sr-only" for="inputSearch">Pesquisar</label>
+										<div class="input-group">
+												<input type="text" class="form-control" id="inputSearch" placeholder="Nome completo ou CPF">
+												<div class="input-group-addon"><span class="icon is-small is-right">
+																<i class="fas fa-search"></i>
+												</span>
+										</div>
+										</div>
+								</div>
+				</div>
+							<thead>
+							<tr>
+									<th><abbr title="Id">Id</abbr></th>
+									<th>Nome</th>
+									<th>CPF</abbr></th>
+							</tr>
+							</thead>
+							<tbody id="customerTable">        
+							</tbody>
+					</table>
+					</div>
 
-      <form id="form">
-
-      	<div class="form-group" id='div-cpf'>
-        	<label for="cpf">CPF</label>
-        	<input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" aria-describedby="helpBlock" maxlength="14">
-      	</div>
-      	<div class="form-group" id="div-complete_name">
-        	<label for="complete_name">Nome Completo</label>
-        	<input type="text" class="form-control" id="complete_name" name="complete_name" placeholder="Nome Completo" aria-describedby="helpBlock">
-      	</div>
-
-        <p class="btn btn-lg orange" id="btnReadUpdate"> Alterar </p>
+				<p class="btn btn-lg orange" id="btnReadUpdate"> Alterar </p>
       	<p class="btn btn-lg orange" id="btnRead"> Consultar </p>
-        
-    	</form>
-
-    </div>
-
-
+			</div>
+    
 	  <script>
 
 	    // Jquery

@@ -28,14 +28,14 @@
 
 
 
-.medio {
+.ok-face {
     content: center;
     background-color: #FFBF46;
     margin: 0 auto;
     text-align: center;
 }
 
-.medio img{
+.ok-face img{
     background-color: #FFBF46;
     content:url(../../public/images/smile.png);
 }
