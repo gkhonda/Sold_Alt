@@ -2,7 +2,7 @@
 
 // This is the renderer
 
-const {BrowserWindow, getCurrentWindow} = require('electron').remote;
+const {getCurrentWindow} = require('electron').remote;
 
 const remote = require('electron').remote;
 

@@ -120,3 +120,8 @@ input, label {
 .lowercase {
     text-transform: lowercase;
 }
+
+.small-font {
+    font-size: .75em;
+    margin-top: 0;
+}
