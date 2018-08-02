@@ -12,8 +12,12 @@
 <div class="row">
 
     <div id="all">
-        <h1> Sangria - <span id="span-method">Dinheiro</span> <a class="btn btn-img btn-default" id="change-type"><img
-                id="type-image" src="../images/Cheque.png" alt=""></a></h1>
+        <div class="header">
+            <h1> Sangria -
+                <span class="span-method">Dinheiro</span>
+            </h1>
+        </div>
+
         <div id="body-form">
             <h2>R$ <span id="money-quantity">1300,00</span> *</h2>
             <form>
@@ -25,11 +29,15 @@
 
                 <div id='output'>
                     <p id="sent"></p>
-                    <p class="btn btn-lg orange">Depositar dinheiro</p>
+                    <p class="btn btn-lg orange">Depositar <span class="span-method lowercase">Dinheiro</span></p>
                     <p class="btn btn-lg orange">Fazer retirada</p>
                 </div>
 
             </form>
+        </div>
+
+        <div class="footer" id="change-type">
+            <a ><h3> VER <span class="type-text">CHEQUE</span> </h3></a>
         </div>
     </div>
 
