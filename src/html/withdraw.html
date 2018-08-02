@@ -12,18 +12,19 @@
 <div class="row">
 
     <div id="all">
-        <h1> Sangria - <span>Dinheiro</span></h1>
+        <h1> Sangria - <span id="span-method">Dinheiro</span> <a class="btn btn-img btn-default" id="change-type"><img id="type-image" src="../images/Cheque.png" alt=""></a></h1>
         <div id="body-form">
-            <h2>R$ 1300,00 *</h2>
+            <h2>R$ <span id="money-quantity">1300,00</span> *</h2>
             <form>
                 <div class="form-group" id='div-user'>
                     <label for="name">Valor</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="R$00,00" aria-describedby="helpBlock">
                 </div>
-                
+
                 <div id='output'>
                     <p id="sent"></p>
-                    <p class="btn btn-lg orange">Enviar</p>
+                    <p class="btn btn-lg orange">Depositar dinheiro</p>
+                    <p class="btn btn-lg orange">Fazer retirada</p>
                 </div>
 
             </form>

@@ -82,3 +82,19 @@ h2 {
     text-align: center;
     width: 100%;
 }
+
+.btn-lg {
+    width: 300px;
+    margin: 20px;
+}
+
+.btn-img img {
+    width: 64px;
+}
+
+.btn-img {
+    border: 1px solid white;
+    margin-left: 1em;
+    background: transparent;
+    /*float: right;*/
+}

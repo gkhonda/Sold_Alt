@@ -1,5 +1,6 @@
 require('electron-window').parseArgs()
-const {BrowserWindow, getCurrentWindow} = require('electron').remote
+const {BrowserWindow, getCurrentWindow} = require('electron').remote;
+const {ipcRenderer} = require('electron');
 
 let win;
 
@@ -33,5 +34,6 @@ $('#sale').on('click', function (e) {
 });
 
 $('#sangria').on('click', function () {
-    win.showUrl('src/html/withdraw.html', {});
+    ipcRenderer.send('sangria', '');
+    // win.showUrl('src/html/withdraw.html', {});
 });

@@ -308,7 +308,8 @@ $('#back-sale').click(function () {
 });
 
 $('#end-sale').click(function () {
-    if (to_receive != 0) {
+    console.log(to_receive);
+    if (to_receive !== 0) {
         ipcRenderer.send('login',
             {
                 'type': 'ok-face',

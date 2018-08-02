@@ -2,7 +2,7 @@
   "name": "electron_sold_alt",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "main_windows/main.js",
   "dependencies": {
     "electron-prebuilt": "^1.2.3",
     "electron-window": "^0.8.1",

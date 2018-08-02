@@ -70,3 +70,8 @@ ipcMain.on('new-client', (e, args) => {
 ipcMain.on('menu', (e, args) => {
     mainWindow.createWindow('src/html/menu.html')
 });
+
+// Comunicacao menu normal
+ipcMain.on('sangria', (e, args) => {
+    mainWindow.createWindow('src/html/withdraw.html')
+});
