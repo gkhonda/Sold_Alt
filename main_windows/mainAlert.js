@@ -17,12 +17,12 @@ exports.createWindow = (args) => {
         frame: false,
     };
 
-    this.win = window.createWindow(windowOptions)
+    this.win = window.createWindow(windowOptions);
 
     this.win.showUrl('src/html/popup.html', args, () => {
     });
-    // Handling closing 
 
+    // Handling closing
     this.win.on('closed', () => {
         this.win = null
     })

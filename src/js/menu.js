@@ -21,7 +21,8 @@ $('#sale').on('click', function (e) {
                 });
         }
         else {
-            win.showUrl('src/html/sale.html', back)
+            back['url'] = 'src/html/sale.html';
+            ipcRenderer.send('new-sale', back);
         }
     }).fail(function () {
         ipcRenderer.send('login',

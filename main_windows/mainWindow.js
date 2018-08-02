@@ -1,27 +1,29 @@
-const {BrowserWindow} = require('electron')
+const {BrowserWindow} = require('electron');
 
-const path = require('path')
-const url = require('url')
-const window = require('electron-window')
+const path = require('path');
+const url = require('url');
+const window = require('electron-window');
 
-exports.win
+exports.win;
 
-exports.createWindow = (url_) => {
+exports.createWindow = (args) => {
 
     const windowOptions = {
-        width: 1200,
-        height: 1000,
-        minWidth: 350,
-        minHeight: 300,
+        width: 1300,
+        height: 800,
+        minWidth: 1100,
+        minHeight: 600,
         autoHideMenuBar: true,
         // fullscreen: true,
-    }
+    };
 
-    this.win = window.createWindow(windowOptions)
+    this.win = window.createWindow(windowOptions);
+
+    console.log(args);
 
     // Load main window content
-    this.win.showUrl(url_, '', () => {
-    })
+    this.win.showUrl(args['url'], args, () => {
+    });
 
     // Handling closing 
 
@@ -29,4 +31,4 @@ exports.createWindow = (url_) => {
         this.win = null
     })
 
-}
+};

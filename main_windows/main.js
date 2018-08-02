@@ -3,6 +3,7 @@ const electron = require('electron');
 const {app, ipcMain} = electron;
 // Essa a gente que criou
 const mainWindow = require('./mainWindow');
+const mainWithdraw = require('./mainWithdraw');
 const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
 
@@ -19,7 +20,7 @@ global['Cliente_id'] = 4;
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-    mainWindow.createWindow('src/html/login.html')
+    mainWindow.createWindow({ 'url' : 'src/html/login.html' })
 });
 
 // Quit when all windows are closed.
@@ -62,16 +63,20 @@ ipcMain.on('add-client-to-sale', (e, args) => {
 
 // Tela de login
 ipcMain.on('new-client', (e, args) => {
-    mainWindow.createWindow('src/html/client_create.html')
+    mainWindow.createWindow({ 'url' : 'src/html/client_create.html' })
 });
 
+// Tela de venda
+ipcMain.on('new-sale', (e, args) => {
+    mainWindow.createWindow(args)
+});
 
 // Comunicacao menu normal
 ipcMain.on('menu', (e, args) => {
-    mainWindow.createWindow('src/html/menu.html')
+    mainWindow.createWindow({ 'url' : 'src/html/menu.html' })
 });
 
 // Comunicacao menu normal
 ipcMain.on('sangria', (e, args) => {
-    mainWindow.createWindow('src/html/withdraw.html')
+    mainWithdraw.createWindow({ 'url' : 'src/html/withdraw.html' })
 });
