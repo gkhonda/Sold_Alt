@@ -1,135 +1,136 @@
 #footer {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  text-align: center;
-  margin: auto;
-  height: 300px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    height: 300px;
 }
 
 .menu {
-  float: right;
-  position: fixed;
-  bottom: 0;
-  left: 1em;
-  right: 1em;
-  width: 66.6%;
-  height: 400px;
+    float: right;
+    position: fixed;
+    bottom: 0;
+    left: 1em;
+    right: 1em;
+    width: 66.6%;
+    height: 400px;
 }
 
 .btn img {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .btn-group {
-  width: 100%;
-  padding: 0;
-  height: 200px;
-  border-radius: 0;
+    width: 100%;
+    padding: 0;
+    height: 200px;
+    border-radius: 0;
 }
 
 .navbar-default {
-  background-color: orange !important;
-  margin: -1px !important;
-  max-width: 100%;
+    background-color: orange !important;
+    margin: -1px !important;
+    max-width: 100%;
 }
 
 nav img {
-  width: 30%;
-  margin: 0 !important;
+    width: 30%;
+    margin: 0 !important;
 }
 
 .btn {
-  width: 100%;
-  border-radius: 0;
-  background-color: #ff9900;
-  color: white;
-  font-size: 1.5em;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  opacity: 0.85;
+    width: 100%;
+    border-radius: 0;
+    background-color: #ff9900;
+    color: white;
+    font-size: 1.5em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    opacity: 0.85;
 }
 
 .btn:nth-child(2) {
-  background-color: #0099ff;
+    background-color: #0099ff;
 }
 
-.btn:hover{
-  background-color: #afffbd;
-  color: white;
+.btn:hover {
+    background-color: #afffbd;
+    color: white;
 }
 
 .inicio {
-  width: 100%;
-  height: 300px;
-  margin: 0;
-  text-align: center;
+    width: 100%;
+    height: 300px;
+    margin: 0;
+    text-align: center;
 }
 
 /* Animations */
 
-
 .slideshow {
-  position: relative;
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    position: relative;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .slideshow li {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-size: 100% 100%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  opacity: 0;
-  z-index: 0;
-  animation: imageAnimation 20s linear infinite;
-  color: #0099ff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: imageAnimation 20s linear infinite;
+    color: #0099ff;
 }
-
 
 .slideshow li:nth-child(1) {
-  background-image: url(../../public/images/kids-1.jpeg);
+    background-image: url(../../public/images/kids-1.jpeg);
 }
+
 .slideshow li:nth-child(2) {
-  background-image: url(../../public/images/kids-2.jpeg);
-  animation-delay: 5s;
+    background-image: url(../../public/images/kids-2.jpeg);
+    animation-delay: 5s;
 }
+
 .slideshow li:nth-child(3) {
-  background-image: url(../../public/images/kids-3.jpeg);
-  animation-delay: 10s;
+    background-image: url(../../public/images/kids-3.jpeg);
+    animation-delay: 10s;
 }
+
 .slideshow li:nth-child(4) {
-  background-image: url(../../public/images/kids-4.jpeg);
-  animation-delay: 15s;
+    background-image: url(../../public/images/kids-4.jpeg);
+    animation-delay: 15s;
 }
 
 @keyframes imageAnimation {
-  0% {
-    opacity: 0;
-    animation-timing-function: ease-in;
-  }
-  10% {
-    opacity: 1;
-    animation-timing-function: ease-out;
-  }
-  20% {
-    opacity: 1
-  }
-  30% {
-    opacity: 0
-  }
+    0% {
+        opacity: 0;
+        animation-timing-function: ease-in;
+    }
+    10% {
+        opacity: 1;
+        animation-timing-function: ease-out;
+    }
+    20% {
+        opacity: 1
+    }
+    30% {
+        opacity: 0
+    }
 }
 
 .no-cssanimations .slideshow li {
-  opacity: 1;
+    opacity: 1;
 }

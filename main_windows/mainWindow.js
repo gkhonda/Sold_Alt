@@ -20,7 +20,8 @@ exports.createWindow = (url_) => {
     this.win = window.createWindow(windowOptions)
 
     // Load main window content
-    this.win.showUrl(url_, '', () => {})
+    this.win.showUrl(url_, '', () => {
+    })
 
     // Handling closing 
 

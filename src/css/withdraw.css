@@ -19,14 +19,13 @@ h1 {
     color: white;
     margin: 0;
     padding: .25em 0;
-    background-color:  #ff8a37;
+    background-color: #ff8a37;
 }
 
 #logo {
     height: 20%;
     text-align: center;
 }
-
 
 #body-form {
     height: 90%;
@@ -36,7 +35,6 @@ form {
     height: 80%;
     padding: 0 10px;
 }
-
 
 form div {
     position: relative;
@@ -63,7 +61,7 @@ input, label {
 }
 
 .orange {
-    background-color:  #ff8a37;
+    background-color: #ff8a37;
     color: white;
 }
 
@@ -74,7 +72,6 @@ input, label {
 .hasnt-error {
     color: green;
 }
-
 
 h2 {
     color: green;

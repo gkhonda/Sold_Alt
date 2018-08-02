@@ -8,13 +8,12 @@
     background-color: #00BF46;
     margin: 0 auto;
     text-align: center;
-    
+
 }
 
 .happy img {
-    content:url(../../public/images/laugh.png);
+    content: url(../../public/images/laugh.png);
 }
-
 
 .sad {
     background-color: red;
@@ -23,10 +22,8 @@
 }
 
 .sad img {
-    content:url(../../public/images/sad.png);
+    content: url(../../public/images/sad.png);
 }
-
-
 
 .ok-face {
     content: center;
@@ -35,12 +32,10 @@
     text-align: center;
 }
 
-.ok-face img{
+.ok-face img {
     background-color: #FFBF46;
-    content:url(../../public/images/smile.png);
+    content: url(../../public/images/smile.png);
 }
-
-
 
 h2 {
     color: #808080;

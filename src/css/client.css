@@ -1,25 +1,25 @@
 .client {
-  z-index: 1;
-  position: relative;
-  text-align: center;
-  /* border-radius: 20px; */
-  background-color: white;
-  width: 100%;
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    /* border-radius: 20px; */
+    background-color: white;
+    width: 100%;
 }
 
-h1{
-  position: relative;
-  color: white;
-  margin : 0 0 0 0;
-  padding: .25em 0 .25em 0;
-  background-color:  #ff8a37;
-  /* border-radius: 20px 20px 0 0; */
-  font-family: serif;
+h1 {
+    position: relative;
+    color: white;
+    margin: 0 0 0 0;
+    padding: .25em 0 .25em 0;
+    background-color: #ff8a37;
+    /* border-radius: 20px 20px 0 0; */
+    font-family: serif;
 }
 
 .pesquisa {
-  width: 100%;
-  margin-bottom: 20px !important;
+    width: 100%;
+    margin-bottom: 20px !important;
 }
 
 /* table .text .text-el {
@@ -31,32 +31,30 @@ h1{
   right: 0;
 } */
 
-
-
 table {
-  width: 80%;
-  font-size: 1em;
+    width: 80%;
+    font-size: 1em;
 }
 
 #customerTable tr:hover {
-  background: lightgray;
-  cursor: pointer;
+    background: lightgray;
+    cursor: pointer;
 }
 
 .selected {
-  background: lightgreen;
+    background: lightgreen;
 }
 
 .table-size {
-  margin: auto;
-  width: 80%;
-  height: 300px;
-  overflow: auto;
-  background: white;
+    margin: auto;
+    width: 80%;
+    height: 300px;
+    overflow: auto;
+    background: white;
 }
 
 .orange {
-  background-color:  #ff8a37;
-  color: white;
-  margin: 1em auto;
+    background-color: #ff8a37;
+    color: white;
+    margin: 1em auto;
 }

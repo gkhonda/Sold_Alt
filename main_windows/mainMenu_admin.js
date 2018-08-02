@@ -4,7 +4,7 @@ const path = require('path')
 const url = require('url')
 const window = require('electron-window')
 
-exports.win 
+exports.win
 
 exports.createWindow = (args) => {
 
@@ -12,8 +12,8 @@ exports.createWindow = (args) => {
         width: 512,
         height: 220,
         autoHideMenuBar: true,
-        frame : false,
-        }
+        frame: false,
+    }
 
     this.win = window.createWindow(windowOptions)
 

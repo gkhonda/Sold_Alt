@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Pueri Store - Venda e Gerenciamento</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../public/css/fontawesome-all.css" crossorigin="anonymous">
-        <link rel="stylesheet" href="../css/login.css">
+<head>
+    <title>Pueri Store - Venda e Gerenciamento</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/css/fontawesome-all.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/login.css">
 
-    </head>
-    <body>
+</head>
+<body>
 
-        <div class="login">
-        <div id="login-header">
-            <h1>Login</h1>
+<div class="login">
+    <div id="login-header">
+        <h1>Login</h1>
+    </div>
+
+    <img src="../../public/images/pueri.png" alt="">
+
+    <form id="form">
+
+        <div class="form-group" id='div-user'>
+            <label for="name">Usuário</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Usuário"
+                   aria-describedby="helpBlock">
         </div>
-
-        <img src="../../public/images/pueri.png" alt="">
-
-        <form id="form">
-
-            <div class="form-group" id='div-user'>
-                <label for="name">Usuário</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Usuário" aria-describedby="helpBlock">
-            </div>
-            <div class="form-group" id="div-password">
-                <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Senha" aria-describedby="helpBlock">
-            </div>
+        <div class="form-group" id="div-password">
+            <label for="password">Senha</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Senha"
+                   aria-describedby="helpBlock">
+        </div>
 
 
         <p class="btn btn-lg orange" id="btnLogin"> Enviar </p>
     </form>
 
-    </div>
+</div>
 
-    <ul class="slideshow">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+<ul class="slideshow">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
 
-    <script>
+<script>
 
-      // Jquery
+    // Jquery
 
-      $ = require('jquery')
+    $ = require('jquery')
 
-      // You can also require other files to run in this process
-      require('../js/login.js')
-    </script>
-  </body>
+    // You can also require other files to run in this process
+    require('../js/login.js')
+</script>
+</body>
 </html>
