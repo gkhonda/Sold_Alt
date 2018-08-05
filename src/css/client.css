@@ -58,3 +58,7 @@ table {
     color: white;
     margin: 1em auto;
 }
+
+.form-group {
+    margin: 2em 20em;
+}

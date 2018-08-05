@@ -241,18 +241,21 @@ $("table").on('click', 'tr', function () {
     $(this).addClass("selected").siblings().removeClass("selected");
 });
 
-
-// Formata cpf
+// consulta cliente
 $("#inputSearch").keyup(function () {
     if ($('#inputSearch').val().length > 2) {
         client_read("Read")
     }
-
 })
 
 // Formata telefone
 $("#telephone").keypress(function () {
     format("##-#########", this)
+})
+
+// Formata CPF
+$("#cpf").keypress(function () {
+    format("###.###.###-##", this)
 })
 
 // Formata CEP
