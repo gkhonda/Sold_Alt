@@ -12,6 +12,7 @@ const url = require('url');
 
 global['Vendedor'] = '';
 global['Vendedor_id'] = 0;
+global['is_admin'] = false
 global['Cliente'] = 'Cliente';
 global['Cliente_id'] = 4;
 
@@ -52,7 +53,15 @@ ipcMain.on('login', (e, args) => {
 ipcMain.on('menu_admin', (e, args) => {
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
+    global['is_admin'] = true;
     mainMenu_admin.createWindow(args)
+});
+
+// Comunicacao menu
+ipcMain.on('menu_not_admin', (e, args) => {
+    global['Vendedor'] = args['User'];
+    global['Vendedor_id'] = args['User_id'];
+    global['is_admin'] = false;
 });
 
 // Comunicacao add-client

@@ -4,7 +4,7 @@ const {ipcRenderer} = require('electron');
 let type = "Dinheiro";
 
 // Formatar corretamente o valor para reais
-let valor;
+let valor = "0";
 $('#name').on('keyup change', function (e) {
     valor = formact(this, valor, e);
 });
@@ -41,19 +41,23 @@ $('#change-type').click(function () {
 
 // Fazer retirada de dinheiro
 $('#make-withdraw').on('click', function () {
-    let qnt = parseFloat(valor) / 100
-    console.log(valor);
-    console.log(parseFloat(valor));
-    console.log(parseFloat($('#money-quantity').text()))
-
-    if (parseFloat(qnt) > parseFloat($('#money-quantity').text())) {
-        ipcRenderer.send('login', {
-            'type': 'ok-face',
-            'message': 'Operação não permitida.',
-            'text': "Não se pode retirar um valor maior do que a quantidade atual."
-        });
+    if (remote.getGlobal('is_admin')) {
+        let qnt = parseFloat(valor) / 100;
+        if (parseFloat(qnt) > parseFloat($('#money-quantity').text())) {
+            ipcRenderer.send('login', {
+                'type': 'ok-face',
+                'message': 'Operação não permitida.',
+                'text': "Não se pode retirar um valor maior do que a quantidade atual."
+            });
+        } else {
+            update_withdraw_database(1);
+        }
     } else {
-        update_withdraw_database(1);
+        ipcRenderer.send('login', {
+            'type': 'sad',
+            'message': 'Permissão negada.',
+            'text': "Seu usuário não tem permissão para isso. Solicite para um administrador."
+        });
     }
 });
 
@@ -84,9 +88,9 @@ function formact(element, valor, event) {
     if (valor.length > 0) {
         $(element).val((formatter.format((parseFloat(valor) / 100).toFixed(2))));
     } else {
+        console.log(33)
         $(element).val(formatter.format(0));
     }
-
 
     return valor;
 }
