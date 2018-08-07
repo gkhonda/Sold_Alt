@@ -4,6 +4,7 @@
   "description": "",
   "main": "main_windows/main.js",
   "dependencies": {
+    "electron-pdf-window": "^1.0.12",
     "electron-prebuilt": "^1.2.3",
     "electron-window": "^0.8.1",
     "jquery": "^3.3.1",

@@ -63,9 +63,8 @@ var login = function () {
                 ipcRenderer.send('menu_admin', back);
                 win.close()
             } else {
-                win.showUrl('src/html/login.html', back, () => {
-                    console.log('window is now visible!')
-                })
+                ipcRenderer.send('menu_not_admin', back);
+                win.showUrl('src/html/menu.html', back, () => {})
             }
         }
         // Lida com erro no request

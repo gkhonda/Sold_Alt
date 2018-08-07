@@ -1,26 +1,26 @@
 require('electron-window').parseArgs();
-const {BrowserWindow, getCurrentWindow} = require('electron').remote;
+const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
 
-let win, new_win;
+let win;
 
 const remote = require('electron').remote;
 
 // Para manipular a Janela Atual
 win = getCurrentWindow();
 // Variaveis auxiliares
-var to_pay;
-var received = 0;
-var to_receive;
-var change = 0;
+let to_pay;
+let received = 0;
+let to_receive;
+let change = 0;
 
 // Página superior
 
 // Lista de names
-var list_of_products = window.__args__['Product'];
+let list_of_products = window.__args__['Product'];
 
-var product_dictionary = {};
-var current_sale = {};
+let product_dictionary = {};
+let current_sale = {};
 
 // Coloca os names na tabela
 list_of_products.forEach(function (p) {
@@ -29,7 +29,7 @@ list_of_products.forEach(function (p) {
 });
 
 // Faz o painel ser preenchido
-var update_div = function (product) {
+let update_div = function (product) {
     $('#productId').val(product.id);
     $('#productDesc').text(product.name + ' ' + product.size);
     $('#imgProduct').attr("src", product.src)

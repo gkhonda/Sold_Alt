@@ -10,7 +10,7 @@ exports.createWindow = (args) => {
 
     const windowOptions = {
         width: 1000,
-        height: 400,
+        height: 450,
         // minWidth: 1000,
         // minHeight: 600,
         autoHideMenuBar: true,
