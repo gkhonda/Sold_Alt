@@ -75,7 +75,7 @@ function formact(element, valor, event) {
     });
 
     if (event.which < 58 && event.which > 47) {
-        last_typo = $(element).val()[$(element).val().length - 1];
+        let last_typo = $(element).val()[$(element).val().length - 1];
         if (valor === undefined) {
             valor = $(element).val()
         } else {
@@ -88,14 +88,13 @@ function formact(element, valor, event) {
     if (valor.length > 0) {
         $(element).val((formatter.format((parseFloat(valor) / 100).toFixed(2))));
     } else {
-        console.log(33)
         $(element).val(formatter.format(0));
     }
 
     return valor;
 }
 
-var update_withdraw_database = function (is_withdraw) {
+let update_withdraw_database = function (is_withdraw) {
     let qnt = (parseFloat(valor) / 100).toFixed(2);
     let user_id = remote.getGlobal('Vendedor_id');
 

@@ -38,3 +38,7 @@ $('#sangria').on('click', function () {
     ipcRenderer.send('sangria', '');
     // win.showUrl('src/html/withdraw.html', {});
 });
+
+$('#storage').on('click', function () {
+    ipcRenderer.send('pdf', '');
+});
