@@ -158,29 +158,39 @@ var add_item = function () {
 // Finaliza de adicionar os itens (parte de cima), e move para o pagamento
 $('.finish-sale').on('click', function () {
 
-    var name;
-    var qnt;
-    var price;
-
-    tabela = {};
-
-    venda = {
-        'Total': $('#totalValueSale').text(),
-        'Vendedor': remote.getGlobal('Vendedor_id'),
-        'Cliente': $('#span-id-customer').text()
-    };
-
     to_pay = parseFloat($('#totalValueSale').text());
-    $("#to-pay").text(to_pay.toFixed(2));
-    $("#to-receive").text(to_pay.toFixed(2));
-    received = 0;
-    to_receive = to_pay;
-    change = 0;
 
-    $('html,body').animate({
-            scrollTop: $(".second-page").offset().top
-        },
-        'slow');
+    if (to_pay !== 0){
+        var name;
+        var qnt;
+        var price;
+
+        tabela = {};
+
+        venda = {
+            'Total': $('#totalValueSale').text(),
+            'Vendedor': remote.getGlobal('Vendedor_id'),
+            'Cliente': $('#span-id-customer').text()
+        };
+
+        // to_pay = parseFloat($('#totalValueSale').text());
+        $("#to-pay").text(to_pay.toFixed(2));
+        $("#to-receive").text(to_pay.toFixed(2));
+        received = 0;
+        to_receive = to_pay;
+        change = 0;
+        
+        go_end();
+
+        
+    } else {
+        ipcRenderer.send('login',
+            {
+                'type': 'ok-face',
+                'message': 'Insira produtos!',
+                'text': 'Adicione as formas de pagamento para o valor total da venda'
+            });
+    }
 
 });
 
@@ -301,10 +311,7 @@ $("#lblQuantidade").keypress(function (event) {
 });
 
 $('#back-sale').click(function () {
-    $('html,body').animate({
-            scrollTop: $(".first-page").offset().top
-        },
-        'slow');
+   back_start();
 });
 
 $('#end-sale').click(function () {
@@ -319,7 +326,6 @@ $('#end-sale').click(function () {
 
     } else {
         send = {
-            'a': 2,
             'sale_details': venda,
             'sale_itens': current_sale,
             'sale_payments': current_payment
@@ -341,6 +347,9 @@ $('#end-sale').click(function () {
                         'message': 'Sucesso!',
                         'text': 'Venda cadastrada!'
                     })
+
+                reset_sell();
+                back_start();
             }
         }).fail(function () {
             ipcRenderer.send('login',
@@ -437,4 +446,34 @@ var client_read = function (button) {
     });
 };
 
+var reset_sell = function () {
+    to_receive = 0;
+    received = 0;
+    change = 0;
+    $('#to-receive').text('0.00');
+    $('#received').text('0.00');
+    $('#change').text('0.00');
+    $('#paymentTable tr').remove();
+    $('#totalValuePayment').text('0.00');
+    $('#saleTable tr').remove();
+    $('#totalValueSale').text('0.00');
+    current_sale = {};
+    current_payment = {};
+};
+
+var back_start = function () {
+    console.log('antes', received, to_receive, change);
+    $('html,body').animate({
+        scrollTop: $(".first-page").offset().top
+    },
+    'slow');
+    console.log('depois', received, to_receive, change);
+};
+
+var go_end = function() {
+   $('html,body').animate({
+                scrollTop: $(".second-page").offset().top
+    },
+    'slow'); 
+};
 
