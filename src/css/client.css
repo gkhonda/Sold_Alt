@@ -3,7 +3,6 @@
     position: relative;
     text-align: center;
     /* border-radius: 20px; */
-    background-color: white;
     width: 100%;
 }
 
@@ -14,7 +13,7 @@ h1 {
     padding: .25em 0 .25em 0;
     background-color: #ff8a37;
     /* border-radius: 20px 20px 0 0; */
-    font-family: serif;
+    font-family: Roboto, serif;
 }
 
 .pesquisa {
@@ -54,7 +53,7 @@ table {
 }
 
 .orange {
-    background-color: #ff8a37;
+    background-color: background-color: #e77000 !important;
     color: white;
     margin: 1em auto;
 }

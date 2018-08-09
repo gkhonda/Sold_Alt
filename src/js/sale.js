@@ -49,7 +49,6 @@ $("#saleTable").on('click', "tr td .del", function (e) {
 });
 
 // Funções para o botão de diminui/aumenta a quantidade 
-var quantitiy = 0;
 $('.btn-success').click(function (e) {
     // Stop acting like a button
     e.preventDefault();
