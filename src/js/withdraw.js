@@ -23,7 +23,7 @@ $('#change-type').click(function () {
             $('#money-quantity').text(back['quantity'].toFixed(2));
             $('.span-method').text("Cheque");
             type = "Cheque";
-            $("#type-text").val("DINHEIRO");
+            $("#type-text").text("DINHEIRO");
 
         });
     } else {
@@ -32,7 +32,7 @@ $('#change-type').click(function () {
             $('#money-quantity').text(back['quantity'].toFixed(2));
             $('.span-method').text("Dinheiro");
             type = "Dinheiro";
-            $("#type-text").val("CHEQUE");
+            $("#type-text").text("CHEQUE");
 
         });
     }
@@ -131,7 +131,8 @@ let update_withdraw_database = function (is_withdraw) {
                     'message': 'Sucesso!',
                     'text': 'Operação feita com sucesso!'
                 });
-            location.reload();
+            // location.reload();
+            reset();
         }
     }).fail(function () {
         ipcRenderer.send('login',
@@ -142,3 +143,11 @@ let update_withdraw_database = function (is_withdraw) {
             })
     });
 };
+
+var reset = function () {
+    valor = 0;
+    $.post("http://127.0.0.1:8000/withdraw/read", {'method': type}).done(function (back) {
+        $('#money-quantity').text(back['quantity'].toFixed(2));
+    });
+    $('#name').val('');
+}
