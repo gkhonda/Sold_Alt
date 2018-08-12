@@ -174,10 +174,11 @@ $('.finish-sale').on('click', function () {
 
         // to_pay = parseFloat($('#totalValueSale').text());
         $("#to-pay").text(to_pay.toFixed(2));
-        $("#to-receive").text(to_pay.toFixed(2));
-        received = 0;
-        to_receive = to_pay;
+        // received = 0;
+        to_receive = to_pay - received;
         change = 0;
+        $("#to-receive").text(to_receive.toFixed(2));
+        console.log(received, to_receive, change);
         
         go_end();
 
@@ -461,12 +462,11 @@ var reset_sell = function () {
 };
 
 var back_start = function () {
-    console.log('antes', received, to_receive, change);
     $('html,body').animate({
         scrollTop: $(".first-page").offset().top
     },
     'slow');
-    console.log('depois', received, to_receive, change);
+    console.log(received, to_receive, change);
 };
 
 var go_end = function() {
