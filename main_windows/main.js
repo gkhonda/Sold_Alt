@@ -98,5 +98,5 @@ ipcMain.on('pdf', (e, args) => {
         height: 600
     });
 
-    win.loadURL(global['default_url'] + 'reports/tax_coupom');
+    win.loadURL(global['default_url'] + 'reports/tax_coupom/29');
 });
