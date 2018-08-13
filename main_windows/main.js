@@ -91,12 +91,12 @@ ipcMain.on('sangria', (e, args) => {
     mainWithdraw.createWindow({'url': 'src/html/withdraw.html'})
 });
 
-ipcMain.on('pdf', (e, args) => {
+ipcMain.on('pdf', (e, saleID) => {
 
     const win = new PDFWindow({
         width: 800,
         height: 600
     });
 
-    win.loadURL(global['default_url'] + 'reports/tax_coupom/29');
+    win.loadURL(global['default_url'] + 'reports/tax_coupom/' + saleID);
 });

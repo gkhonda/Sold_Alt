@@ -178,8 +178,7 @@ $('.finish-sale').on('click', function () {
         to_receive = to_pay - received;
         change = 0;
         $("#to-receive").text(to_receive.toFixed(2));
-        console.log(received, to_receive, change);
-        
+
         go_end();
 
         
@@ -258,7 +257,6 @@ let add_payment = function () {
 
 $("#paymentTable").on('click', "tr td .del", function (e) {
     // Pega o código e deleta ele
-    console.log(current_payment[$(this).parent().html()[$(this).parent().html().length - 1]]);
     delete current_payment[$(this).parent().html()[$(this).parent().html().length - 1]];
     $(this).parent().parent().remove();
 
@@ -315,7 +313,6 @@ $('#back-sale').click(function () {
 });
 
 $('#end-sale').click(function () {
-    console.log(to_receive);
     if (to_receive !== 0) {
         ipcRenderer.send('login',
             {
@@ -346,7 +343,11 @@ $('#end-sale').click(function () {
                         'type': 'happy',
                         'message': 'Sucesso!',
                         'text': 'Venda cadastrada!'
-                    })
+                    });
+
+                console.log(back['SaleId']);
+
+                ipcRenderer.send('pdf', back['SaleId']);
 
                 reset_sell();
                 back_start();
@@ -466,7 +467,6 @@ var back_start = function () {
         scrollTop: $(".first-page").offset().top
     },
     'slow');
-    console.log(received, to_receive, change);
 };
 
 var go_end = function() {
