@@ -1,4 +1,6 @@
 const electron = require('electron');
+const {BrowserWindow} = require('electron');
+
 // Module to control application life.
 const {app, ipcMain} = electron;
 // Essa a gente que criou
@@ -6,7 +8,6 @@ const mainWindow = require('./mainWindow');
 const mainWithdraw = require('./mainWithdraw');
 const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
-const PDFWindow = require('electron-pdf-window');
 
 const path = require('path');
 const url = require('url');
@@ -77,7 +78,7 @@ ipcMain.on('new-client', (e, args) => {
 });
 
 // Tela de venda
-ipcMain.on('new-sale', (e, args) => {
+ipcMain.on('new-main-screen', (e, args) => {
     mainWindow.createWindow(args)
 });
 
@@ -93,9 +94,10 @@ ipcMain.on('sangria', (e, args) => {
 
 ipcMain.on('pdf', (e, saleID) => {
 
-    const win = new PDFWindow({
-        width: 800,
-        height: 600
+    const win = new BrowserWindow({
+        webPreferences: {
+            plugins: true
+        }
     });
 
     win.loadURL(global['default_url'] + 'reports/tax_coupom/' + saleID);
