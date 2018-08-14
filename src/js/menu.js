@@ -12,6 +12,7 @@ console.log(window.__args__);
 $('#sale').on('click', function (e) {
     // Cria o get request para pegar os produtos
     $.get("http://127.0.0.1:8000/product/read").done(function (back) {
+        console.log(back);
         if (back['Error'] === true) {
             ipcRenderer.send('login',
                 {
@@ -22,7 +23,7 @@ $('#sale').on('click', function (e) {
         }
         else {
             back['url'] = 'src/html/sale.html';
-            ipcRenderer.send('new-sale', back);
+            ipcRenderer.send('new-main-screen', back);
         }
     }).fail(function () {
         ipcRenderer.send('login',
