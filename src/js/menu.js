@@ -40,5 +40,6 @@ $('#sangria').on('click', function () {
 });
 
 $('#storage').on('click', function () {
-    ipcRenderer.send('pdf', '');
+    // win.showUrl('http://127.0.0.1:8000/sale/read');
+    win.showURL('src/html/storage.html')
 });

@@ -1,0 +1,38 @@
+html {
+    max-height: 100vh;
+}
+
+body{
+    max-height: 100vh;
+}
+
+.orange {
+    background-color: #ff8a37 !important;
+    color: white;
+    padding: .25em;
+}
+
+.pesquisa {
+    width: 100%;
+    margin-bottom: 20px !important;
+}
+
+.h-text {
+    text-align: center;
+    font-family: "Microsoft JhengHei Light", serif;
+    position: relative;
+    color: white;
+    margin: .25em auto;
+}
+
+.h-link {
+    font-size: 1em;
+    font-family: "Microsoft JhengHei Light", serif;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.selected {
+    background: lightgreen;
+}

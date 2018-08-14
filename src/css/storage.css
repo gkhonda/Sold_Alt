@@ -1,0 +1,29 @@
+.upload-container {
+    height: 200px;
+    width: 60%;
+    border: 3px dashed #999999;
+    margin: 4em auto;
+}
+
+h5 {
+    align-content: center;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    color: #999999;
+    font-family: "Microsoft JhengHei Light", serif;
+    font-size: 1.75em;
+}
+
+h2 img {
+    width: 80px;
+    margin: .5em;
+}
+
+h2 a {
+    display: block;
+    font-size: .75em;
+    padding-left: 2em;
+}

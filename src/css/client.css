@@ -12,7 +12,6 @@ h1 {
     margin: 0 0 0 0;
     padding: .25em 0 .25em 0;
     background-color: #ff8a37;
-    /* border-radius: 20px 20px 0 0; */
     font-family: Roboto, serif;
 }
 
@@ -53,7 +52,7 @@ table {
 }
 
 .orange {
-    background-color: background-color: #e77000 !important;
+    background-color: #e77000 !important;
     color: white;
     margin: 1em auto;
 }
