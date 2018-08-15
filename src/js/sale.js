@@ -169,7 +169,8 @@ $('.finish-sale').on('click', function () {
         venda = {
             'Total': $('#totalValueSale').text(),
             'Vendedor': remote.getGlobal('Vendedor_id'),
-            'Cliente': $('#span-id-customer').text()
+            'Cliente': $('#span-id-customer').text(),
+            'LojaNome': remote.getGlobal('LojaNome')
         };
 
         // to_pay = parseFloat($('#totalValueSale').text());
@@ -196,14 +197,14 @@ $('.finish-sale').on('click', function () {
 // Aqui começa a parte de baixo
 
 // Inicia com dinheiro como método de pagamente
-let payment_method = 1;
+let payment_method = 'Dinheiro';
 
 let dict_of_values = {
-    1: 'Dinheiro',
-    2: 'Cheque',
-    3: 'Debito',
-    4: 'Credito',
-    5: 'Transferencia'
+    'Dinheiro': 1,
+    'Cheque': 2,
+    'Débito': 3,
+    'Crédito': 4,
+    'Transferência': 5
 };
 
 current_payment = {};
@@ -223,11 +224,11 @@ let add_payment = function () {
 
         $("#paymentTable tr").remove();
 
-        for (let id in current_payment) {
+        for (let payment_method in current_payment) {
 
-            $('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>' + id + '</td>' +
-                '<td>' + dict_of_values[id] + '</td>' +
-                '<td>' + (current_payment[id]).toFixed(2) + '</td></tr>');
+            $('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>' + dict_of_values[payment_method] + '</td>' +
+                '<td>' + payment_method + '</td>' +
+                '<td>' + (current_payment[payment_method]).toFixed(2) + '</td></tr>');
 
         }
 
@@ -264,13 +265,13 @@ $("#paymentTable").on('click', "tr td .del", function (e) {
 
     received = 0;
 
-    for (id in current_payment) {
+    for (payment_method in current_payment) {
 
         $('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>' + id + '</td>' +
-            '<td>' + dict_of_values[id] + '</td>' +
-            '<td>' + (current_payment[id]).toFixed(2) + '</td></tr>');
+            '<td>' + payment_method + '</td>' +
+            '<td>' + current_payment[payment_method].toFixed(2) + '</td></tr>');
 
-        received += current_payment[id];
+        received += current_payment[payment_method];
 
     }
 
@@ -292,7 +293,7 @@ $("#paymentTable").on('click', "tr td .del", function (e) {
 $(".btn-toolbar .btn").click(function () {
     $('.btn').removeClass('active');
     $(this).addClass('active');
-    payment_method = $(this).attr('value');
+    payment_method = $(this).attr('id');
 });
 
 
