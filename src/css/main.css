@@ -36,3 +36,19 @@ body{
 .selected {
     background: lightgreen;
 }
+
+.block {
+    display: block;
+}
+
+.btn-orange {
+    background-color: #ff8a37;
+    color: white;
+    padding: .5em;
+}
+
+.btn-orange:hover {
+    background-color: white;
+    color: #ff8a37;
+    border: 1px solid #ff8a37;
+}

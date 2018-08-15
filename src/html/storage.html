@@ -10,19 +10,21 @@
 
 <h1 class="h-text orange">Controle de Estoque</h1>
 
-<a><h3 class="h-link"> BAIXAR SAMPLESHEET* </h3></a>
+<a><h3 class="h-link" id="downloadSheet"> BAIXAR SAMPLESHEET* </h3></a>
 
 <h5>*É sempre necessário estar com o template atualizado. Recomenda-se baixar todas as vezes</h5>
 
 <div class="upload-container">
 
-    <h2><img src="../../public/images/upload.png" alt=""> Arraste o arquivo aqui ou
+    <h2><img src="../../public/images/upload.png" id="img-container"> <span id="text-container"></span>
     <a id="btnChooser"> ESCOLHA O ARQUIVO </a>
     </h2>
 
-
 </div>
 
+<div class="container text-center">
+    <button class="btn btn-orange" id="submit-btn">ATUALIZAR ESTOQUE</button>
+</div>
 <script>
 
     // Jquery
