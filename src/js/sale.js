@@ -187,7 +187,7 @@ $('.finish-sale').on('click', function () {
             {
                 'type': 'ok-face',
                 'message': 'Insira produtos!',
-                'text': 'Adicione as formas de pagamento para o valor total da venda'
+                'text': 'Insira pelo menos algum produto para continuar com a venda.'
             });
     }
 
@@ -256,8 +256,10 @@ let add_payment = function () {
 };
 
 $("#paymentTable").on('click', "tr td .del", function (e) {
+
     // Pega o código e deleta ele
-    delete current_payment[$(this).parent().html()[$(this).parent().html().length - 1]];
+    var to_delete = get_from_table($(this).parent().parent().parent(), 1);
+    delete current_payment[to_delete];
     $(this).parent().parent().remove();
 
     $("#paymentTable tr").remove();
@@ -266,7 +268,7 @@ $("#paymentTable").on('click', "tr td .del", function (e) {
 
     for (payment_method in current_payment) {
 
-        $('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>' + id + '</td>' +
+        $('#paymentTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>' + dict_of_values[payment_method] + '</td>' +
             '<td>' + payment_method + '</td>' +
             '<td>' + current_payment[payment_method].toFixed(2) + '</td></tr>');
 
@@ -284,6 +286,8 @@ $("#paymentTable").on('click', "tr td .del", function (e) {
     $('#received').text(received.toFixed(2));
     $('#to-receive').text(to_receive.toFixed(2));
     $('#change').text(change.toFixed(2));
+
+    $('#totalValuePayment').text(received.toFixed(2))
 
     e.stopPropagation();
 });
@@ -344,8 +348,6 @@ $('#end-sale').click(function () {
                         'message': 'Sucesso!',
                         'text': 'Venda cadastrada!'
                     });
-
-                console.log(back['SaleId']);
 
                 ipcRenderer.send('pdf', back['SaleId']);
 
@@ -476,3 +478,17 @@ var go_end = function() {
     'slow'); 
 };
 
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+function get_from_table(line, key) {
+    let to_return;
+    line.find('td').each(function (index) {
+        if (index === key) {
+            to_return =  $(this).html()
+        }
+    });
+
+    return to_return;
+}

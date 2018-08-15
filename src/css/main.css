@@ -58,7 +58,7 @@ body{
 }
 
 .selected {
-    background: lightgreen;
+    background: lightgreen !important;
 }
 
 .block {
