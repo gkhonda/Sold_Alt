@@ -78,7 +78,7 @@ submitBtn.on('click', function () {
 
     var form = new FormData();
     form.append('type', type);
-    form.append('store', 1);
+    form.append('store', 'Verbo Divino');
     form.append('my_buffer', new Buffer(10));
     form.append('sample_sheet', fs.createReadStream(file));
 
