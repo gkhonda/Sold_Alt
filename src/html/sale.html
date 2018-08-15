@@ -4,7 +4,7 @@
     <title></title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="../../public/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="stylesheet" type="text/css" href="../css/sale.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
@@ -25,7 +25,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-size">
-                    <table class="table" id="client-table">
+                    <table class="table table-bordered" id="client-table">
                         <div class="field pesquisa">
                             <div class="form-group">
                                 <label class="sr-only" for="inputSearch">Pesquisar</label>
@@ -51,8 +51,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <p class="btn btn-lg orange" id="btnAddNewCustomer"> Adicionar Novo </p>
-                <p class="btn btn-lg orange" id="btnRead"> Adicionar a venda </p>
+                <p class="btn btn-lg btn-orange" id="btnAddNewCustomer"> Adicionar Novo </p>
+                <p class="btn btn-lg btn-orange" id="btnRead"> Adicionar a venda </p>
             </div>
         </div>
 
@@ -79,7 +79,6 @@
             <h1>Adicione o produto</h1>
             <!-- Painel -->
             <div class="panel-block">
-                <img src="../images/tshirt.png" id="imgProduct">
                 <div class="first-side">
                     <span class="h2" id="productDesc">CAMISETA MANGA CURTA 00</span>
                     <div class="input-group number-input">
@@ -111,7 +110,7 @@
                 <h1>Produto</h1>
                 <div class="table-size" id="product">
 
-                    <table class="table table-hover" id="tableSearch">
+                    <table class="table table-hover table-bordered table-striped" id="tableSearch">
                         <div class="field pesquisa">
                             <div class="form-group">
                                 <label class="sr-only" for="inputSearch">Pesquisar</label>
@@ -144,7 +143,7 @@
         <div class="col-md-6 to-right up-page">
             <h1>Vendas</h1>
             <div class="table-size" id="sale">
-                <table class="table">
+                <table class="table table-hover table-bordered table-striped">
                     <thead>
                     <tr>
                         <th><abbr title="Codigo">C</abbr></th>

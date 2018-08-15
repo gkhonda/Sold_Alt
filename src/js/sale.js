@@ -32,7 +32,6 @@ list_of_products.forEach(function (p) {
 let update_div = function (product) {
     $('#productId').val(product.id);
     $('#productDesc').text(product.name + ' ' + product.size);
-    $('#imgProduct').attr("src", product.src)
 };
 
 $('.add-client').click(function () {

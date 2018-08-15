@@ -1,22 +1,19 @@
 /* Propriedades do html */
 
+
 html {
     min-height: 100%;
 }
 
 body {
-    font-family: Roboto, serif;
-    /* background-image: linear-gradient(to bottom, #f3d1b2, #f5c395, #f6b579, #f6a75e, #f59841); */
-    /* background-image: linear-gradient(to right, #fefefe, #d3d3d3, #a9a9a9, #828181, #5c5b5b); */
-    background: linear-gradient(to left bottom, #ffffff, #fd8e85, #f77761, #ec633a, #e77000) no-repeat;
     overflow: hidden;
 }
 
 .navbar-default {
-    background-color: #e77000 !important;
+    background-color: #ff8a37  !important;
     margin: -1px !important;
     max-width: 100%;
-    border-color: #e77000;
+    border-color: #ff8a37;
 }
 
 .navbar-brand {
@@ -54,7 +51,7 @@ header {
 /* Titulos */
 
 h1 {
-    background-color: #e77000;
+    background-color: #ff8a37 ;
     color: white;
     margin: 0;
     padding: 10px 20px;
@@ -156,6 +153,9 @@ tr:hover .del {
 }
 
 .panel-block {
+    border-bottom: 2px dashed lightgrey;
+    border-left: 2px dashed lightgrey;
+    border-right: 2px dashed lightgrey;
     background: white;
     height: 120px;
 }
@@ -170,8 +170,9 @@ tr:hover .del {
 }
 
 .h2 {
+    margin-top: 10px;
     display: block;
-    font-size: 13px;
+    font-size: 17px;
     padding: 0 0 5px 0;
     color: lightslategray;
 }
@@ -201,6 +202,7 @@ tr:hover .del {
 .second-size button {
     margin-top: .5em;
     float: left;
+    width: 90%;
 }
 
 .second-size a {
@@ -239,8 +241,9 @@ tr:hover .del {
 }
 
 .codigo {
-    width: 50px;
+    width: 90%;
     font-size: 12px;
+    text-align: center;
 }
 
 /* Botao da sale */
@@ -248,15 +251,15 @@ tr:hover .del {
 .finish-sale {
     margin-top: 2em;
     width: 100%;
-    background: #e77000;
+    background: #ff8a37;
     color: white;
-    border-color: #e77000;
+    border-color: #ff8a37;
 }
 
 .finish-sale:hover {
-    background: #e77000;
+    background: #ff8a37;
     color: white;
-    border-color: #e77000;
+    border-color: #ff8a37;
 }
 
 /* Pagina 2 */
@@ -366,21 +369,10 @@ h3 span {
     padding: .25em;
 }
 
-.orange {
-    background-color: transparent;
-    color: white;
-    border: 1px solid white;
-}
-
-.orange:hover {
-    background: white;
-    color: #e77000;
-}
-
 /* Modal Header */
 .modal-header {
     padding: 2px 16px;
-    background-color: #e77000;
+    background-color: #ff8a37;
     color: white;
 }
 
@@ -391,7 +383,7 @@ h3 span {
 
 /* Modal Footer */
 .modal-footer {
-    background-color: #e77000;
+    background-color: #ff8a37;
     color: white;
 }
 

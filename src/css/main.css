@@ -4,7 +4,31 @@ html {
 
 body{
     max-height: 100vh;
+    font-family: "Microsoft JhengHei Light", serif;
 }
+
+/*Scroll bar*/
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/*End Scroll Bar*/
 
 .orange {
     background-color: #ff8a37 !important;
@@ -45,6 +69,7 @@ body{
     background-color: #ff8a37;
     color: white;
     padding: .5em;
+    border: 1px solid white;
 }
 
 .btn-orange:hover {
