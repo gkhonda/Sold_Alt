@@ -12,12 +12,19 @@ const mainMenu_admin = require('./mainMenu_admin');
 const path = require('path');
 const url = require('url');
 
+// para mexer com o config file
+const ini = require('ini');
+const fs = require('fs');
+const config = ini.parse(fs.readFileSync('./config/config.ini', 'utf-8'));
+
 global['default_url'] = 'http://127.0.0.1:8000/';
 global['Vendedor'] = '';
 global['Vendedor_id'] = 0;
 global['is_admin'] = false;
 global['Cliente'] = 'Cliente';
-global['Cliente_id'] = 4;
+global['Cliente_id'] = 0;
+global['LojaNome'] = config.storeName;
+global['LojaCEP'] = config.storeCEP;
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
