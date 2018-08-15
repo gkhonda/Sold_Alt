@@ -21,7 +21,7 @@ downloadSheet = $('#downloadSheet');
 submitBtn = $('#submit-btn');
 
 downloadSheet.on('click', function () {
-    win.showUrl(remote.getGlobal('default_url') + 'sale/read');
+    win.showUrl(remote.getGlobal('default_url') + 'store_product/read');
 });
 
 btnChooser.on('click', function () {
