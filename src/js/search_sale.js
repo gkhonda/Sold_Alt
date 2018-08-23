@@ -1,6 +1,8 @@
+// Imports do electron
 const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
 
+// Variaveis para trabalhar com data -> já deixa setado os calendários na data atual (pesquisar venda do dia)
 let now = new Date();
 let day = ("0" + now.getDate()).slice(-2);
 let month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -8,6 +10,7 @@ let today = now.getFullYear() + "-" + (month) + "-" + (day);
 let y = now.getFullYear() + "-" + (month) + "-" + (day - 10);
 let id;
 
+// Declarações jQuery -> acho mais organizados fazermos assim sempre, para não chamar os seletores várias vezes.
 const datepicker1 = $("#datepicker1");
 const datepicker2 = $("#datepicker2");
 const btnPesquisa = $("#btn-pesquisa");
@@ -19,9 +22,11 @@ const modalTable = $(".modal-table");
 const btnDelete = $("#btn-delete");
 const btnChange = $("#btn-change");
 
+// Seta as datas no calendario
 datepicker1.val(y);
 datepicker2.val(today);
 
+// Pesquisa vendas -> data + nome (vazio pega tudo). Sem cpf por enquanto
 btnPesquisa.on('click', function () {
     let data = {
         'name_or_cpf': inputSearch.val(),
@@ -41,7 +46,7 @@ btnPesquisa.on('click', function () {
     });
 });
 
-
+// Enche a tabela
 let update_table = function (list_of_sales) {
     $("#tableSearch .plus-sale").remove();
     list_of_sales.slice().reverse().forEach(function (c) {
@@ -49,7 +54,7 @@ let update_table = function (list_of_sales) {
     })
 };
 
-
+// Se clica no maiszinho abre o modal com detalhes da venda, para ver se quer apagar mesmo (ou realizar a troca)
 tableSearch.on('click', 'tr td img', function () {
     id = $(this).parent().text();
     let data = {
@@ -72,6 +77,7 @@ tableSearch.on('click', 'tr td img', function () {
     });
 });
 
+// Deleta a venda
 btnDelete.on('click', function () {
     if (remote.getGlobal('is_admin')) {
         $.post(remote.getGlobal('default_url') + "sale/delete", {'id': id}).done(function (back) {
@@ -104,6 +110,7 @@ btnDelete.on('click', function () {
     }
 });
 
+// TODO: Abre tela de troca
 btnChange.on('click', function () {
     ipcRenderer.send('login',
         {
@@ -113,6 +120,7 @@ btnChange.on('click', function () {
         })
 });
 
+// Fecha o modal
 $('.close').click(function () {
     $('.modal').css('display', 'none');
 });
