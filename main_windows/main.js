@@ -9,9 +9,6 @@ const mainWithdraw = require('./mainWithdraw');
 const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
 
-const path = require('path');
-const url = require('url');
-
 // para mexer com o config file
 const ini = require('ini');
 const fs = require('fs');

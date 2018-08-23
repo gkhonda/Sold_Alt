@@ -4,14 +4,7 @@
 
 const {getCurrentWindow} = require('electron').remote;
 
-const remote = require('electron').remote;
-
-const path = require('path');
-const url = require('url');
-
 let win;
-
-console.log(remote.getGlobal('Vendedor_id'));
 
 // Para manipular a Janela Atual
 win = getCurrentWindow();
