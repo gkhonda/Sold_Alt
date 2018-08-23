@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/search_sale.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1 class="h-text orange">Procurar venda</h1>
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2 class="modal-h2">Venda <span id="span-venda">52</span></h2>
+        </div>
+        <div class="modal-body">
+            <div class="container-modal">
+                <h2>Cliente: <span id="cliente-modal"></span></h2>
+                <h4 id="valor"><span id="valor-modal"></span></h4>
+            </div>
+            <div class="modal-table-size" id="product">
+                <table class="table table-hover table-bordered table-striped" id="tableModal">
+                    <thead>
+                    <tr>
+                        <th><abbr title="Codigo">C</abbr></th>
+                        <th>Descricao</th>
+                        <th>Tamanho</th>
+                        <th>Qnt</th>
+                    </tr>
+                    </thead>
+                    <tbody class="modal-table">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="btn btn-lg btn-orange" id="btnAddNewCustomer"> Apagar venda </p>
+            <p class="btn btn-lg btn-orange" id="btnRead"> Realizar Troca </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="div-table">
+    <div class="container-filter">
+        <h2>Filtros</h2>
+        <div>
+            <div class="form-group">
+                <label class="sr-only" for="inputSearch">Pesquisar</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inputSearch" placeholder="Nome (ou cpf)">
+                    <div class="input-group-addon"><span class="icon is-small is-right">
+                                                <i class="fas fa-search"></i>
+                                        </span>
+                    </div>
+                </div>
+
+
+                <div class='input-group'>
+                    <label class="sr-only" for="datepicker1">Datepicker1</label>
+                    <input type="date" class="form-control " id="datepicker1" placeholder="saf"/>
+                    <span class="input-group-addon">
+                <i class="fas fa-calendar"></i>
+            </span>
+                </div>
+
+                <div class='input-group'>
+                    <label class="sr-only" for="datepicker2">Datepicker2</label>
+                    <input type='date' class="form-control" id="datepicker2"/>
+                    <span class="input-group-addon">
+                        <i class="fas fa-calendar"></i>
+                    </span>
+
+                </div>
+            </div>
+
+        </div>
+
+        <button class="btn btn-orange orange" id="btn-pesquisa">Pesquisar</button>
+
+    </div>
+
+    <div class="table-size">
+
+        <table class="table table-hover table-bordered table-striped" id="tableSearch">
+            <thead>
+            <tr>
+                <th><abbr title="Codigo">C</abbr></th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Data</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody class="search-table">
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+
+    // Jquery
+
+    $ = require('jquery');
+
+    // You can also require other files to run in this process
+    require('../js/search_sale.js')
+
+</script>
+
+</body>
+</html>
