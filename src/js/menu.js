@@ -10,7 +10,6 @@ win = getCurrentWindow();
 console.log(window.__args__);
 
 $('#sale').on('click', function (e) {
-    console.log('DO')
     // Cria o get request para pegar os produtos
     $.get("http://127.0.0.1:8000/product/read").done(function (back) {
         console.log(back);

@@ -88,7 +88,7 @@ ipcMain.on('new-main-screen', (e, args) => {
 
 // Comunicacao menu normal
 ipcMain.on('menu', (e, args) => {
-    mainWindow.createWindow({'url': 'src/html/menu.html'})
+    mainWindow.createWindow(args)
 });
 
 // Comunicacao menu normal
