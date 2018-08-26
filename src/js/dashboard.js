@@ -1,6 +1,15 @@
 
+const profit = $('#profit');
+const soldItens = $('#sold-itens');
+const dinheiro = $('#dinheiro');
+const cheque = $('#cheque');
+
+
 $.get('http://127.0.0.1:8000/sale/return_infos').done(function (back) {
-    initializeChart(back['data']);
+    initializeChart(back);
+    profit.text("R$ " + back['soma'].toFixed(2));
+    dinheiro.text("R$ " + back['total_dinheiro'].toFixed(2));
+    cheque.text("R$ " + back['total_cheque'].toFixed(2));
 });
 
 function initializeChart(data) {
@@ -15,13 +24,13 @@ function initializeChart(data) {
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    labels: data['dias'].reverse(),
                     datasets: [
                         {
-                            label: "My First dataset",
-                            data: [78, 81, 80, 64, 65, 80, 70, 75, 67, 85, 66, 68],
+                            label: "Quantidade vendida",
+                            data: data['vendas_semana'].reverse(),
                             borderColor: "transparent",
-                            borderWidth: "0",
+                            borderWidth: ".5",
                             backgroundColor: "#ccc",
                         }
                     ]
@@ -33,9 +42,9 @@ function initializeChart(data) {
                     },
                     scales: {
                         xAxes: [{
-                            display: false,
+                            display: true,
                             categoryPercentage: 1,
-                            barPercentage: 0.65
+                            barPercentage: 0.7
                         }],
                         yAxes: [{
                             display: false
@@ -52,16 +61,16 @@ function initializeChart(data) {
     try {
 
         // Percent Chart 2
-        var ctx = document.getElementById("percent-chart2");
-        if (ctx) {
-            ctx.height = 209;
-            var myChart = new Chart(ctx, {
+        let ctx2 = document.getElementById("percent-chart2");
+        if (ctx2) {
+            ctx2.height = 209;
+            let myChart2 = new Chart(ctx2, {
                 type: 'doughnut',
                 data: {
                     datasets: [
                         {
                             label: "My First dataset",
-                            data: data,
+                            data: [720, 120, 10, 10],
                             backgroundColor: [
                                 '#00b5e9',
                                 '#fa4251',

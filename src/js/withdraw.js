@@ -10,7 +10,7 @@ $('#name').on('keyup change', function (e) {
 });
 
 // Post request inicial para pegar a quantidade de dinheiro em caixa
-$.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro'}).done(function (back) {
+$.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
     $('#money-quantity').text(back['quantity'].toFixed(2));
 });
 
@@ -18,7 +18,7 @@ $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro'}).done(funct
 $('#change-type').click(function () {
 
     if (type === "Dinheiro") {
-        $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Cheque'}).done(function (back) {
+        $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Cheque', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
             console.log(back['quantity']);
             $('#money-quantity').text(back['quantity'].toFixed(2));
             $('.span-method').text("Cheque");
@@ -27,7 +27,7 @@ $('#change-type').click(function () {
 
         });
     } else {
-        $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro'}).done(function (back) {
+        $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
             console.log(back['quantity']);
             $('#money-quantity').text(back['quantity'].toFixed(2));
             $('.span-method').text("Dinheiro");
@@ -102,7 +102,8 @@ let update_withdraw_database = function (is_withdraw) {
         'type': type,
         'quantity': qnt,
         'user_id': user_id,
-        'withdraw': is_withdraw
+        'withdraw': is_withdraw,
+        'loja': remote.getGlobal('LojaNome')
     };
 
 
@@ -144,10 +145,10 @@ let update_withdraw_database = function (is_withdraw) {
     });
 };
 
-var reset = function () {
+let reset = function () {
     valor = 0;
-    $.post("http://127.0.0.1:8000/withdraw/read", {'method': type}).done(function (back) {
+    $.post("http://127.0.0.1:8000/withdraw/read", {'method': type, 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
         $('#money-quantity').text(back['quantity'].toFixed(2));
     });
     $('#name').val('');
-}
+};
