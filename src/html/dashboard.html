@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard 3</title>
+    <title>Dashboard</title>
 
     <!-- Fontfaces CSS-->
     <link href="../../public/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -32,7 +32,6 @@
 
     <!-- Main CSS-->
     <link href="../css/dashboard.css" rel="stylesheet" media="all">
-    <script src="../../../CoolAdmin/js/main.js"></script>
 
 </head>
 
@@ -51,9 +50,12 @@
                     <ul class="list-unstyled">
                         <li class="has-sub">
                             <a href="#" class="p-r-5 p-l-5">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                                <i class="fas fa-tachometer-alt"></i><span id="text-dash">Central</span>
                                 <span class="bot-line"></span>
                             </a>
+                            <ul class="header3-sub-list list-unstyled" id="dashboad-options">
+                                <li><a href="#">Central</a></li>
+                            </ul>
                         </li>
                         <li class="has-sub">
                             <a href="#" class="p-r-5 p-l-5">
@@ -395,8 +397,8 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item statistic__item--green">
-                            <h2 class="number" id="profit">R$ 1,368,00</h2>
-                            <span class="desc">LUCRO (MÊS)</span>
+                            <h2 class="number" id="profit">-</h2>
+                            <span class="desc">LUCRO (ÚLTIMOS 7 DIAS)</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-money-off"></i>
                             </div>
@@ -404,8 +406,8 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item statistic__item--orange">
-                            <h2 class="number">200</h2>
-                            <span class="desc" id="sold-itens">itens vendidos (dia)</span>
+                            <h2 class="number" id="sold-itens">-</h2>
+                            <span class="desc">itens vendidos (dia)</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-shopping-cart"></i>
                             </div>
@@ -413,7 +415,7 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item statistic__item--blue">
-                            <h2 class="number" id="cheque">R$ 1,060.20</h2>
+                            <h2 class="number" id="cheque">-</h2>
                             <span class="desc">cheque em caixa</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-money-box"></i>
@@ -422,7 +424,7 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item statistic__item--red">
-                            <h2 class="number" id="dinheiro">R$ 1,060.20</h2>
+                            <h2 class="number" id="dinheiro">-</h2>
                             <span class="desc">Dinheiro em caixa</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-money"></i>
@@ -443,21 +445,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 columns-expand col-lg-4">
                         <!-- CHART-->
                         <div class="statistic-chart-1">
                             <h3 class="title-3 m-b-30">Vendas nos últimos dias</h3>
                             <div class="chart-wrap">
                                 <canvas id="widgetChart5"></canvas>
                             </div>
-                            <div class="statistic-chart-1-note">
-                                <span class="big">10,368</span>
-                                <span>/ 16220 items sold</span>
-                            </div>
                         </div>
                         <!-- END CHART-->
                     </div>
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 columns-collapse col-lg-4">
                         <!-- TOP CAMPAIGN-->
                         <div class="top-campaign">
                             <h3 class="title-3 m-b-30">Vendas nas lojas</h3>
@@ -490,7 +488,7 @@
                         </div>
                         <!-- END TOP CAMPAIGN-->
                     </div>
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 columns-expand col-lg-4">
                         <!-- CHART PERCENT-->
                         <div class="chart-percent-2">
                             <h3 class="title-3 m-b-30">forma de pagamento %</h3>
@@ -519,36 +517,38 @@
         <!-- END STATISTIC CHART-->
 
 
+    </div>
+
+    <!-- Jquery JS-->
+    <!--<script src="../../public/vendor/jquery-3.2.1.min.js"></script>-->
+    <!-- Bootstrap JS-->
+    <script>
+        window.$ = window.jQuery = require('jquery'); // not sure if you need this at all
+    </script>
+    <script src="../../public/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="../../public/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="../../public/vendor/slick/slick.min.js">
+    </script>
+    <script src="../../public/vendor/wow/wow.min.js"></script>
+    <script src="../../public/vendor/animsition/animsition.min.js"></script>
+    <script src="../../public/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="../../public/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="../../public/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="../../public/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="../../public/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../public/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="../../public/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script>
+        require('../js/dashboard.js')
+    </script>
+
 </div>
-
-<!-- Jquery JS-->
-<!--<script src="../../public/vendor/jquery-3.2.1.min.js"></script>-->
-<!-- Bootstrap JS-->
-<script>
-    window.$ = window.jQuery = require('jquery'); // not sure if you need this at all
-</script>
-<script src="../../public/vendor/bootstrap-4.1/popper.min.js"></script>
-<script src="../../public/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-<!-- Vendor JS       -->
-<script src="../../public/vendor/slick/slick.min.js">
-</script>
-<script src="../../public/vendor/wow/wow.min.js"></script>
-<script src="../../public/vendor/animsition/animsition.min.js"></script>
-<script src="../../public/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-</script>
-<script src="../../public/vendor/counter-up/jquery.waypoints.min.js"></script>
-<script src="../../public/vendor/counter-up/jquery.counterup.min.js">
-</script>
-<script src="../../public/vendor/circle-progress/circle-progress.min.js"></script>
-<script src="../../public/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="../../public/vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="../../public/vendor/select2/select2.min.js">
-</script>
-
-<!-- Main JS-->
-<script>
-    require('../js/dashboard.js')
-</script>
 
 </body>
 

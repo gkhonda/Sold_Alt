@@ -3,16 +3,45 @@ const profit = $('#profit');
 const soldItens = $('#sold-itens');
 const dinheiro = $('#dinheiro');
 const cheque = $('#cheque');
+const colExpand =  $('.columns-expand');
+const colCollapse = $('.columns-collapse');
 
+initializePage("", true);
 
-$.get('http://127.0.0.1:8000/sale/return_infos').done(function (back) {
-    initializeChart(back);
-    profit.text("R$ " + back['soma'].toFixed(2));
-    dinheiro.text("R$ " + back['total_dinheiro'].toFixed(2));
-    cheque.text("R$ " + back['total_cheque'].toFixed(2));
+$('#dashboad-options').on('click', 'li', function () {
+    let store = $(this).text();
+    if (store === "Central") {
+        store = "";
+        colExpand.removeClass('col-lg-6');
+        colExpand.addClass('col-lg-4');
+        colCollapse.css('display', 'block');
+    } else {
+        colExpand.removeClass('col-lg-4');
+        colExpand.addClass('col-lg-6');
+        colCollapse.css('display', 'none');
+    }
+    initializePage(store, false);
+    $('#text-dash').text($(this).text());
 });
 
-function initializeChart(data) {
+function initializePage(store, first) {
+    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja' : store}).done(function (back) {
+        initializeChart(back, store);
+        soldItens.text(back['itens']);
+        profit.text("R$ " + back['lucro'].toFixed(2));
+        dinheiro.text("R$ " + back['dinheiro_caixa'].toFixed(2));
+        cheque.text("R$ " + back['cheque_caixa'].toFixed(2));
+
+        if (first) {
+            back['lojas'].forEach(function (p) {
+                $('#dashboad-options').append("<li><a href=\"#\">" + p + "</a></li>");
+            });
+        }
+
+    });
+}
+
+function initializeChart(data, store) {
     // USE STRICT
     "use strict";
 
@@ -27,8 +56,8 @@ function initializeChart(data) {
                     labels: data['dias'].reverse(),
                     datasets: [
                         {
-                            label: "Quantidade vendida",
-                            data: data['vendas_semana'].reverse(),
+                            label: "Receita obtida",
+                            data: data[store].reverse(),
                             borderColor: "transparent",
                             borderWidth: ".5",
                             backgroundColor: "#ccc",
@@ -70,12 +99,13 @@ function initializeChart(data) {
                     datasets: [
                         {
                             label: "My First dataset",
-                            data: [720, 120, 10, 10],
+                            data: data['forma_de_pagamento'],
                             backgroundColor: [
                                 '#00b5e9',
                                 '#fa4251',
                                 '#ffeee2',
-                                "#abABab"
+                                "#abABab",
+                                '#009900'
                             ],
                             borderWidth: [
                                 0, 0
@@ -86,12 +116,7 @@ function initializeChart(data) {
                             ]
                         }
                     ],
-                    labels: [
-                        'Products',
-                        'Services',
-                        'bla',
-                        'bla'
-                    ]
+                    labels: data['opcoes_de_pagamento']
                 },
                 options: {
                     maintainAspectRatio: false,
