@@ -4536,9 +4536,10 @@ section {
 .statistic__item .icon i {
     font-size: 180px;
     color: #808080;
-    opacity: 0.4;
+    opacity: .6;
     line-height: 1;
     vertical-align: baseline;
+    z-index: 2;
 }
 
 .statistic__item--green {

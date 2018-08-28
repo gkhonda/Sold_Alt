@@ -1,10 +1,10 @@
-
 const profit = $('#profit');
 const soldItens = $('#sold-itens');
 const dinheiro = $('#dinheiro');
 const cheque = $('#cheque');
-const colExpand =  $('.columns-expand');
+const colExpand = $('.columns-expand');
 const colCollapse = $('.columns-collapse');
+const table = $('#table-sales');
 
 initializePage("", true);
 
@@ -25,7 +25,7 @@ $('#dashboad-options').on('click', 'li', function () {
 });
 
 function initializePage(store, first) {
-    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja' : store}).done(function (back) {
+    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja': store}).done(function (back) {
         initializeChart(back, store);
         soldItens.text(back['itens']);
         profit.text("R$ " + back['lucro'].toFixed(2));
@@ -38,6 +38,29 @@ function initializePage(store, first) {
             });
         }
 
+        updateTable(back)
+
+    });
+}
+
+function updateTable(data) {
+    let list = {
+        'Verbo Divino': data['Verbo Divino'][0],
+        'Aldeia da Serra': data['Aldeia da Serra'][0],
+        'Itaim': data['Itaim'][0],
+        'Aclimacao': data['Aclimacao'][0]
+    };
+    var sortable = [];
+    for (var vehicle in list) {
+        sortable.push([vehicle, list[vehicle]]);
+    }
+
+    sortable.sort(function(a, b) {
+        return a[1] - b[1];
+    });
+
+    sortable.reverse().forEach(function (p, i) {
+        table.append("<tr><td>" + i + ". " + p[0] + "</td><td>R$ " + p[1].toFixed(2) + "</td></tr>");
     });
 }
 
