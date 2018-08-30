@@ -207,11 +207,17 @@ let dict_of_values = {
 };
 
 current_payment = {};
+installment = 1;
 
 let add_payment = function () {
 
     let tipo = dict_of_values[payment_method];
-    let price_sell = parseFloat($("#lblQuantidade").val());
+    let price_sell = parseFloat($("#lblValor").val());
+    if (payment_method === 'Cheque')
+    {
+        installment = parseFloat($("#lblParcelas").val());
+        console.log('installment: ' + installment)
+    }
 
     if (price_sell === price_sell) {
 
@@ -297,18 +303,30 @@ $(".btn-toolbar .btn").click(function () {
     $('.btn').removeClass('active');
     $(this).addClass('active');
     payment_method = $(this).attr('id');
+    if (payment_method === 'Cheque')
+    {
+        $('<input type="text" class="form-control" id="lblParcelas" placeholder="Parcelas">').appendTo('#paymentMethod');
+        return false;
+    }
+    else
+    {
+        $('input').remove('#lblParcelas');
+        return false;
+    }
 });
 
 
 $("#add-payment").on('click', function (e) {
     add_payment();
-    $("#lblQuantidade").val('');
+    $("#lblValor").val('');
+    $("#lblParcelas").val('');
 });
 
-$("#lblQuantidade").keypress(function (event) {
+$("#lblValor").keypress(function (event) {
     if (event.which == 13) {
         add_payment();
-        $("#lblQuantidade").val('')
+        $("#lblValor").val('')
+        $("#lblParcelas").val('');
     }
 });
 
@@ -329,7 +347,8 @@ $('#end-sale').click(function () {
         send = {
             'sale_details': venda,
             'sale_itens': current_sale,
-            'sale_payments': current_payment
+            'sale_payments': current_payment,
+            'installment' : installment
         };
         $.post("http://127.0.0.1:8000/sale/create", JSON.stringify(send)
         ).done(function (back) {
