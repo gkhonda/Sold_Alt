@@ -13,6 +13,26 @@ const mainMenu_admin = require('./mainMenu_admin');
 const ini = require('ini');
 const fs = require('fs');
 const config = ini.parse(fs.readFileSync('./config/config.ini', 'utf-8'));
+const crypto = require('crypto');
+const cryptoAlgo = 'aes-128-cbc';
+const cryptoPassword = 'soldalt';
+
+// funções de crypto
+function encrypt(text)
+{
+    var cipher = crypto.createCipher(cryptoAlgo, cryptoPassword)
+    var crypted = cipher.update(text, 'utf8', 'hex')
+    crypted += cipher.final('hex');
+    return crypted
+}
+
+function decrypt(crypted)
+{
+    var decipher = crypto.createDecipher(cryptoAlgo, cryptoPassword)
+    var text = decipher.update(crypted, 'hex', 'utf8')
+    text += decipher.final('utf8');
+    return text
+}
 
 global['default_url'] = 'http://127.0.0.1:8000/';
 global['Vendedor'] = '';
@@ -20,8 +40,8 @@ global['Vendedor_id'] = 0;
 global['is_admin'] = false;
 global['Cliente'] = 'Cliente';
 global['Cliente_id'] = 0;
-global['LojaNome'] = config.storeName;
-global['LojaCEP'] = config.storeCEP;
+global['LojaNome'] = decrypt(config.storeName);
+global['LojaCEP'] = decrypt(config.storeCEP);
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
