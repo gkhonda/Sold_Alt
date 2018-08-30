@@ -1,7 +1,6 @@
 // import { ipcRenderer } from 'electron';
 
 // This is the renderer
-
 const {getCurrentWindow} = require('electron').remote;
 
 let win;
@@ -42,8 +41,6 @@ var login = function () {
 
     // Cria um post request pro endereço (local), que ta rodando o meu Django
     $.post("http://127.0.0.1:8000/login/", data).done(function (back) {
-
-            console.log(back);
 
             if (back['isAuth'] === false) {
                 ipcRenderer.send('login',

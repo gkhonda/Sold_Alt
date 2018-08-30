@@ -1,0 +1,42 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    height: 90%;
+}
+
+.infos {
+    padding: 0 50px 0 50px;
+}
+
+.infos h3 {
+    text-align: right;
+}
+
+h3 {
+    font-size: 15px;
+}
+
+.loja {
+    float: right;
+}
+
+.vendedor {
+    float: left;
+}
+
+.max-size {
+    width: 100%;
+    margin: auto;
+    padding: 0 50px 0 50px;
+}
+
+footer {
+    padding-left: 50px;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    left: 0;
+    /*text-align: center;*/
+}

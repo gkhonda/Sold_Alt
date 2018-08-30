@@ -8,6 +8,7 @@ const mainWindow = require('./mainWindow');
 const mainWithdraw = require('./mainWithdraw');
 const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
+const mainReport = require('./mainReport');
 
 // para mexer com o config file
 const ini = require('ini');
@@ -96,13 +97,6 @@ ipcMain.on('sangria', (e, args) => {
     mainWithdraw.createWindow({'url': 'src/html/withdraw.html'})
 });
 
-ipcMain.on('pdf', (e, saleID) => {
-
-    const win = new BrowserWindow({
-        webPreferences: {
-            plugins: true
-        }
-    });
-
-    win.loadURL(global['default_url'] + 'reports/tax_coupom/' + saleID);
+ipcMain.on('pdf', (e, args) => {
+    mainReport.createWindow(args);
 });

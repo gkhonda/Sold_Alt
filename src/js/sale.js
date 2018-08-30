@@ -342,14 +342,10 @@ $('#end-sale').click(function () {
                     });
 
             } else {
-                ipcRenderer.send('login',
-                    {
-                        'type': 'happy',
-                        'message': 'Sucesso!',
-                        'text': 'Venda cadastrada!'
-                    });
-
-                ipcRenderer.send('pdf', back['SaleId']);
+                send['url'] = 'src/html/report.html';
+                send['productList'] = list_of_products;
+                send['client'] = $('#spam-name-customer').text();
+                ipcRenderer.send('pdf', send);
 
                 reset_sell();
                 back_start();

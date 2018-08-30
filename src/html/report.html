@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/report.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Pueri Store</h1>
+
+<div class="infos clearfix">
+    <h3 class="vendedor">Vendedor: <span id="vendedor-id">Michel</span></h3>
+
+    <div class="loja">
+        <h3>Unidade: <span id="loja">Verbo Divino</span></h3>
+        <h3 id="time">23:40</h3>
+    </div>
+</div>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<div class="max-size">
+    <table class="table table-striped" id="client-table">
+        <thead>
+        <tr>
+            <th><abbr title="Produto">Produto</abbr></th>
+            <th>Tamanho</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody id="customerTable">
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <h3>Total da venda: <span id="totalSale">-</span></h3>
+</footer>
+<script src="../../public/vendor/jquery-3.2.1.min.js"></script>
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script>
+
+    // You can also require other files to run in this process
+    require('../js/report.js')
+</script>
+
+</body>
+
+</html>

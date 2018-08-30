@@ -19,8 +19,6 @@ exports.createWindow = (args) => {
 
     this.win = window.createWindow(windowOptions);
 
-    console.log(args);
-
     // Load main window content
     this.win.showUrl(args['url'], args, () => {
     });
