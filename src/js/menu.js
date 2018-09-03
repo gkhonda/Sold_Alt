@@ -46,4 +46,8 @@ $('#storage').on('click', function () {
 
 $('#search-sale').on('click', function () {
     win.showURL('src/html/search_sale.html')
+})
+
+$('#reports-menu').on('click', function () {
+    win.showURL('src/html/reports_menu.html')
 });
