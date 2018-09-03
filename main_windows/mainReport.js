@@ -1,4 +1,3 @@
-const {BrowserWindow} = require('electron');
 const window = require('electron-window');
 const fs = require('fs');
 const os = require('os');
@@ -10,10 +9,10 @@ exports.win;
 exports.createWindow = (args) => {
 
     const windowOptions = {
-        width: 800,
-        height: 600,
-        autoHideMenuBar: true,
-        // fullscreen: true,
+        width: 0,
+        height: 0,
+        frame: false,
+        show: false
     };
 
     this.win = window.createWindow(windowOptions);
@@ -35,7 +34,7 @@ exports.createWindow = (args) => {
                 });
 
                 winPDF.loadURL(path.resolve(__dirname) + '/../print.pdf');
-                // this.win.close();
+                this.win.close();
             })
         })
     });
