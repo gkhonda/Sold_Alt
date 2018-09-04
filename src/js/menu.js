@@ -1,13 +1,10 @@
-require('electron-window').parseArgs()
-const {BrowserWindow, getCurrentWindow} = require('electron').remote;
+require('electron-window').parseArgs();
+const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
-
 let win;
 
 // Para manipular a Janela Atual
 win = getCurrentWindow();
-
-console.log(window.__args__);
 
 $('#sale').on('click', function (e) {
     // Cria o get request para pegar os produtos
@@ -37,7 +34,6 @@ $('#sale').on('click', function (e) {
 
 $('#sangria').on('click', function () {
     ipcRenderer.send('sangria', '');
-    // win.showUrl('src/html/withdraw.html', {});
 });
 
 $('#storage').on('click', function () {
@@ -46,7 +42,7 @@ $('#storage').on('click', function () {
 
 $('#search-sale').on('click', function () {
     win.showURL('src/html/search_sale.html')
-})
+});
 
 $('#reports-menu').on('click', function () {
     win.showURL('src/html/reports_menu.html')

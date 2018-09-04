@@ -7,7 +7,7 @@ let now = new Date();
 let day = ("0" + now.getDate()).slice(-2);
 let month = ("0" + (now.getMonth() + 1)).slice(-2);
 let today = now.getFullYear() + "-" + (month) + "-" + (day);
-let y = now.getFullYear() + "-" + (month) + "-" + (day - 10);
+let y = now.getFullYear() + "-" + (month) + "-" + (day);
 let id;
 
 // Declarações jQuery -> acho mais organizados fazermos assim sempre, para não chamar os seletores várias vezes.

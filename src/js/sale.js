@@ -361,7 +361,7 @@ $('#end-sale').click(function () {
                     });
 
             } else {
-                send['url'] = 'src/html/report.html';
+                send['url'] = 'src/reports/html/tax_cupom.html';
                 send['productList'] = list_of_products;
                 send['client'] = $('#spam-name-customer').text();
                 ipcRenderer.send('pdf', send);
