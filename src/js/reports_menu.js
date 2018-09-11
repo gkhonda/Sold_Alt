@@ -19,11 +19,12 @@ const datepicker2 = $("#datepicker2");
 const datepicker3 = $("#datepicker3");
 const datepicker4 = $("#datepicker4");
 const selectStore1 = $("#select-store");
+const selectStore2 = $("#select-store2");
 
 datepicker1.val(today);
 datepicker2.val(today2);
 datepicker3.val(today);
-datepicker4.val(today);
+datepicker4.val(today2);
 
 $('#btn-pesquisa').on('click', function () {
     data = {
@@ -34,6 +35,28 @@ $('#btn-pesquisa').on('click', function () {
     $.get(remote.getGlobal('default_url') + "reports/report_by_payment", data).done(function (back) {
         console.log(back);
         back['url'] = 'src/reports/html/payment_report.html';
+        ipcRenderer.send('pdf', back);
+    }).fail(function () {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro de conexão.',
+                'text': "Verifique a conexão com a Internet."
+            })
+    });
+});
+
+$('#btn-pesquisa2').on('click', function () {
+    data = {
+        'initial_date': datepicker3.val(),
+        'final_date': datepicker4.val(),
+        'store' : selectStore2.val()
+    };
+    $.get(remote.getGlobal('default_url') + "reports/report_by_products", data).done(function (back) {
+        console.log(back);
+        back['url'] = 'src/reports/html/product_report.html';
+        back['from'] = datepicker3.val();
+        back['to'] = datepicker4.val();
         ipcRenderer.send('pdf', back);
     }).fail(function () {
         ipcRenderer.send('login',

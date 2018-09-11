@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/product_report.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-filter">
+    <h1>Venda Por Produto</h1>
+</div>
+<div class="infos clearfix">
+    <div class="loja">
+        <h3 class="pull-left">De <span id="from">-</span> a <span id="to"></span></h3>
+        <h3 class="pull-right">Unidade: <span id="loja">Verbo Divino</span></h3>
+    </div>
+</div>
+
+<div class="max-size">
+    <table class="table table-striped" id="tableModal">
+        <thead>
+        <tr>
+            <th>C</th>
+            <th>Descricao</th>
+            <th>Tamanho</th>
+            <th>Qnt</th>
+        </tr>
+        </thead>
+        <tbody id="table">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script src="../../../public/vendor/chartjs/Chart.bundle.min.js"></script>
+
+<script>
+
+    // You can also require other files to run in this process
+    require('../js/product_report.js')
+</script>
+
+
+</body>
+
+</html>

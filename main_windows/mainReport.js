@@ -9,8 +9,8 @@ exports.win;
 exports.createWindow = (args) => {
 
     const windowOptions = {
-        width: 800,
-        height: 1200,
+        width: 0,
+        height: 0,
         frame: false,
         show: false
     };
@@ -34,7 +34,7 @@ exports.createWindow = (args) => {
                 });
 
                 winPDF.loadURL(path.resolve(__dirname) + '/../print.pdf');
-                // this.win.close();
+                this.win.close();
             })
         })
     });
