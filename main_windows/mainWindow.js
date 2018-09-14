@@ -14,7 +14,7 @@ exports.createWindow = (args) => {
         minWidth: 1100,
         minHeight: 600,
         autoHideMenuBar: true,
-        // fullscreen: true,
+        fullscreen: false,
     };
 
     this.win = window.createWindow(windowOptions);

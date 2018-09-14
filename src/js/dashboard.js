@@ -6,7 +6,12 @@ const colExpand = $('.columns-expand');
 const colCollapse = $('.columns-collapse');
 const table = $('#table-sales');
 
-initializePage("", true);
+
+(function ($) {
+    // USE STRICT
+    "use strict";
+    initializePage("", true);
+})(jQuery);
 
 $('#dashboad-options').on('click', 'li', function () {
     let store = $(this).text();

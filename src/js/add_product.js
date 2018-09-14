@@ -4,11 +4,15 @@ const {ipcRenderer} = require('electron');
 // Para manipular a Janela Atual
 let win = getCurrentWindow();
 const sent = $('#sent');
-
 let prices = {
     cost: 0,
     sell: 0
 };
+
+// Include navbar
+$(function () {
+    $("#navbar").load("../html/navbar_adm.html");
+});
 
 function sendInfo() {
     let name = $('#name').val();

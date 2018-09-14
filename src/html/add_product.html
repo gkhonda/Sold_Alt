@@ -3,60 +3,75 @@
 <head>
     <title>Pueri Store - Venda e Gerenciamento</title>
     <meta charset="UTF-8">
+    <link href="../../public/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/add_product.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body>
 
-<div id="all">
-    <h1>Insira um produto</h1>
-    <div id="body-form">
-        <div id="logo">
-            <img src="../../public/images/pueri.png" alt="">
+<div id="navbar"></div>
+
+<section class="p-t-25">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title-4">Insira um Produto</h1>
+                <hr class="line-seprate">
+            </div>
         </div>
-        <form>
-            <div id="product" class='data-div'>
-                <label for="name">Nome:</label>
-                <input type="text" name="name" id="name" class="data" placeholder="nome">
-            </div>
+    </div>
+</section>
 
-            <div id="dropdown" class="data-div">
-                <label for="size">Tamanho:</label>
-                <select id="size" class="data">
-                    <option disabled selected>Tamanho</option>
-                    <option>00</option>
-                    <option>02</option>
-                    <option>04</option>
-                    <option>06</option>
-                    <option>08</option>
-                    <option>10</option>
-                    <option>12</option>
-                    <option>14</option>
-                    <option>PP</option>
-                    <option>P</option>
-                    <option>M</option>
-                    <option>G</option>
-                    <option>GG</option>
-                </select>
-            </div>
+<div id="body-form">
+    <div class="col-md-12">
+        <div class="container">
+            <div class="row">
+                <form class="form-group">
+                    <div id="product" class='input-group'>
+                        <label for="name">Nome:</label>
+                        <input type="text" name="name" id="name" class="data form-control" placeholder="Nome">
+                    </div>
 
-            <div class="prices data-div" id="price_in_div">
-                <label for="price_in">Preço de custo:</label>
-                <input type="text" name="price_in" id="price_in" class="data" placeholder="R$00,00">
-            </div>
+                    <div id="dropdown" class="input-group">
+                        <label for="size">Tamanho:</label>
+                        <select id="size" class="data form-control">
+                            <option disabled selected>Tamanho</option>
+                            <option>00</option>
+                            <option>02</option>
+                            <option>04</option>
+                            <option>06</option>
+                            <option>08</option>
+                            <option>10</option>
+                            <option>12</option>
+                            <option>14</option>
+                            <option>PP</option>
+                            <option>P</option>
+                            <option>M</option>
+                            <option>G</option>
+                            <option>GG</option>
+                        </select>
+                    </div>
 
-            <div class="prices data-div" id="price_out_div">
-                <label for="price_out">Preço de venda:</label>
-                <input type="text" name="price_out" id="price_out" class="data" placeholder="R$00,00">
-            </div>
+                    <div class="prices input-group" id="price_in_div">
+                        <label for="price_in">Preço de custo:</label>
+                        <input type="text" name="price_in" id="price_in" class="data form-control"
+                               placeholder="R$00,00">
+                    </div>
 
-            <div id='output'>
-                <p id="sent"></p>
-                <p class="btn btn-lg orange">Enviar</p>
-            </div>
+                    <div class="prices input-group" id="price_out_div">
+                        <label for="price_out">Preço de venda:</label>
+                        <input type="text" name="price_out" id="price_out" class="data form-control"
+                               placeholder="R$00,00">
+                    </div>
 
-        </form>
+                    <div id='output'>
+                        <p id="sent"></p>
+                        <p class="btn btn-lg orange">Enviar</p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -70,6 +85,5 @@
     require('../js/add_product.js')
 </script>
 </body>
-
-
+<link rel="stylesheet" type="text/css" href="../css/add_product.css">
 </html>
