@@ -1,16 +1,15 @@
-require('electron-window').parseArgs()
+require('electron-window').parseArgs();
+let type = window.__args__['type'];
+let message = window.__args__['message'];
+let text = window.__args__['text'];
 
-let type = window.__args__['type']
-let message = window.__args__['message']
-let text = window.__args__['text']
+$('#div').addClass(type);
+$('.btn').addClass(type);
 
-$('#div').addClass(type)
-$('.btn').addClass(type)
+$('#message').text(message);
 
-$('#message').text(message)
-
-$('#text').text(text)
+$('#text').text(text);
 
 $("button").on('click', function (e) {
     window.close();
-})
+});

@@ -216,7 +216,6 @@ let add_payment = function () {
     if (payment_method === 'Cheque')
     {
         installment = parseFloat($("#lblParcelas").val());
-        console.log('installment: ' + installment)
     }
 
     if (price_sell === price_sell) {

@@ -53,7 +53,6 @@ $('#btn-pesquisa2').on('click', function () {
         'store' : selectStore2.val()
     };
     $.get(remote.getGlobal('default_url') + "reports/report_by_products", data).done(function (back) {
-        console.log(back);
         back['url'] = 'src/reports/html/product_report.html';
         back['from'] = datepicker3.val();
         back['to'] = datepicker4.val();

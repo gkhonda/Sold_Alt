@@ -1,5 +1,4 @@
 const electron = require('electron');
-const {BrowserWindow} = require('electron');
 
 // Module to control application life.
 const {app, ipcMain} = electron;
@@ -119,4 +118,12 @@ ipcMain.on('sangria', (e, args) => {
 
 ipcMain.on('pdf', (e, args) => {
     mainReport.createWindow(args);
+});
+
+ipcMain.on('dashboard', (e, args) => {
+    try {
+        mainWindow.showUrl(args);
+    } catch (err) {
+        mainWindow.createWindow(args);
+    }
 });

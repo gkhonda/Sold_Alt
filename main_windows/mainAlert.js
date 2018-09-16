@@ -1,7 +1,3 @@
-const {BrowserWindow} = require('electron');
-
-const path = require('path');
-const url = require('url');
 const window = require('electron-window');
 
 exports.win;

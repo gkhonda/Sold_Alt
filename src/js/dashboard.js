@@ -1,3 +1,4 @@
+require('electron-window').parseArgs();
 const profit = $('#profit');
 const soldItens = $('#sold-itens');
 const dinheiro = $('#dinheiro');
@@ -6,11 +7,13 @@ const colExpand = $('.columns-expand');
 const colCollapse = $('.columns-collapse');
 const table = $('#table-sales');
 
+const back = window.__args__;
 
 (function ($) {
     // USE STRICT
     "use strict";
-    initializePage("", true);
+    $("#navbar").load("../html/navbar_adm.html");
+    initializePage(back, "");
 })(jQuery);
 
 $('#dashboad-options').on('click', 'li', function () {
@@ -29,23 +32,15 @@ $('#dashboad-options').on('click', 'li', function () {
     $('#text-dash').text($(this).text());
 });
 
-function initializePage(store, first) {
-    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja': store}).done(function (back) {
-        initializeChart(back, store);
-        soldItens.text(back['itens']);
-        profit.text("R$ " + back['lucro'].toFixed(2));
-        dinheiro.text("R$ " + back['dinheiro_caixa'].toFixed(2));
-        cheque.text("R$ " + back['cheque_caixa'].toFixed(2));
+function initializePage(back, store) {
+    initializeChart(back, store);
+    soldItens.text(back['itens']);
+    profit.text("R$ " + back['lucro'].toFixed(2));
+    dinheiro.text("R$ " + back['dinheiro_caixa'].toFixed(2));
+    cheque.text("R$ " + back['cheque_caixa'].toFixed(2));
 
-        if (first) {
-            back['lojas'].forEach(function (p) {
-                $('#dashboad-options').append("<li><a href=\"#\">" + p + "</a></li>");
-            });
-        }
+    updateTable(back)
 
-        updateTable(back)
-
-    });
 }
 
 function updateTable(data) {
@@ -60,7 +55,7 @@ function updateTable(data) {
         sortable.push([vehicle, list[vehicle]]);
     }
 
-    sortable.sort(function(a, b) {
+    sortable.sort(function (a, b) {
         return a[1] - b[1];
     });
 

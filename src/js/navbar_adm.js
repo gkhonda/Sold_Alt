@@ -1,3 +1,15 @@
+const {ipcRenderer} = require('electron');
+
+$('#dashboad-options').on('click', 'li', function () {
+    let store = $(this).text();
+    if (store === "Central")
+        store = "";
+    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja': store}).done(function (back) {
+        back['url'] = 'src/html/dashboard.html';
+        ipcRenderer.send('dashboard', back)
+    })
+});
+
 (function ($) {
     // USE STRICT
     "use strict";
