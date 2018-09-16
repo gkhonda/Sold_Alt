@@ -33,7 +33,19 @@ $('#sale').on('click', function (e) {
 });
 
 $('#sangria').on('click', function () {
-    ipcRenderer.send('sangria', '');
+    if (navigator.onLine)
+    {
+        ipcRenderer.send('sangria', '');
+    }
+    else
+    {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro.',
+                'text': 'Verifique a conexão'
+            })
+    }
 });
 
 $('#storage').on('click', function () {
@@ -41,9 +53,43 @@ $('#storage').on('click', function () {
 });
 
 $('#search-sale').on('click', function () {
-    win.showURL('src/html/search_sale.html')
+    if (navigator.onLine)
+    {
+        ipcRenderer.send('search-sale', '');
+    }
+    else
+    {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro.',
+                'text': 'Verifique a conexão'
+            })
+    }
 });
 
 $('#reports-menu').on('click', function () {
-    win.showURL('src/html/reports_menu.html')
+    if (navigator.onLine)
+    {
+        win.showURL('src/html/reports_menu.html')
+    }
+    else
+    {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro.',
+                'text': 'Verifique a conexão'
+            })
+    }
 });
+
+$('#log-out').on('click', function() {
+    ipcRenderer.send('login',
+    {
+        'type' : 'happy',
+        'message': 'Confirmação',
+        'text': 'Deseja voltar para tela de login?',
+        'confirmation': 'True'
+    })
+})

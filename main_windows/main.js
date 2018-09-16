@@ -72,7 +72,12 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-// Comunicação Login
+// Comunicação login
+ipcMain.on('ready', () => {
+    mainWindow.createWindow({'url': 'src/html/login.html'})
+});
+
+// Comunicação popups
 ipcMain.on('login', (e, args) => {
     mainAlert.createWindow(args)
 });
@@ -113,11 +118,17 @@ ipcMain.on('menu', (e, args) => {
     mainWindow.createWindow(args)
 });
 
-// Comunicacao menu normal
+// Comunicacao menu sangria
 ipcMain.on('sangria', (e, args) => {
     mainWithdraw.createWindow({'url': 'src/html/withdraw.html'})
 });
 
+// Tela pdf
 ipcMain.on('pdf', (e, args) => {
     mainReport.createWindow(args);
 });
+
+// Tela de procurar venda
+ipcMain.on('search-sale', (e, args) => {
+    mainWindow.createWindow({'url' : 'src/html/search_sale.html'})
+})
