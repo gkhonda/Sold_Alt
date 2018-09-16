@@ -1,5 +1,6 @@
 require('electron-window').parseArgs();
 const {getCurrentWindow} = require('electron').remote;
+const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
 let win;
 
@@ -92,3 +93,7 @@ $('#log-out').on('click', function() {
         'confirmation': 'True'
     })
 })
+
+var user = remote.getGlobal('Vendedor');
+var headerText = "Bem Vinda/o " + user +"!";
+$('#user').text(headerText)

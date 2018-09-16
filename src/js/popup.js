@@ -24,6 +24,7 @@ if (isConfirmation === "True")
 }
 
 $("#confirmation-btn").on('click', function (e) {
-	ipcRenderer.send('ready');
+	ipcRenderer.send('ready');	
+	window.close();
 })
 

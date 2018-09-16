@@ -1,4 +1,5 @@
 const electron = require('electron');
+const remote = require('electron').remote;
 
 // Module to control application life.
 const {app, ipcMain} = electron;
