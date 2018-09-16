@@ -82,7 +82,6 @@ submitBtn.on('click', function () {
     form.append('my_buffer', new Buffer(10));
     form.append('sample_sheet', fs.createReadStream(file));
 
-    console.log(form);
     form.submit(remote.getGlobal('default_url') + 'store_product/getdata', function(err, res) {
         if (err) {
             ipcRenderer.send('login',

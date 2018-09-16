@@ -9,7 +9,6 @@ win = getCurrentWindow();
 $('#sale').on('click', function (e) {
     // Cria o get request para pegar os produtos
     $.get("http://127.0.0.1:8000/product/read").done(function (back) {
-        console.log(back);
         if (back['Error'] === true) {
             ipcRenderer.send('login',
                 {

@@ -1,5 +1,4 @@
 require('electron-window').parseArgs();
-console.log(window.__args__);
 
 const productTable = $('#table');
 const storeSpan = $('#loja');

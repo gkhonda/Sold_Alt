@@ -1,10 +1,10 @@
-const {BrowserWindow} = require('electron');
-
-const path = require('path');
-const url = require('url');
 const window = require('electron-window');
 
 exports.win;
+
+exports.showUrl = (args) => {
+    this.win.showUrl(args['url'], args, () => {});
+};
 
 exports.createWindow = (args) => {
 
@@ -20,8 +20,7 @@ exports.createWindow = (args) => {
     this.win = window.createWindow(windowOptions);
 
     // Load main window content
-    this.win.showUrl(args['url'], args, () => {
-    });
+    this.win.showUrl(args['url'], args, () => {});
 
     // Handling closing 
 

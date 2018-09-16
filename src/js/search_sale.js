@@ -71,7 +71,6 @@ tableSearch.on('click', 'tr td img', function () {
             modalTable.append('<tr><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.size + '</td><td>' + c.quantity + '</td></tr>')
         });
         $('.modal').css('display', 'block');
-        console.log(back);
     }).fail(function () {
         console.log("fail")
     });

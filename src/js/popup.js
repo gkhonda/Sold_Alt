@@ -5,13 +5,12 @@ let type = window.__args__['type']
 let message = window.__args__['message']
 let text = window.__args__['text']
 let isConfirmation = window.__args__['confirmation']
+$('#div').addClass(type);
+$('.btn').addClass(type);
 
-$('#div').addClass(type)
-$('.btn').addClass(type)
+$('#message').text(message);
 
-$('#message').text(message)
-
-$('#text').text(text)
+$('#text').text(text);
 
 $("#default-btn").on('click', function (e) {
     window.close();
@@ -27,3 +26,4 @@ if (isConfirmation === "True")
 $("#confirmation-btn").on('click', function (e) {
 	ipcRenderer.send('ready');
 })
+

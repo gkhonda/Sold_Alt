@@ -13,17 +13,15 @@ exports.createWindow = (args) => {
         height: 220,
         autoHideMenuBar: true,
         frame: false,
-    }
+    };
 
     this.win = window.createWindow(windowOptions)
 
-    this.win.showUrl('src/html/menu_adm.html', args, () => {
-        console.log('the window should be showing with the contents of the URL now')
-    })
+    this.win.showUrl('src/html/menu_adm.html', args, () => {});
     // Handling closing 
 
     this.win.on('closed', () => {
         this.win = null
     })
 
-}
+};
