@@ -13,6 +13,7 @@ const mainReport = require('./mainReport');
 // para mexer com o config file
 const ini = require('ini');
 const fs = require('fs');
+const os = require('os');
 const config = ini.parse(fs.readFileSync('./config/config.ini', 'utf-8'));
 const crypto = require('crypto');
 const cryptoAlgo = 'aes-128-cbc';
@@ -76,7 +77,7 @@ ipcMain.on('login', (e, args) => {
     mainAlert.createWindow(args)
 });
 
-// Comunicacao menu
+// Comunicacao menu adm
 ipcMain.on('menu_admin', (e, args) => {
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
@@ -84,7 +85,7 @@ ipcMain.on('menu_admin', (e, args) => {
     mainMenu_admin.createWindow(args)
 });
 
-// Comunicacao menu
+// Comunicacao menu vendedor
 ipcMain.on('menu_not_admin', (e, args) => {
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
