@@ -120,10 +120,6 @@ ipcMain.on('pdf', (e, args) => {
     mainReport.createWindow(args);
 });
 
-ipcMain.on('dashboard', (e, args) => {
-    try {
-        mainWindow.showUrl(args);
-    } catch (err) {
-        mainWindow.createWindow(args);
-    }
+ipcMain.on('update-window', (e, args) => {
+    mainWindow.showUrl(args);
 });

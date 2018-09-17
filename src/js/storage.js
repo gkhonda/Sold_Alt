@@ -5,20 +5,23 @@ const remote = require('electron').remote;
 const FormData = require('form-data');
 const fs = require('fs');
 
-let win;
-
 // Para manipular a Janela Atual
-win = getCurrentWindow();
+let win = getCurrentWindow();
 
-var file;
-var type;
+let file;
+let type;
 
 // Manipulação do DOM
-btnChooser = $('#btnChooser');
-textContainer = $('#text-container');
-imgContainer = $('#img-container');
-downloadSheet = $('#downloadSheet');
-submitBtn = $('#submit-btn');
+const btnChooser = $('#btnChooser');
+const textContainer = $('#text-container');
+const imgContainer = $('#img-container');
+const downloadSheet = $('#downloadSheet');
+const submitBtn = $('#submit-btn');
+
+// Include navbar
+$(function () {
+    $("#navbar").load("../html/navbar_adm.html");
+});
 
 downloadSheet.on('click', function () {
     win.showUrl(remote.getGlobal('default_url') + 'store_product/read');
@@ -76,7 +79,7 @@ submitBtn.on('click', function () {
         return;
     }
 
-    var form = new FormData();
+    let form = new FormData();
     form.append('type', type);
     form.append('store', 'Verbo Divino');
     form.append('my_buffer', new Buffer(10));
