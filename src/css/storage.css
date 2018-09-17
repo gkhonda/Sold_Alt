@@ -32,9 +32,10 @@ h2 img {
     font-size: .25em;
 }
 
-h2 a {
+a {
     font-size: .75em;
     padding-left: .5em;
+    margin: .75em 0;
     cursor: pointer;
 }
 
