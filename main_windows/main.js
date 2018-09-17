@@ -12,6 +12,7 @@ const mainReport = require('./mainReport');
 // para mexer com o config file
 const ini = require('ini');
 const fs = require('fs');
+const os = require('os');
 const config = ini.parse(fs.readFileSync('./config/config.ini', 'utf-8'));
 const crypto = require('crypto');
 const cryptoAlgo = 'aes-128-cbc';
@@ -70,12 +71,17 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-// Comunicação Login
+// Comunicação login
+ipcMain.on('ready', () => {
+    mainWindow.createWindow({'url': 'src/html/login.html'})
+});
+
+// Comunicação popups
 ipcMain.on('login', (e, args) => {
     mainAlert.createWindow(args)
 });
 
-// Comunicacao menu
+// Comunicacao menu adm
 ipcMain.on('menu_admin', (e, args) => {
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
@@ -83,7 +89,7 @@ ipcMain.on('menu_admin', (e, args) => {
     mainMenu_admin.createWindow(args)
 });
 
-// Comunicacao menu
+// Comunicacao menu vendedor
 ipcMain.on('menu_not_admin', (e, args) => {
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
@@ -111,15 +117,29 @@ ipcMain.on('menu', (e, args) => {
     mainWindow.createWindow(args)
 });
 
-// Comunicacao menu normal
+// Comunicacao menu sangria
 ipcMain.on('sangria', (e, args) => {
     mainWithdraw.createWindow({'url': 'src/html/withdraw.html'})
 });
 
+// Tela pdf
 ipcMain.on('pdf', (e, args) => {
     mainReport.createWindow(args);
 });
 
 ipcMain.on('update-window', (e, args) => {
     mainWindow.showUrl(args);
+});
+
+// Tela de procurar venda
+ipcMain.on('search-sale', (e, args) => {
+    mainWindow.createWindow({'url' : 'src/html/search_sale.html'})
+});
+
+ipcMain.on('dashboard', (e, args) => {
+    try {
+        mainWindow.showUrl(args);
+    } catch (err) {
+        mainWindow.createWindow(args);
+    }
 });
