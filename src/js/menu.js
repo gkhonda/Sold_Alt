@@ -1,7 +1,7 @@
 require('electron-window').parseArgs();
 const {getCurrentWindow} = require('electron').remote;
-const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
+const remote = require('electron').remote;
 let win;
 
 // Para manipular a Janela Atual
@@ -9,7 +9,7 @@ win = getCurrentWindow();
 
 $('#sale').on('click', function (e) {
     // Cria o get request para pegar os produtos
-    $.get("http://127.0.0.1:8000/product/read").done(function (back) {
+    $.get(remote.getGlobal('default_url') + "product/read").done(function (back) {
         if (back['Error'] === true) {
             ipcRenderer.send('login',
                 {

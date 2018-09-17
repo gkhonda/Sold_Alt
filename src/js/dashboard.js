@@ -48,7 +48,7 @@ function updateTable(data) {
         'Verbo Divino': data['Verbo Divino'][0],
         'Aldeia da Serra': data['Aldeia da Serra'][0],
         'Itaim': data['Itaim'][0],
-        'Aclimacao': data['Aclimacao'][0]
+        'Aclimação': data['Aclimação'][0]
     };
     var sortable = [];
     for (var vehicle in list) {

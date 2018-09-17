@@ -1,5 +1,6 @@
 const {ipcRenderer} = require('electron');
 const {getCurrentWindow} = require('electron').remote;
+const remote = require('electron').remote;
 
 $(".sale").on('click', function () {
     ipcRenderer.send('menu', {'url': 'src/html/menu.html'});
@@ -8,7 +9,7 @@ $(".sale").on('click', function () {
 });
 
 $(".admin").on('click', function () {
-    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja': ""}).done(function (back) {
+    $.get(remote.getGlobal('default_url') + "sale/return_infos", {'loja': ""}).done(function (back) {
         back['url'] = 'src/html/dashboard.html';
         ipcRenderer.send('new-main-screen', back)
         window = getCurrentWindow();
