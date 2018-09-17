@@ -128,10 +128,14 @@ ipcMain.on('pdf', (e, args) => {
     mainReport.createWindow(args);
 });
 
+ipcMain.on('update-window', (e, args) => {
+    mainWindow.showUrl(args);
+});
+
 // Tela de procurar venda
 ipcMain.on('search-sale', (e, args) => {
     mainWindow.createWindow({'url' : 'src/html/search_sale.html'})
-})
+});
 
 ipcMain.on('dashboard', (e, args) => {
     try {

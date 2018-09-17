@@ -8,8 +8,20 @@ $('#dashboad-options').on('click', 'li', function () {
         store = "";
     $.get(remote.getGlobal('default_url') + "sale/return_infos", {'loja': store}).done(function (back) {
         back['url'] = 'src/html/dashboard.html';
-        ipcRenderer.send('dashboard', back)
+        ipcRenderer.send('update-window', back)
     })
+});
+
+$('#to-product').on('click', function () {
+    ipcRenderer.send('update-window', {'url': 'src/html/add_product.html'})
+});
+
+$('#to-report').on('click', function () {
+    ipcRenderer.send('update-window', {'url': 'src/html/reports_menu.html'})
+});
+
+$('#to-storage').on('click', function () {
+    ipcRenderer.send('update-window', {'url': 'src/html/storage.html'})
 });
 
 (function ($) {

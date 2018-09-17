@@ -2,15 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="../../public/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../css/storage.css">
 </head>
 <body>
 
-<h1 class="h-text orange">Controle de Estoque</h1>
+<div id="navbar"></div>
 
-<a><h3 class="h-link" id="downloadSheet"> BAIXAR SAMPLESHEET* </h3></a>
+<section class="p-t-25">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title-4">Controle de Estoque</h1>
+                <hr class="line-seprate">
+            </div>
+        </div>
+    </div>
+</section>
+<a class="h-link" id="downloadSheet"> BAIXAR SAMPLESHEET* </a>
 
 <h5>*É sempre necessário estar com o template atualizado. Recomenda-se baixar todas as vezes</h5>
 
@@ -28,13 +37,15 @@
 <script>
 
     // Jquery
-
     $ = require('jquery');
 
     // You can also require other files to run in this process
     require('../js/storage.js')
 
 </script>
+
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<link rel="stylesheet" type="text/css" href="../css/storage.css">
 
 </body>
 </html>
