@@ -103,7 +103,7 @@ ipcMain.on('add-client-to-sale', (e, args) => {
     global['Client_id'] = args['id'];
 });
 
-// Tela de login
+// Tela de criar cliente
 ipcMain.on('new-client', (e, args) => {
     mainWindow.createWindow({'url': 'src/html/client_create.html'})
 });

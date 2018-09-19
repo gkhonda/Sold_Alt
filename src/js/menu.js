@@ -49,7 +49,31 @@ $('#sangria').on('click', function () {
 });
 
 $('#storage').on('click', function () {
-    win.showURL('src/html/storage.html')
+    if (navigator.onLine)
+    {
+        if (remote.getGlobal('is_admin') === true)
+        {
+            win.showURL('src/html/storage.html')
+        }
+        else
+        {
+            ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro de Autorização.',
+                'text': 'Somente um administrador pode ver essa tela!'
+            })
+        }
+    }
+    else
+    {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro.',
+                'text': 'Verifique a conexão'
+            })
+    }
 });
 
 $('#search-sale').on('click', function () {
@@ -71,7 +95,19 @@ $('#search-sale').on('click', function () {
 $('#reports-menu').on('click', function () {
     if (navigator.onLine)
     {
-        win.showURL('src/html/reports_menu.html')
+        if (remote.getGlobal('is_admin') === true)
+        {
+            win.showURL('src/html/reports_menu.html')
+        }
+        else
+        {
+            ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro de Autorização.',
+                'text': 'Somente um administrador pode ver essa tela!'
+            })
+        }
     }
     else
     {
