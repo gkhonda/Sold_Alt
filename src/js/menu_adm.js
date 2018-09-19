@@ -11,7 +11,7 @@ $(".sale").on('click', function () {
 $(".admin").on('click', function () {
     $.get(remote.getGlobal('default_url') + "sale/return_infos", {'loja': ""}).done(function (back) {
         back['url'] = 'src/html/dashboard.html';
-        ipcRenderer.send('new-main-screen', back)
+        ipcRenderer.send('new-main-screen', back);
         window = getCurrentWindow();
         window.close()
     }).fail(function (err) {

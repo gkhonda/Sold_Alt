@@ -25,13 +25,13 @@ datepicker4.val(today2);
 
 // Include navbar
 $(function () {
-    if (window.__args__['from'] === 'seller'){
+    if (window.__args__['from'] === 'adm') {
+        $("#navbar").load("../html/navbar_adm.html");
+        $("#title-seller").addClass('invisible');
+    } else {
         $("#navbar").load("../html/navbar-seller.html");
         $("#title-adm").addClass('invisible');
         $("#title-seller").addClass('m-b-50');
-    } else {
-        $("#navbar").load("../html/navbar_adm.html");
-        $("#title-seller").addClass('invisible');
     }
 });
 

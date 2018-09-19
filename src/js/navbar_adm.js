@@ -17,7 +17,7 @@ $('#to-product').on('click', function () {
 });
 
 $('#to-report').on('click', function () {
-    ipcRenderer.send('update-window', {'url': 'src/html/reports_menu.html'})
+    ipcRenderer.send('update-window', {'url': 'src/html/reports_menu.html', 'from': 'adm'})
 });
 
 $('#to-storage').on('click', function () {
