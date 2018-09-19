@@ -11,8 +11,35 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1 class="h-text orange">Procurar venda</h1>
 
+<div class="total">
+    <div class="vertical-menu">
+        <div class="border-orange">
+            <div class="btn-group btn-group-justified">
+                <a href="#" class="btn" id="sale"><img src="../../public/images/register.png" alt=""> Efetuar Venda</a>
+            </div>
+            <div class="btn-group btn-group-justified">
+                <a href="#" class="btn" id="storage"><img src="../../public/images/truck.png" alt=""> Transfere Estoque</a>
+            </div>
+
+            <div class="btn-group btn-group-justified">
+                <a href="#" class="btn " id="search-sale"><img src="../../public/images/search_money.png" alt=""> Pesquisa Venda</a>
+            </div>
+            <div class="btn-group btn-group-justified">
+                <a href="#" class="btn " id="reports-menu"><img src="../../public/images/report.png" alt=""> Ver Relatórios</a>
+            </div>
+            <div class="btn-group btn-group-justified">
+                <a href="#" class="btn" id="sair"> Sair</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix">
+    <h1 class="h-text orange clearfix">
+        <img alt="Brand" id="nav-img" src="../../public/images/options.png">
+        Pesquisar Venda
+    </h1>
+</div>
 <div id="myModal" class="modal">
 
     <!-- Modal content -->
@@ -115,6 +142,7 @@
 
     // You can also require other files to run in this process
     require('../js/search_sale.js')
+    require('../js/navbar_seller')
 
 </script>
 

@@ -76,6 +76,8 @@ tableSearch.on('click', 'tr td img', function () {
     });
 });
 
+$('')
+
 // Deleta a venda
 btnDelete.on('click', function () {
     if (remote.getGlobal('is_admin')) {
