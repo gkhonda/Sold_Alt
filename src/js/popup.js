@@ -1,4 +1,4 @@
-require('electron-window').parseArgs()
+require('electron-window').parseArgs();
 const {ipcRenderer} = require('electron');
 
 let type = window.__args__['type']
@@ -14,7 +14,7 @@ $('#text').text(text);
 
 $("#default-btn").on('click', function (e) {
     window.close();
-})
+});
 
 if (isConfirmation === "True")
 {
@@ -24,7 +24,7 @@ if (isConfirmation === "True")
 }
 
 $("#confirmation-btn").on('click', function (e) {
-	ipcRenderer.send('ready');	
+	ipcRenderer.send('update-window', {'url': 'src/html/login.html'});
 	window.close();
-})
+});
 

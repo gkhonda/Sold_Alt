@@ -26,6 +26,8 @@ const btnChange = $("#btn-change");
 datepicker1.val(y);
 datepicker2.val(today);
 
+$("#navbar").load("../html/navbar-seller.html");
+
 // Pesquisa vendas -> data + nome (vazio pega tudo). Sem cpf por enquanto
 btnPesquisa.on('click', function () {
     let data = {
@@ -75,8 +77,6 @@ tableSearch.on('click', 'tr td img', function () {
         console.log("fail")
     });
 });
-
-$('')
 
 // Deleta a venda
 btnDelete.on('click', function () {

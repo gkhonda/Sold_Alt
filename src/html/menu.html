@@ -5,22 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/menu.css">
 
     <title>Document</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                <img alt="Brand" src="../../public/images/options.png">
-            </a>
+<div class="clearfix">
+    <h1 class="h-text orange clearfix">
+        <img alt="Brand" id="nav-img" src="../../public/images/options.png">
+        Menu Principal
+    </h1>
+</div>
 
-            <div class="navbar-header navbar-user" id="user"></div>
-        </div>
-    </div>
-</nav>
+<div id="navbar"></div>
 
 <div class="inicio">
     <ul class="slideshow">
@@ -36,12 +34,12 @@
     <div class="container-fluid menu">
         <div class="btn-group btn-group-justified">
             <a href="#" class="btn" id="sale"><img src="../../public/images/register.png" alt=""> <br><br> Efetuar Venda</a>
-            <a href="#" class="btn" id="sangria"><img src="../../public/images/money.png" alt=""> <br><br> Sangria</a>
-            <a href="#" class="btn" id="storage"><img src="../../public/images/truck.png" alt=""> <br><br> Transfere Estoque</a>
+            <a href="#" class="btn" id="sangria"><img src="../../public/images/money.png" alt=""> <br><br> Fazer Sangria</a>
+            <a href="#" class="btn" id="storage"><img src="../../public/images/truck.png" alt=""> <br><br> Transferir Estoque</a>
         </div>
 
         <div class="btn-group btn-group-justified">
-            <a href="#" class="btn " id="search-sale"><img src="../../public/images/search_money.png" alt=""> <br><br> Pesquisa Venda</a>
+            <a href="#" class="btn " id="search-sale"><img src="../../public/images/search_money.png" alt=""> <br><br> Pesquisar Venda</a>
             <a href="#" class="btn " id="reports-menu"><img src="../../public/images/report.png" alt=""> <br><br> Ver Relatórios</a>
             <a href="#" class="btn" id="log-out">Sair</a>
         </div>
@@ -52,10 +50,11 @@
 
     // Jquery
 
-    $ = require('jquery')
+    $ = require('jquery');
 
     // You can also require other files to run in this process
-    require('../js/menu.js')
+    require('../js/menu.js');
+    require('../js/navbar_seller.js');
 </script>
 
 </body>

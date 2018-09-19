@@ -51,6 +51,7 @@ body{
     color: #ff9900;
     font-size: 1.25em;
     height: 15vh;
+    opacity: 1;
 }
 
 .vertical-menu .btn:hover {
@@ -115,6 +116,10 @@ body{
 
 .block {
     display: block;
+}
+
+.invisible {
+    display: none;
 }
 
 .btn-orange {

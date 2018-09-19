@@ -7,6 +7,8 @@ let win;
 // Para manipular a Janela Atual
 win = getCurrentWindow();
 
+$("#navbar").load("../html/navbar-seller.html");
+
 $('#sale').on('click', function (e) {
     // Cria o get request para pegar os produtos
     $.get(remote.getGlobal('default_url') + "product/read").done(function (back) {

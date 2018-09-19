@@ -1,11 +1,8 @@
 // Imports do electron
+require('electron-window').parseArgs();
 const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
 
-// Include navbar
-$(function () {
-    $("#navbar").load("../html/navbar_adm.html");
-});
 
 let now = new Date();
 let day = ("0" + now.getDate()).slice(-2);
@@ -25,6 +22,18 @@ datepicker1.val(today);
 datepicker2.val(today2);
 datepicker3.val(today);
 datepicker4.val(today2);
+
+// Include navbar
+$(function () {
+    if (window.__args__['from'] === 'seller'){
+        $("#navbar").load("../html/navbar-seller.html");
+        $("#title-adm").addClass('invisible');
+        $("#title-seller").addClass('m-b-50');
+    } else {
+        $("#navbar").load("../html/navbar_adm.html");
+        $("#title-seller").addClass('invisible');
+    }
+});
 
 $('#btn-pesquisa').on('click', function () {
     data = {
