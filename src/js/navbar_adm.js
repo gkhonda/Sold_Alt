@@ -24,6 +24,10 @@ $('#to-storage').on('click', function () {
     ipcRenderer.send('update-window', {'url': 'src/html/storage.html'})
 });
 
+$('#logout').on('click', function () {
+    ipcRenderer.send('update-window', {'url': 'src/html/login.html'})
+});
+
 (function ($) {
     // USE STRICT
     "use strict";
