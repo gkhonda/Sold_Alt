@@ -10,7 +10,7 @@ $('#name').on('keyup change', function (e) {
 });
 
 // Post request inicial para pegar a quantidade de dinheiro em caixa
-$.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
+$.post(remote.getGlobal('default_url') + "withdraw/read", {'method': 'Dinheiro', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
     $('#money-quantity').text(back['quantity'].toFixed(2));
 });
 
@@ -18,7 +18,7 @@ $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro', 'loja': rem
 $('#change-type').click(function () {
 
     if (type === "Dinheiro") {
-        $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Cheque', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
+        $.post(remote.getGlobal('default_url') + "withdraw/read", {'method': 'Cheque', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
             $('#money-quantity').text(back['quantity'].toFixed(2));
             $('.span-method').text("Cheque");
             type = "Cheque";
@@ -26,7 +26,7 @@ $('#change-type').click(function () {
 
         });
     } else {
-        $.post("http://127.0.0.1:8000/withdraw/read", {'method': 'Dinheiro', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
+        $.post(remote.getGlobal('default_url') + "withdraw/read", {'method': 'Dinheiro', 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
             $('#money-quantity').text(back['quantity'].toFixed(2));
             $('.span-method').text("Dinheiro");
             type = "Dinheiro";
@@ -114,7 +114,7 @@ let update_withdraw_database = function (is_withdraw) {
         return;
     }
 
-    $.post("http://127.0.0.1:8000/withdraw/create", args).done(function (back) {
+    $.post(remote.getGlobal('default_url') + "withdraw/create", args).done(function (back) {
         if (back['Error'] === 1) {
             ipcRenderer.send('login',
                 {
@@ -145,7 +145,7 @@ let update_withdraw_database = function (is_withdraw) {
 
 let reset = function () {
     valor = 0;
-    $.post("http://127.0.0.1:8000/withdraw/read", {'method': type, 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
+    $.post(remote.getGlobal('default_url') + "withdraw/read", {'method': type, 'loja': remote.getGlobal('LojaNome')}).done(function (back) {
         $('#money-quantity').text(back['quantity'].toFixed(2));
     });
     $('#name').val('');

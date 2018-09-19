@@ -1,5 +1,6 @@
 const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
+const remote = require('electron').remote;
 
 // Para manipular a Janela Atual
 let win = getCurrentWindow();
@@ -56,7 +57,7 @@ function sendInfo() {
         };
 
         //send to back-end
-        $.post("http://127.0.0.1:8000/product/create", data).done(function (back) {
+        $.post(remote.getGlobal('default_url') + "product/create", data).done(function (back) {
             if (back['Error'] === true) {
                 ipcRenderer.send('login',
                     {

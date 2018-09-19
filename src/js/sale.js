@@ -22,6 +22,9 @@ let list_of_products = window.__args__['Product'];
 let product_dictionary = {};
 let current_sale = {};
 
+$('#productId').val(list_of_products[0].id);
+$('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
+
 // Coloca os names na tabela
 list_of_products.forEach(function (p) {
     $('.search-table').append('<tr class="table-search"><td>' + p.id + '</td><td>' + p.name + '</td><td>' + p.size + '</td><td>' + p.price_sell + '</td></tr>');
@@ -349,9 +352,17 @@ $('#end-sale').click(function () {
             'sale_payments': current_payment,
             'installment' : installment
         };
-        $.post("http://127.0.0.1:8000/sale/create", JSON.stringify(send)
+        $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
         ).done(function (back) {
-            if (back['Error'] === true) {
+            if (back['Online'] === false) {
+                ipcRenderer.send('login',
+                {
+                    'type': 'sad',
+                    'message': 'Erro.',
+                    'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                })
+            }
+            else if (back['Error'] === true) {
                 ipcRenderer.send('login',
                     {
                         'type': 'sad',
@@ -438,7 +449,7 @@ var client_read = function (button) {
     data['cpf'] = $('#inputSearch-client').val();
 
     // Cria o get request para pegar o cliente
-    $.get("http://127.0.0.1:8000/client/read", data).done(function (back) {
+    $.get(remote.getGlobal('default_url') + "client/read", data).done(function (back) {
         if (back['Error'] === true) {
 
         } else if (back['Exists'] === true) {

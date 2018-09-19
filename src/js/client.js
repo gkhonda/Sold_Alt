@@ -1,4 +1,5 @@
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
+const remote = require('electron').remote;
 
 const path = require('path')
 const url = require('url')
@@ -6,8 +7,6 @@ const url = require('url')
 require('electron-window').parseArgs()
 
 let win, new_win
-
-const remote = require('electron').remote
 
 // Para manipular a Janela Atual
 win = getCurrentWindow()
@@ -60,7 +59,7 @@ var client_create = function () {
     }
 
     // Cria o post request para criar cliente
-    $.post("http://127.0.0.1:8000/client/create", data).done(function (back) {
+    $.post(remote.getGlobal('default_url') + "client/create", data).done(function (back) {
         if (back['Error'] === true) {
             ipcRenderer.send('login',
                 {
@@ -105,7 +104,7 @@ var client_read = function (button) {
     data['cpf'] = $('#inputSearch').val()
 
     // Cria o get request para pegar o cliente
-    $.get("http://127.0.0.1:8000/client/read", data).done(function (back) {
+    $.get(remote.getGlobal('default_url') + "client/read", data).done(function (back) {
         if (back['Error'] === true) {
             return
         } else if (back['Exists'] === true) {
@@ -160,7 +159,7 @@ var client_update = function () {
     }
 
     // Cria o post request para alterar cliente
-    $.post("http://127.0.0.1:8000/client/update", data).done(function (back) {
+    $.post(remote.getGlobal('default_url') + "client/update", data).done(function (back) {
         if (back['Error'] === true) {
             ipcRenderer.send('login',
                 {
@@ -199,7 +198,7 @@ var client_delete = function () {
         return obj;
     }, {})
 
-    $.get("http://127.0.0.1:8000/client/delete", data).done(function (back) {
+    $.get(remote.getGlobal('default_url') + "client/delete", data).done(function (back) {
         if (back['Error'] === true) {
             ipcRenderer.send('login',
                 {

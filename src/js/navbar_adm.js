@@ -1,10 +1,12 @@
 const {ipcRenderer} = require('electron');
+const {getCurrentWindow} = require('electron').remote;
+const remote = require('electron').remote;
 
 $('#dashboad-options').on('click', 'li', function () {
     let store = $(this).text();
     if (store === "Central")
         store = "";
-    $.get('http://127.0.0.1:8000/sale/return_infos', {'loja': store}).done(function (back) {
+    $.get(remote.getGlobal('default_url') + "sale/return_infos", {'loja': store}).done(function (back) {
         back['url'] = 'src/html/dashboard.html';
         ipcRenderer.send('update-window', back)
     })

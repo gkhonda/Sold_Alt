@@ -1,0 +1,13 @@
+sale1 = 
+{
+  "sale_details" : 
+  {
+    "Total": "100",
+    "Vendedor": "2",
+    "Cliente": "0",
+    "LojaNome": "Verbo Divino"
+  },
+  "sale_itens" : current_sale,
+  "sale_payments" : {"Dinheiro" : "100"},
+  "installment" : "1"
+};
