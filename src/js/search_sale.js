@@ -36,7 +36,7 @@ btnPesquisa.on('click', function () {
         'final_date': datepicker2.val(),
         'unique': false
     };
-    $.get(remote.getGlobal('default_url') + "sale/read/", data).done(function (back) {
+    $.get(remote.getGlobal('default_url') + "sale/read", data).done(function (back) {
         update_table(back['sale'])
     }).fail(function () {
         ipcRenderer.send('login',

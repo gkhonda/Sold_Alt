@@ -111,5 +111,4 @@ submitBtn.on('click', function () {
                 'text': 'Estoque modificado com sucesso!'
             });
     });
-
 });

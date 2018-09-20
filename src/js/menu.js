@@ -35,12 +35,10 @@ $('#sale').on('click', function (e) {
 });
 
 $('#sangria').on('click', function () {
-    if (navigator.onLine)
-    {
+    if (navigator.onLine) {
         ipcRenderer.send('sangria', '');
     }
-    else
-    {
+    else {
         ipcRenderer.send('login',
             {
                 'type': 'sad',
@@ -51,40 +49,18 @@ $('#sangria').on('click', function () {
 });
 
 $('#storage').on('click', function () {
-    if (navigator.onLine)
-    {
-        if (remote.getGlobal('is_admin') === true)
+    ipcRenderer.send('login',
         {
-            win.showURL('src/html/storage.html')
-        }
-        else
-        {
-            ipcRenderer.send('login',
-            {
-                'type': 'sad',
-                'message': 'Erro de Autorização.',
-                'text': 'Somente um administrador pode ver essa tela!'
-            })
-        }
-    }
-    else
-    {
-        ipcRenderer.send('login',
-            {
-                'type': 'sad',
-                'message': 'Erro.',
-                'text': 'Verifique a conexão'
-            })
-    }
+            'type': 'ok-face',
+            'message': 'Essa página não foi implementada ainda.',
+            'text': 'Espere a próxima atualização.'
+        });
 });
 
 $('#search-sale').on('click', function () {
-    if (navigator.onLine)
-    {
-        ipcRenderer.send('search-sale', '');
-    }
-    else
-    {
+    if (navigator.onLine) {
+        win.showURL('src/html/search_sale.html')
+    } else {
         ipcRenderer.send('login',
             {
                 'type': 'sad',
@@ -95,24 +71,20 @@ $('#search-sale').on('click', function () {
 });
 
 $('#reports-menu').on('click', function () {
-    if (navigator.onLine)
-    {
-        if (remote.getGlobal('is_admin') === true)
-        {
+    if (navigator.onLine) {
+        if (remote.getGlobal('is_admin') === true) {
             win.showURL('src/html/reports_menu.html')
         }
-        else
-        {
+        else {
             ipcRenderer.send('login',
-            {
-                'type': 'sad',
-                'message': 'Erro de Autorização.',
-                'text': 'Somente um administrador pode ver essa tela!'
-            })
+                {
+                    'type': 'sad',
+                    'message': 'Erro de Autorização.',
+                    'text': 'Somente um administrador pode ver essa tela!'
+                })
         }
     }
-    else
-    {
+    else {
         ipcRenderer.send('login',
             {
                 'type': 'sad',
@@ -122,16 +94,16 @@ $('#reports-menu').on('click', function () {
     }
 });
 
-$('#log-out').on('click', function() {
+$('#log-out').on('click', function () {
     ipcRenderer.send('login',
-    {
-        'type' : 'happy',
-        'message': 'Confirmação',
-        'text': 'Deseja voltar para tela de login?',
-        'confirmation': 'True'
-    })
+        {
+            'type': 'happy',
+            'message': 'Confirmação',
+            'text': 'Deseja voltar para tela de login?',
+            'confirmation': 'True'
+        })
 })
 
 var user = remote.getGlobal('Vendedor');
-var headerText = "Bem Vinda/o " + user +"!";
-$('#user').text(headerText)
+var headerText = "Bem Vinda/o " + user + "!";
+$('#user').text(headerText);
