@@ -1,6 +1,5 @@
 /* Propriedades do html */
 
-
 html {
     min-height: 100%;
 }
@@ -210,8 +209,19 @@ tr:hover .del {
 }
 
 .number-input {
-    width: 130px !important;
+    width: 130px;
     color: lightslategray;
+}
+
+.number-input p {
+    float: left;
+}
+
+.number-input .input-number {
+    float: right;
+    width: 70%;
+    text-align: center;
+    border-radius: 0;
 }
 
 .field {
