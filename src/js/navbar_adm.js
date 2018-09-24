@@ -2,18 +2,43 @@ const {ipcRenderer} = require('electron');
 const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
 
-var img_request = {
+var user_request = {
     'Vendedor_id': remote.getGlobal('Vendedor_id')
 }
 
-$.get(remote.getGlobal('default_url') + 'login/avatar', img_request).done(function(back){
-    if (!back.error){
-        $('#profile_picture').attr('src', back.avatar);
-        $('#profile_picture').attr('alt', back.user_name);
+$.get(remote.getGlobal('default_url') + 'login/get', user_request).done(function(back){
+    if (!back.error && back.avatar && back.user_name){
+        $('.profile_picture').attr('src', back.avatar);
+        $('.profile_picture').attr('alt', back.user_name);
     } else {
-        console.log('bad img');
+        $('.profile_picture').attr('src', '../../public/images/interrogation.png');
+        $('.profile_picture').attr('alt', back.user_name);
+    }
+
+    if (!back.error && back.first_name && back.last_name) {
+        $('.user_name').text(`${back.first_name} ${back.last_name}`);
+    } else if (!back.error && back.first_name) {
+        $('.user_name').text(`${back.first_name}`);
+    } else {
+        $('.user_name').text('Usuário desconhecido');
+    }
+
+    if (!back.error && back.email){
+        $('#user_email').text(back.email);
+    } else{
+        $('#user_email').text('e-mail desconhecido');
     }
 });
+
+// $.get(remote.getGlobal('default_url') + 'login/get', user_request).done(function(back) {
+//     if (!back.error && back.first_name && back.last_name) {
+//         $('.user_name').text(`${back.first_name} ${back.last_name}`);
+//     } else if (!back.error && back.first_name) {
+//         $('.user_name').text(`${back.first_name}`);
+//     } else {
+//         $('.user_name').text('Usuário desconhecido');
+//     }
+// });
 
 $('#dashboad-options').on('click', 'li', function () {
     let store = $(this).text();

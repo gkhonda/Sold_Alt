@@ -22,8 +22,10 @@ var user_request = {
 }
 
 $.get(remote.getGlobal('default_url') + 'login/get', user_request).done(function(back) {
-    if (!back.error) {
+    if (!back.error && back.first_name && back.last_name) {
         $('#user_name').text(`, ${back.first_name} ${back.last_name}!`);
+    } else if (!back.error && back.first_name) {
+        $('#user_name').text(`, ${back.first_name}!`);
     } else {
         $('#user_name').text('!');
     }
