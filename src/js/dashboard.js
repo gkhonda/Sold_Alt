@@ -8,6 +8,7 @@ const colCollapse = $('.columns-collapse');
 const table = $('#table-sales');
 
 const back = window.__args__;
+const remote = require('electron').remote;
 
 (function ($) {
     // USE STRICT
@@ -15,6 +16,18 @@ const back = window.__args__;
     $("#navbar").load("../html/navbar_adm.html");
     initializePage(back, "");
 })(jQuery);
+
+var user_request = {
+    'Vendedor_id': remote.getGlobal('Vendedor_id')
+}
+
+$.get(remote.getGlobal('default_url') + 'login/get', user_request).done(function(back) {
+    if (!back.error) {
+        $('#user_name').text(`, ${back.first_name} ${back.last_name}!`);
+    } else {
+        $('#user_name').text('!');
+    }
+});
 
 $('#dashboad-options').on('click', 'li', function () {
     let store = $(this).text();
@@ -48,7 +61,7 @@ function updateTable(data) {
         'Verbo Divino': data['Verbo Divino'][0],
         'Aldeia da Serra': data['Aldeia da Serra'][0],
         'Itaim': data['Itaim'][0],
-        'Aclimacao': data['Aclimacao'][0]
+        'Aclimação': data['Aclimação'][0]
     };
     var sortable = [];
     for (var vehicle in list) {
@@ -304,6 +317,7 @@ function initializeChart(data, store) {
         console.log(error);
     }
 })(jQuery);
+
 
 
 

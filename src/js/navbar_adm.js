@@ -2,6 +2,19 @@ const {ipcRenderer} = require('electron');
 const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
 
+var img_request = {
+    'Vendedor_id': remote.getGlobal('Vendedor_id')
+}
+
+$.get(remote.getGlobal('default_url') + 'login/avatar', img_request).done(function(back){
+    if (!back.error){
+        $('#profile_picture').attr('src', back.avatar);
+        $('#profile_picture').attr('alt', back.user_name);
+    } else {
+        console.log('bad img');
+    }
+});
+
 $('#dashboad-options').on('click', 'li', function () {
     let store = $(this).text();
     if (store === "Central")
