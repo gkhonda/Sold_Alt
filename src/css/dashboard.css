@@ -40,6 +40,13 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
 /*                   GENERIC                           */
 /*-----------------------------------------------------*/
 /* ----- Normalize ----- */
+
+
+#navbar {
+    background-color: blue;
+}
+
+
 * {
     margin: 0;
     padding: 0;
