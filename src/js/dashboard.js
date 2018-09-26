@@ -8,6 +8,7 @@ const colCollapse = $('.columns-collapse');
 const table = $('#table-sales');
 
 const back = window.__args__;
+console.log(back);
 const remote = require('electron').remote;
 
 (function ($) {
