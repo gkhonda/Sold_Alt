@@ -43,16 +43,8 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
 
 /* -------- FOR MAC ---------- */
 #navbar {
-    position: fixed;
+    position: relative;
     width: 100%;
-}
-
-.section-title {
-    margin-top: 80px;
-}
-
-#dashboad-options {
-    z-index: 100000000;
 }
 
 /* --------END FOR MAC ---------- */
