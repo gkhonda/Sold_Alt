@@ -75,7 +75,8 @@ function sendInfo() {
                     });
             }
             else {
-                win.showUrl('src/html/add_product.html', back)
+                back['url'] = 'add_product.html';
+                ipcRenderer.send('update-window', back)
             }
         }).fail(function () {
             ipcRenderer.send('login',

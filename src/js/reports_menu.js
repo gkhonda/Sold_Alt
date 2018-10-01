@@ -1,8 +1,9 @@
 // Imports do electron
-require('electron-window').parseArgs();
 const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
 
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
 let now = new Date();
 let day = ("0" + now.getDate()).slice(-2);

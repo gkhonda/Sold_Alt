@@ -32,25 +32,25 @@ $('#dashboad-options').on('click', 'li', function () {
     if (store === "Central")
         store = "";
     $.get(remote.getGlobal('default_url') + "sale/return_infos", {'loja': store}).done(function (back) {
-        back['url'] = 'src/html/dashboard.html';
+        back['url'] = 'dashboard.html';
         ipcRenderer.send('update-window', back)
     })
 });
 
 $('#to-product').on('click', function () {
-    ipcRenderer.send('update-window', {'url': 'src/html/add_product.html'})
+    ipcRenderer.send('update-window', {'url': 'add_product.html'})
 });
 
 $('#to-report').on('click', function () {
-    ipcRenderer.send('update-window', {'url': 'src/html/reports_menu.html', 'from': 'adm'})
+    ipcRenderer.send('update-window', {'url': 'reports_menu.html', 'from': 'adm'})
 });
 
 $('#to-storage').on('click', function () {
-    ipcRenderer.send('update-window', {'url': 'src/html/storage.html'})
+    ipcRenderer.send('update-window', {'url': 'storage.html'})
 });
 
 $('#logout').on('click', function () {
-    ipcRenderer.send('update-window', {'url': 'src/html/login.html'})
+    ipcRenderer.send('update-window', {'url': 'login.html'})
 });
 
 (function ($) {

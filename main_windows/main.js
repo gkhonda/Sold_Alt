@@ -1,5 +1,4 @@
 const electron = require('electron');
-const remote = require('electron').remote;
 
 // Module to control application life.
 const {app, ipcMain} = electron;
@@ -9,12 +8,15 @@ const mainWithdraw = require('./mainWithdraw');
 const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
 const mainReport = require('./mainReport');
+const mainSale = require('./mainSale');
 
 // para mexer com o config file
 const ini = require('ini');
 const fs = require('fs');
+const path = require('path');
 const os = require('os');
-const config = ini.parse(fs.readFileSync('./config/config.ini', 'utf-8'));
+const config_path = path.resolve(__dirname, '..', 'config', 'config.ini');
+const config = ini.parse(fs.readFileSync(config_path, 'utf-8'));
 const crypto = require('crypto');
 const cryptoAlgo = 'aes-128-cbc';
 const cryptoPassword = 'soldalt';
@@ -22,21 +24,22 @@ const cryptoPassword = 'soldalt';
 // funções de crypto
 function encrypt(text)
 {
-    var cipher = crypto.createCipher(cryptoAlgo, cryptoPassword)
-    var crypted = cipher.update(text, 'utf8', 'hex')
+    let cipher = crypto.createCipher(cryptoAlgo, cryptoPassword);
+    let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
     return crypted
 }
 
 function decrypt(crypted)
 {
-    var decipher = crypto.createDecipher(cryptoAlgo, cryptoPassword)
-    var text = decipher.update(crypted, 'hex', 'utf8')
+    let decipher = crypto.createDecipher(cryptoAlgo, cryptoPassword);
+    let text = decipher.update(crypted, 'hex', 'utf8');
     text += decipher.final('utf8');
     return text
 }
 
-global['default_url'] = 'http://127.0.0.1:8000/';
+// global['default_url'] = 'http://127.0.0.1:8000/';
+global['default_url'] = 'http://www.pueristore.com.br/django_sold_alt/';
 global['Vendedor'] = '';
 global['Vendedor_id'] = 0;
 global['is_admin'] = false;
@@ -49,7 +52,7 @@ global['LojaCEP'] = decrypt(config.storeCEP);
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-    mainWindow.createWindow({'url': 'src/html/login.html'})
+    mainWindow.createWindow({'url': 'login.html'})
 });
 
 // Quit when all windows are closed.
@@ -74,11 +77,12 @@ app.on('activate', () => {
 
 // Comunicação login
 ipcMain.on('ready', () => {
-    mainWindow.createWindow({'url': 'src/html/login.html'})
+    mainWindow.createWindow({'url': 'login.html'})
 });
 
 // Comunicação popups
 ipcMain.on('login', (e, args) => {
+    args['url'] = 'popup.html';
     mainAlert.createWindow(args)
 });
 
@@ -105,10 +109,14 @@ ipcMain.on('add-client-to-sale', (e, args) => {
 
 // Tela de criar cliente
 ipcMain.on('new-client', (e, args) => {
-    mainWindow.createWindow({'url': 'src/html/client_create.html'})
+    mainWindow.createWindow({'url': 'client_create.html'})
 });
 
 // Tela de venda
+ipcMain.on('new-sale', (e, args) => {
+    mainSale.createWindow(args)
+});
+
 ipcMain.on('new-main-screen', (e, args) => {
     mainWindow.createWindow(args)
 });
@@ -120,7 +128,7 @@ ipcMain.on('menu', (e, args) => {
 
 // Comunicacao menu sangria
 ipcMain.on('sangria', (e, args) => {
-    mainWithdraw.createWindow({'url': 'src/html/withdraw.html'})
+    mainWithdraw.createWindow({'url': 'withdraw.html'})
 });
 
 // Tela pdf
@@ -130,12 +138,4 @@ ipcMain.on('pdf', (e, args) => {
 
 ipcMain.on('update-window', (e, args) => {
     mainWindow.showUrl(args);
-});
-
-ipcMain.on('dashboard', (e, args) => {
-    try {
-        mainWindow.showUrl(args);
-    } catch (err) {
-        mainWindow.createWindow(args);
-    }
 });

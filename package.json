@@ -4,8 +4,8 @@
   "description": "",
   "main": "main_windows/main.js",
   "dependencies": {
+    "electron-debug": "^2.0.0",
     "electron-pdf-window": "^1.0.12",
-    "electron-prebuilt": "^1.2.3",
     "electron-window": "^0.8.1",
     "form-data": "^2.3.2",
     "ini": "^1.3.5",
@@ -13,8 +13,14 @@
     "query-string": "^6.1.0"
   },
   "devDependencies": {
-    "electron": "^2.0.2"
+    "electron": "^2.0.2",
+    "electron-builder": "^20.28.4"
   },
+  "files": [
+    "*.js",
+    "build",
+    "node_modules"
+  ],
   "scripts": {
     "start": "electron ."
   },

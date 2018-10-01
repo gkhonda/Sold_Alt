@@ -2,6 +2,8 @@ const {ipcRenderer} = require('electron');
 const remote = require('electron').remote;
 const {getCurrentWindow} = require('electron').remote;
 
+let back = {};
+
 // Para manipular a Janela Atual
 let win = getCurrentWindow();
 // JQuery selectors
@@ -22,7 +24,8 @@ $(document).click(function (event) {
 
 navbar.on('click', '.total .vertical-menu .border-orange .btn-group #menu', function (e) {
     // Cria o get request para pegar os produtos
-    win.showURL('src/html/menu.html')
+    back['url'] = 'menu.html';
+    ipcRenderer.send('update-window', back);
 });
 
 navbar.on('click', '.total .vertical-menu .border-orange .btn-group #withdraw', function () {
@@ -50,7 +53,7 @@ navbar.on('click', '.total .vertical-menu .border-orange .btn-group #storage', f
 
 navbar.on('click', '.total .vertical-menu .border-orange .btn-group #search-sale', function () {
     if (navigator.onLine) {
-        win.showURL('src/html/search_sale.html')
+        win.showUrl('search_sale.html')
     }
     else {
         ipcRenderer.send('login',
@@ -64,7 +67,8 @@ navbar.on('click', '.total .vertical-menu .border-orange .btn-group #search-sale
 
 navbar.on('click', '.total .vertical-menu .border-orange .btn-group #reports-menu', function () {
     if (navigator.onLine) {
-        win.showURL('src/html/reports_menu.html', {'from': 'seller'})
+        let back = {'url': 'menu.html', 'from': 'seller'};
+        ipcRenderer.send('update-window', back);
     }
     else {
         ipcRenderer.send('login',

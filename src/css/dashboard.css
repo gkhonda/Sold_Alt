@@ -41,10 +41,14 @@ Notes:	decreasing heading by 0.4em with every subsequent heading level
 /*-----------------------------------------------------*/
 /* ----- Normalize ----- */
 
-
+/* -------- FOR MAC ---------- */
 #navbar {
-    background-color: blue;
+    position: relative;
+    width: 100%;
+    z-index: 1000;
 }
+
+/* --------END FOR MAC ---------- */
 
 
 * {

@@ -1,12 +1,10 @@
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
 const remote = require('electron').remote;
 
-const path = require('path')
-const url = require('url')
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
-require('electron-window').parseArgs()
-
-let win, new_win
+let win;
 
 // Para manipular a Janela Atual
 win = getCurrentWindow()
@@ -79,7 +77,8 @@ var client_create = function () {
             return
         }
         else {
-            win.showUrl('src/html/client_create.html', back)
+            back['url'] = 'client_create.html';
+            ipcRenderer.send('update-window', back);
         }
     }).fail(function () {
         ipcRenderer.send('login',
@@ -112,11 +111,13 @@ var client_read = function (button) {
                 update_table(back['Clients'])
                 return
             } else if (button === "Update") {
-                win.showUrl('src/html/client_update.html', back)
+                back['url'] = 'client_update.html';
+                ipcRenderer.send('update-window', back);
                 return
             }
         } else {
-            win.showUrl('src/html/client_read.html', back)
+            back['url'] = 'client_read.html';
+            ipcRenderer.send('update-window', back);
             return
         }
     }).fail(function () {
@@ -179,7 +180,7 @@ var client_update = function () {
             return
         }
         else {
-            win.showUrl('src/html/client_update.html', back)
+            win.showUrl('client_update.html', back)
         }
     }).fail(function () {
         ipcRenderer.send('login',

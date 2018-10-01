@@ -1,6 +1,8 @@
-require('electron-window').parseArgs();
 const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
+
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
 let win;
 
@@ -371,7 +373,7 @@ $('#end-sale').click(function () {
                     });
 
             } else {
-                send['url'] = 'src/reports/html/tax_cupom.html';
+                send['url'] = 'tax_cupom.html';
                 send['productList'] = list_of_products;
                 send['client'] = $('#spam-name-customer').text();
                 ipcRenderer.send('pdf', send);
@@ -457,11 +459,13 @@ var client_read = function (button) {
                 update_table(back['Clients']);
 
             } else if (button === "Update") {
-                win.showUrl('src/html/client_update.html', back);
+                back['url'] = 'client_update.html';
+                ipcRenderer.send('update-window', back);
 
             }
         } else {
-            win.showUrl('src/html/client_read.html', back);
+            back['url'] = 'client_read.html'
+            ipcRenderer.send('update-window', back);
 
         }
     }).fail(function () {
