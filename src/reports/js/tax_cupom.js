@@ -1,6 +1,7 @@
-require('electron-window').parseArgs();
 const remote = require('electron').remote;
-console.log(window.__args__)
+console.log(22)
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
 const saleDetails = window.__args__['sale_details'];
 const saleItens = window.__args__['sale_itens'];

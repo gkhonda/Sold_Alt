@@ -1,5 +1,5 @@
-require('electron-window').parseArgs();
-console.log(window.__args__);
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
 const paymentList = $('#payment-list');
 const storeSpan = $('#loja')

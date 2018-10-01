@@ -1,4 +1,3 @@
-require('electron-window').parseArgs();
 const profit = $('#profit');
 const soldItens = $('#sold-itens');
 const dinheiro = $('#dinheiro');
@@ -7,8 +6,10 @@ const colExpand = $('.columns-expand');
 const colCollapse = $('.columns-collapse');
 const table = $('#table-sales');
 
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
+
 const back = window.__args__;
-console.log(back);
 const remote = require('electron').remote;
 
 (function ($) {

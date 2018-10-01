@@ -1,5 +1,4 @@
 const {BrowserWindow} = require('electron')
-
 const path = require('path')
 const url = require('url')
 const window = require('electron-window')
@@ -15,10 +14,19 @@ exports.createWindow = (args) => {
         frame: false,
     };
 
-    this.win = window.createWindow(windowOptions)
+    const someArgs = args;
+    const indexPath = path.resolve(__dirname, '..', 'src', 'html', args['url']);
+    const indexUrl = url.format({
+        protocol: 'file',
+        pathname: indexPath,
+        slashes: true,
+        hash: encodeURIComponent(JSON.stringify(someArgs))
+    });
 
-    this.win.showUrl('src/html/menu_adm.html', args, () => {});
-    // Handling closing 
+    this.win = new BrowserWindow(windowOptions);
+
+    // Load main window content
+    this.win.loadURL(indexUrl);
 
     this.win.on('closed', () => {
         this.win = null

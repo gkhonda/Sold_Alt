@@ -1,8 +1,9 @@
 // import { ipcRenderer } from 'electron';
-
 // This is the renderer
 const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
+let hash = window.location.hash.slice(1);
+window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
 let win;
 
@@ -51,11 +52,13 @@ var login = function () {
                         'text': "Usuário ou senha incorretos"
                     })
             } else if (back['Permission'] === "Administrador") {
+                back['url'] = 'menu_adm.html';
                 ipcRenderer.send('menu_admin', back);
                 win.close()
             } else {
                 ipcRenderer.send('menu_not_admin', back);
-                win.showUrl('src/html/menu.html', back, () => {})
+                back['url'] = 'menu.html';
+                ipcRenderer.send('update-window', back);
             }
         }
         // Lida com erro no request

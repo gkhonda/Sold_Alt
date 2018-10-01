@@ -1,7 +1,7 @@
-require('electron-window').parseArgs();
 const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
 const remote = require('electron').remote;
+
 let win;
 
 // Para manipular a Janela Atual
@@ -21,8 +21,8 @@ $('#sale').on('click', function (e) {
                 });
         }
         else {
-            back['url'] = 'src/html/sale.html';
-            ipcRenderer.send('new-main-screen', back);
+            back['url'] = 'sale.html';
+            ipcRenderer.send('new-sale', back);
         }
     }).fail(function () {
         ipcRenderer.send('login',
@@ -59,7 +59,7 @@ $('#storage').on('click', function () {
 
 $('#search-sale').on('click', function () {
     if (navigator.onLine) {
-        win.showURL('src/html/search_sale.html')
+        ipcRenderer.send('update-window', {'url': 'search_sale.html'})
     } else {
         ipcRenderer.send('login',
             {
@@ -73,7 +73,7 @@ $('#search-sale').on('click', function () {
 $('#reports-menu').on('click', function () {
     if (navigator.onLine) {
         if (remote.getGlobal('is_admin') === true) {
-            win.showURL('src/html/reports_menu.html')
+            ipcRenderer.send('update-window', {'url': 'reports_menu.html'});
         }
         else {
             ipcRenderer.send('login',

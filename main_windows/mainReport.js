@@ -1,7 +1,7 @@
-const window = require('electron-window');
+const {BrowserWindow} = require('electron');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
+const url = require('url');
 const PDFWindow = require('electron-pdf-window');
 
 exports.win;
@@ -9,13 +9,26 @@ exports.win;
 exports.createWindow = (args) => {
 
     const windowOptions = {
-        width: 0,
-        height: 0,
+        width: 1200,
+        height: 600,
         frame: false,
         show: false
     };
 
-    this.win = window.createWindow(windowOptions);
+    const someArgs = args;
+    const indexPath = path.resolve(__dirname, '..', 'src', 'reports', 'html', args['url']);
+    const indexUrl = url.format({
+        protocol: 'file',
+        pathname: indexPath,
+        slashes: true,
+        hash: encodeURIComponent(JSON.stringify(someArgs))
+    });
+
+    this.win = new BrowserWindow(windowOptions);
+
+    // Load main window content
+    this.win.loadURL(indexUrl);
+
 
     this.win.webContents.on('did-finish-load', () => {
         // Use default printing options
@@ -34,13 +47,9 @@ exports.createWindow = (args) => {
                 });
 
                 winPDF.loadURL(path.resolve(__dirname) + '/../print.pdf');
-                this.win.close();
+                // this.win.close();
             })
         })
-    });
-
-    // Load main window content
-    this.win.showUrl(args['url'], args, () => {
     });
 
     // Handling closing

@@ -2,7 +2,6 @@ const {BrowserWindow} = require('electron');
 
 const path = require('path');
 const url = require('url');
-const window = require('electron-window');
 
 exports.win;
 
@@ -11,18 +10,24 @@ exports.createWindow = (args) => {
     const windowOptions = {
         width: 1000,
         height: 450,
-        // minWidth: 1000,
-        // minHeight: 600,
         autoHideMenuBar: true,
-        // frame: false,
     };
 
-    this.win = window.createWindow(windowOptions);
-
-    this.win.showUrl('src/html/withdraw.html', '', () => {
+    const someArgs = args;
+    const indexPath = path.resolve(__dirname, '..', 'src', 'html', args['url']);
+    const indexUrl = url.format({
+        protocol: 'file',
+        pathname: indexPath,
+        slashes: true,
+        hash: encodeURIComponent(JSON.stringify(someArgs))
     });
-    // Handling closing
 
+    this.win = new BrowserWindow(windowOptions);
+
+    // Load main window content
+    this.win.loadURL(indexUrl);
+
+    // Handling closing
     this.win.on('closed', () => {
         this.win = null
     })
