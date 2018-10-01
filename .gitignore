@@ -65,6 +65,9 @@ typings/
 
 .DS_Store
 
+# Privado
+private/
+
 __pycache__/
 .idea/workspace.xml
 .idea/workspace.xml
