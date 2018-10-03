@@ -9,6 +9,7 @@ const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
 const mainReport = require('./mainReport');
 const mainSale = require('./mainSale');
+const updater = require('./updater');
 
 // para mexer com o config file
 const ini = require('ini');
@@ -52,7 +53,10 @@ global['LojaCEP'] = decrypt(config.storeCEP);
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-    mainWindow.createWindow({'url': 'login.html'})
+    mainWindow.createWindow({'url': 'login.html'});
+
+    // Check for updates after 2 seconds
+    setTimeout(updater.check, 2000);
 });
 
 // Quit when all windows are closed.

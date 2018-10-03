@@ -39,7 +39,8 @@ exports.createWindow = (args) => {
             landscape: false,
         }, (error, data) => {
             if (error) throw error;
-            fs.writeFile('print.pdf', data, (error) => {
+            const my_path = path.resolve(__dirname) + '/../print.pdf';
+            fs.writeFile(my_path, data, (error) => {
                 if (error) throw error;
                 const winPDF = new PDFWindow({
                     width: 800,

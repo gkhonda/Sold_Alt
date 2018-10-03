@@ -20,11 +20,11 @@ const submitBtn = $('#submit-btn');
 
 // Include navbar
 $(function () {
-    $("#navbar").load("../html/navbar_adm.html");
+    $("#navbar").load("../htl/navbar_adm.html");
 });
 
 downloadSheet.on('click', function () {
-    win.showUrl(remote.getGlobal('default_url') + 'store_product/read');
+    win.loadURL(remote.getGlobal('default_url') + 'store_product/read');
 });
 
 btnChooser.on('click', function () {
