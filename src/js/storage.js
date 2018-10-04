@@ -20,7 +20,7 @@ const submitBtn = $('#submit-btn');
 
 // Include navbar
 $(function () {
-    $("#navbar").load("../htl/navbar_adm.html");
+    $("#navbar").load("../html/navbar_adm.html");
 });
 
 downloadSheet.on('click', function () {
