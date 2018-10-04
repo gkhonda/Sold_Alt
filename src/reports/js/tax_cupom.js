@@ -1,5 +1,4 @@
 const remote = require('electron').remote;
-console.log(22)
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
