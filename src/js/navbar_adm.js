@@ -5,12 +5,11 @@ const remote = require('electron').remote;
 $.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getGlobal('Vendedor_id')}).done(function(back){
     console.log(back)
     if (!back.error && back.avatar && back.user_name){
-        $('.profile_picture').attr('src', '../../public/images/user_icon.png');
-        $('.profile_picture').attr('alt', back.user_name);
+        $('.profile_picture').attr('src', 'hjkl');
     } else {
         $('.profile_picture').attr('src', '../../public/images/user_icon.png');
-        $('.profile_picture').attr('alt', back.user_name);
     }
+    $('.profile_picture').attr('alt', back.user_name);
 
     if (!back.error && back.first_name && back.last_name) {
         $('.user_name').text(`${back.first_name} ${back.last_name}`);

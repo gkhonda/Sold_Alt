@@ -97,7 +97,7 @@
                 <div class="account-wrap p-l-10">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
-                            <img src="" alt="" class="profile_picture"/>
+                            <img src="" alt="" class="profile_picture" onerror="defaultImage()" />
                         </div>
                         <div class="content">
                             <a class="js-acc-btn" href="#" class="user_name"></a>
@@ -106,7 +106,7 @@
                             <div class="info clearfix">
                                 <div class="image">
                                     <a href="#">
-                                        <img src="" alt="" class="profile_picture"/>
+                                        <img src="" alt="" class="profile_picture" onerror="defaultImage()" />
                                     </a>
                                 </div>
                                 <div class="content">
@@ -137,6 +137,10 @@
 <!-- END HEADER DESKTOP-->
 <script>
     window.$ = window.jQuery = require('jquery'); // not sure if you need this at all
+
+    function defaultImage(){
+        $('.profile_picture').attr('src', '../../public/images/user_icon.png');
+    }
 </script>
 <script>require('../js/navbar_adm.js')</script>
 
