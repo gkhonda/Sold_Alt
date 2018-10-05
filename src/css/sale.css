@@ -70,13 +70,13 @@ h1 {
 /* Limita tamanho da tabela */
 
 #sale {
-    height: 500px;
+    height: 420px;
     overflow: auto;
     background: white;
 }
 
 #product {
-    height: 300px;
+    height: 225px;
     overflow: auto;
     background: white;
 }
@@ -124,7 +124,7 @@ tr:hover .del {
 }
 
 .second-page h2 {
-    padding: 30px;
+    padding: 10px;
 }
 
 /* Para a tabela não mudar com textos muito grandes */
