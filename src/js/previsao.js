@@ -1,3 +1,7 @@
+const {ipcRenderer} = require('electron');
+const {getCurrentWindow} = require('electron').remote;
+const remote = require('electron').remote;
+
 $(function () {
     $("#navbar").load("../html/navbar_adm.html");
 });
@@ -22,9 +26,15 @@ date = date.getMonth();
 $('.mes').text(month[date + 1]);
 
 $('.generate').on('click', function(){
-    console.log('generate');
+    getPredictions({'create': true})
 });
 
 $('.open').on('click', function() {
-    console.log('open');
+    getPredictions({'create': false})
 });
+
+function getPredictions(request){
+    $.get(remote.getGlobal('default_url') + 'prediction', request).done(function(back){
+        console.log(back);
+    });
+}
