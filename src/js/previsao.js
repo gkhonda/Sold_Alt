@@ -19,4 +19,12 @@ var month = {
 }
 var date = new Date();
 date = date.getMonth();
-$('.mes').text(month[date]);
+$('.mes').text(month[date + 1]);
+
+$('.generate').on('click', function(){
+    console.log('generate');
+});
+
+$('.open').on('click', function() {
+    console.log('open');
+});
