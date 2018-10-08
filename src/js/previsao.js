@@ -21,6 +21,7 @@ var months = {
     11: 'novembro',
     12: 'dezembro'
 }
+
 var date = new Date();
 var month = date.getMonth() + 2;
 var year = date.getFullYear();
@@ -36,6 +37,15 @@ $('.open').on('click', function() {
 
 function getPredictions(request){
     $.get(remote.getGlobal('default_url') + 'prediction', request).done(function(back){
-        console.log(back);
-    });
+        back['url'] = 'predictions_report.html';
+        back['month'] = month;
+        ipcRenderer.send('pdf', back);
+    }).fail(function () {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro de conexão.',
+                'text': "Verifique a conexão com a Internet."
+            })
+    });;
 }
