@@ -12,7 +12,7 @@ win = getCurrentWindow();
 
 const {ipcRenderer} = require('electron');
 
-// Send message to main process on channel login
+const btnLogin = $("#btnLogin");
 
 // Essa função é chamada ao clicar no botao
 var login = function () {
@@ -42,8 +42,8 @@ var login = function () {
     }
 
     // Cria um post request pro endereço (local), que ta rodando o meu Django
+    btnLogin.addClass("disabled");
     $.post(remote.getGlobal('default_url') + "login/", data).done(function (back) {
-
             if (back['isAuth'] === false) {
                 ipcRenderer.send('login',
                     {
@@ -73,15 +73,20 @@ var login = function () {
         // Limpa o campo password para o user tentar novamente
     ).always(function () {
         $('#password').val('')
+        $('#btnLogin').removeClass("disabled");
     });
 };
 
 // Chama quando clica
-$("#btnLogin").on("click", function () {
-    login()
+btnLogin.on("click", function () {
+    if(!$(this).hasClass("disabled")) {
+        login()
+    }
 });
 
 // Chama quando aperta enter
 $(".form-control").keypress(function (event) {
-    if (event.which === 13) login();
+    if (event.which === 13 && !btnLogin.hasClass("disabled")) {
+        login();
+    }
 });

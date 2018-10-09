@@ -17,6 +17,7 @@ exports.createWindow = (args) => {
 
     const someArgs = args;
     const indexPath = path.resolve(__dirname, '..', 'src', 'reports', 'html', args['url']);
+    args['u'] = path.resolve(__dirname) + '/../../print.pdf';
     const indexUrl = url.format({
         protocol: 'file',
         pathname: indexPath,
@@ -29,6 +30,8 @@ exports.createWindow = (args) => {
     // Load main window content
     this.win.loadURL(indexUrl);
 
+    this.win.webContents.openDevTools();
+
 
     this.win.webContents.on('did-finish-load', () => {
         // Use default printing options
@@ -39,14 +42,15 @@ exports.createWindow = (args) => {
             landscape: false,
         }, (error, data) => {
             if (error) throw error;
-            fs.writeFile('print.pdf', data, (error) => {
+            const my_path = path.resolve(__dirname) + '/../../print.pdf';
+            fs.writeFile(my_path, data, (error) => {
                 if (error) throw error;
                 const winPDF = new PDFWindow({
                     width: 800,
                     height: 600
                 });
 
-                winPDF.loadURL(path.resolve(__dirname) + '/../print.pdf');
+                winPDF.loadURL(path.resolve(__dirname) + '/../../print.pdf');
                 // this.win.close();
             })
         })

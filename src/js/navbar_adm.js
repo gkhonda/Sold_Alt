@@ -1,16 +1,13 @@
 const {ipcRenderer} = require('electron');
 const remote = require('electron').remote;
 
-const profilePicture = $('.profile_picture');
-
-$.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getGlobal('Vendedor_id')}).done(function (back) {
-    if (!back.error && back.avatar && back.user_name) {
-        profilePicture.attr('src', back.avatar);
-        profilePicture.attr('alt', back.user_name);
+$.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getGlobal('Vendedor_id')}).done(function(back){
+    if (!back.error && back.avatar && back.user_name){
+        $('.profile_picture').attr('src', back.avatar);
     } else {
-        profilePicture.attr('src', '../../public/images/user_icon.png');
-        profilePicture.attr('alt', back.user_name);
+        $('.profile_picture').attr('src', '../../public/images/user_icon.png');
     }
+    $('.profile_picture').attr('alt', back.user_name);
 
     if (!back.error && back.first_name && back.last_name) {
         $('.user_name').text(`${back.first_name} ${back.last_name}`);
@@ -47,6 +44,10 @@ $('#to-report').on('click', function () {
 
 $('#to-storage').on('click', function () {
     ipcRenderer.send('update-window', {'url': 'storage.html'})
+});
+
+$('#to-prediction').on('click', function() {
+    ipcRenderer.send('update-window', {'url': 'previsao.html'})
 });
 
 $('#logout').on('click', function () {

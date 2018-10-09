@@ -24,7 +24,7 @@ $(function () {
 });
 
 downloadSheet.on('click', function () {
-    win.showUrl(remote.getGlobal('default_url') + 'store_product/read');
+    win.loadURL(remote.getGlobal('default_url') + 'store_product/read');
 });
 
 btnChooser.on('click', function () {

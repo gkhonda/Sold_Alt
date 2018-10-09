@@ -10,12 +10,12 @@ const remote = require('electron').remote;
 
 // Para manipular a Janela Atual
 win = getCurrentWindow();
-// Variaveis auxiliares
+// letiaveis auxiliares
 let to_pay;
 let received = 0;
 let to_receive;
 let change = 0;
-
+let discount = 0;
 // Página superior
 
 // Lista de names
@@ -24,7 +24,13 @@ let list_of_products = window.__args__['Product'];
 let product_dictionary = {};
 let current_sale = {};
 
-$('#productId').val(list_of_products[0].id);
+const productId = $("#productId");
+const inpQnt = $('.quantity');
+const totalValueSale = $('#totalValueSale');
+const red = $('#red');
+
+
+productId.val(list_of_products[0].id);
 $('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
 
 // Coloca os names na tabela
@@ -35,7 +41,7 @@ list_of_products.forEach(function (p) {
 
 // Faz o painel ser preenchido
 let update_div = function (product) {
-    $('#productId').val(product.id);
+    productId.val(product.id);
     $('#productDesc').text(product.name + ' ' + product.size);
 };
 
@@ -43,10 +49,14 @@ $('.add-client').click(function () {
     $('#myModal').css('display', 'block');
 });
 
+$('#desconto').click(function () {
+    $('#myModal2').css('display', 'block');
+});
+
 // Apaga name da compra
 $("#saleTable").on('click', "tr td .del", function (e) {
     // Pega o código e deleta ele
-    delete current_sale[$(this).parent().html()[$(this).parent().html().length - 1]];
+    delete current_sale[$("#saleTable tr td:first").text()];
     $(this).parent().parent().remove();
     e.stopPropagation();
     atualiza_venda(5)
@@ -57,9 +67,9 @@ $('.btn-success').click(function (e) {
     // Stop acting like a button
     e.preventDefault();
     // Get the field name
-    var quantity = parseInt($('.quantity').val());
+    let quantity = parseInt(inpQnt.val());
     // If is not undefined
-    $('.quantity').val(quantity + 1);
+    inpQnt.val(quantity + 1);
     // Increment
 });
 
@@ -68,17 +78,17 @@ $('.btn-danger').click(function (e) {
     // Stop acting like a button
     e.preventDefault();
     // Get the field name
-    var quantity = parseInt($('.quantity').val());
+    let quantity = parseInt(inpQnt.val());
     // If is not undefined
     // Increment
     if (quantity > 1) {
-        $('.quantity').val(quantity - 1);
+        inpQnt.val(quantity - 1);
     }
 });
 
 // Pega da tabela
 $('.table-search').on('click', function (e) {
-    var product = [];
+    let product = [];
     $(this).find('td').each(function () {
         product.push($(this).html())
     });
@@ -88,7 +98,7 @@ $('.table-search').on('click', function (e) {
 
 // Procura na tabela
 $("#inputSearch").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
+    let value = $(this).val().toLowerCase();
     $("#tableSearch tr").filter(function (e) {
         if (e !== 0) {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
@@ -102,7 +112,7 @@ $("#btnAdd").on("click", function () {
 });
 
 // Adiciona item (enter)
-$("#productId").on("keyup", function (e) {
+productId.on("keyup", function (e) {
     if (e.which === 13) add_item();
     if (product_dictionary[$(this).val()] !== undefined) {
         update_div(product_dictionary[$(this).val()])
@@ -111,8 +121,8 @@ $("#productId").on("keyup", function (e) {
 });
 
 // Atualiza preço total da venda, no valor final da tabela
-var atualiza_venda = function (table_lenght) {
-    var price = 0;
+let atualiza_venda = function (table_lenght) {
+    let price = 0;
     $("#saleTable").find('tr').each(function () {
         $(this).find('td').each(function (index) {
             if (index === table_lenght - 1) {
@@ -121,14 +131,14 @@ var atualiza_venda = function (table_lenght) {
         })
     });
 
-    $('#totalValueSale').text((price).toFixed(2));
+    totalValueSale.text((price).toFixed(2));
 
 };
 
 // Função que adiciona o item.
-var add_item = function () {
-    var id = $('#productId').val();
-    var qnt = parseInt($('.quantity').val());
+let add_item = function () {
+    let id = productId.val();
+    let qnt = parseInt(inpQnt.val());
 
     if (product_dictionary[id] !== undefined) {
 
@@ -141,7 +151,7 @@ var add_item = function () {
         $("#saleTable tr").remove();
 
         for (id in current_sale) {
-            var p = product_dictionary[id];
+            let p = product_dictionary[id];
             $('#saleTable').append('<tr><td><span class="del"><i class="fas fa-trash-alt"></i></span>' + id + '</td>' +
                 '<td class="text"><span class="text-el">' + p.name + '</span></td>' +
                 '<td>' + p.size + '</td>' +
@@ -150,7 +160,7 @@ var add_item = function () {
 
             atualiza_venda(5);
 
-            $('.quantity').val(1);
+            inpQnt.val(1);
         }
 
     } else {
@@ -161,23 +171,23 @@ var add_item = function () {
 // Finaliza de adicionar os itens (parte de cima), e move para o pagamento
 $('.finish-sale').on('click', function () {
 
-    to_pay = parseFloat($('#totalValueSale').text());
+    to_pay = parseFloat(totalValueSale.text());
 
-    if (to_pay !== 0){
-        var name;
-        var qnt;
-        var price;
+    if (to_pay !== 0) {
+        let name;
+        let qnt;
+        let price;
 
         tabela = {};
 
         venda = {
-            'Total': $('#totalValueSale').text(),
+            'Total': totalValueSale.text(),
             'Vendedor': remote.getGlobal('Vendedor_id'),
             'Cliente': $('#span-id-customer').text(),
             'LojaNome': remote.getGlobal('LojaNome')
         };
 
-        // to_pay = parseFloat($('#totalValueSale').text());
+        // to_pay = parseFloat(totalValueSale.text());
         $("#to-pay").text(to_pay.toFixed(2));
         // received = 0;
         to_receive = to_pay - received;
@@ -186,7 +196,7 @@ $('.finish-sale').on('click', function () {
 
         go_end();
 
-        
+
     } else {
         ipcRenderer.send('login',
             {
@@ -218,8 +228,7 @@ let add_payment = function () {
 
     let tipo = dict_of_values[payment_method];
     let price_sell = parseFloat($("#lblValor").val());
-    if (payment_method === 'Cheque')
-    {
+    if (payment_method === 'Cheque') {
         installment = parseFloat($("#lblParcelas").val());
     }
 
@@ -254,11 +263,11 @@ let add_payment = function () {
         $('#change').text(change.toFixed(2));
 
         if (received >= to_pay) {
-            $('#red').removeClass("red");
-            $('#red').addClass("green")
+            red.removeClass("red");
+            red.addClass("green")
         } else {
-            $('#red').removeClass("green");
-            $('#red').addClass("red")
+            red.removeClass("green");
+            red.addClass("red")
         }
 
         $('#totalValuePayment').text((received).toFixed(2))
@@ -268,7 +277,7 @@ let add_payment = function () {
 $("#paymentTable").on('click', "tr td .del", function (e) {
 
     // Pega o código e deleta ele
-    var to_delete = get_from_table($(this).parent().parent().parent(), 1);
+    let to_delete = get_from_table($(this).parent().parent().parent(), 1);
     delete current_payment[to_delete];
     $(this).parent().parent().remove();
 
@@ -307,13 +316,11 @@ $(".btn-toolbar .btn").click(function () {
     $('.btn').removeClass('active');
     $(this).addClass('active');
     payment_method = $(this).attr('id');
-    if (payment_method === 'Cheque')
-    {
+    if (payment_method === 'Cheque') {
         $('<input type="text" class="form-control" id="lblParcelas" placeholder="Parcelas">').appendTo('#paymentMethod');
         return false;
     }
-    else
-    {
+    else {
         $('input').remove('#lblParcelas');
         return false;
     }
@@ -335,7 +342,7 @@ $("#lblValor").keypress(function (event) {
 });
 
 $('#back-sale').click(function () {
-   back_start();
+    back_start();
 });
 
 $('#end-sale').click(function () {
@@ -348,21 +355,21 @@ $('#end-sale').click(function () {
             });
 
     } else {
-        send = {
+        let send = {
             'sale_details': venda,
             'sale_itens': current_sale,
             'sale_payments': current_payment,
-            'installment' : installment
+            'installment': installment
         };
         $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
         ).done(function (back) {
             if (back['Online'] === false) {
                 ipcRenderer.send('login',
-                {
-                    'type': 'sad',
-                    'message': 'Erro.',
-                    'text': 'Problemas na conexão, a venda será guardada para processar depois.'
-                })
+                    {
+                        'type': 'sad',
+                        'message': 'Erro.',
+                        'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                    })
             }
             else if (back['Error'] === true) {
                 ipcRenderer.send('login',
@@ -394,7 +401,7 @@ $('#end-sale').click(function () {
 
 //  Aqui começa a parte do Modal : consultar cliente
 
-var update_table = function (list_of_clients) {
+let update_table = function (list_of_clients) {
     $("#customerTable tr").remove();
     list_of_clients.forEach(function (c) {
         $('#customerTable').append('<tr class="table-search"><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.cpf + '</td></tr>')
@@ -403,6 +410,7 @@ var update_table = function (list_of_clients) {
 
 $('.close').click(function () {
     $('#myModal').css('display', 'none');
+    $('#myModal2').css('display', 'block');
 });
 
 $("#btnRead").on("click", function () {
@@ -444,10 +452,10 @@ $("#inputSearch-client").keyup(function () {
 
 });
 
-var client_read = function (button) {
+let client_read = function (button) {
 
     // cria objeto com os dados do form
-    var data = {};
+    let data = {};
     data['cpf'] = $('#inputSearch-client').val();
 
     // Cria o get request para pegar o cliente
@@ -478,7 +486,7 @@ var client_read = function (button) {
     });
 };
 
-var reset_sell = function () {
+let reset_sell = function () {
     to_receive = 0;
     received = 0;
     change = 0;
@@ -488,23 +496,23 @@ var reset_sell = function () {
     $('#paymentTable tr').remove();
     $('#totalValuePayment').text('0.00');
     $('#saleTable tr').remove();
-    $('#totalValueSale').text('0.00');
+    totalValueSale.text('0.00');
     current_sale = {};
     current_payment = {};
 };
 
-var back_start = function () {
+let back_start = function () {
     $('html,body').animate({
-        scrollTop: $(".first-page").offset().top
-    },
-    'slow');
+            scrollTop: $(".first-page").offset().top
+        },
+        'slow');
 };
 
-var go_end = function() {
-   $('html,body').animate({
-                scrollTop: $(".second-page").offset().top
-    },
-    'slow'); 
+let go_end = function () {
+    $('html,body').animate({
+            scrollTop: $(".second-page").offset().top
+        },
+        'slow');
 };
 
 function getKeyByValue(object, value) {
@@ -515,9 +523,24 @@ function get_from_table(line, key) {
     let to_return;
     line.find('td').each(function (index) {
         if (index === key) {
-            to_return =  $(this).html()
+            to_return = $(this).html()
         }
     });
 
     return to_return;
 }
+
+$("#btnAddDesconto").on('click', function () {
+    let apply_discount = $("#myRange").val();
+    if ((discount + apply_discount) <= 6) {
+        to_pay = to_receive * ((1 - (apply_discount) / 100));
+        to_pay = parseFloat(to_pay.toFixed(2));
+        to_receive = to_pay - received;
+        to_receive = parseFloat(to_receive.toFixed(2));
+        discount += apply_discount;
+        $('#to-pay').addClass("line-through");
+        $("#new-value").text(" " + to_pay);
+        $('#to-receive').text(to_receive);
+    }
+    $('#myModal2').css('display', 'none');
+});
