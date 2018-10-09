@@ -1,5 +1,6 @@
 const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
+const remote = require('electron').remote;
 
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
@@ -7,6 +8,7 @@ window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 const btnAdd = $("#btn-add");
 const table = $(".product-table");
 const lblQnt = $("#productQnt");
+const btnTransfer = $("#btn-transfer");
 
 $("#navbar").load("../html/navbar-seller.html");
 
@@ -61,6 +63,7 @@ table.on('click', "tr td .del", function (e) {
     e.stopPropagation();
 });
 
+
 // Adiciona Item
 let add_item = function (id) {
     let qnt = parseInt(lblQnt.val());
@@ -78,6 +81,30 @@ let add_item = function (id) {
     $input.val("");
     current_product = NaN;
 };
+
+btnTransfer.on('click', function () {
+    let data = {'changes': current_storage, 'to_store': $('#select-store').val(), 'from_store': remote.getGlobal('LojaNome'), 'user_id': remote.getGlobal('Vendedor_id')};
+    console.log(data)
+    $.post(remote.getGlobal('default_url') + "store_product/transfer", JSON.stringify(data)).done(function (back) {
+        if (back['Error'] === true) {
+            ipcRenderer.send('login',
+                {
+                    'type': 'sad',
+                    'message': 'Erro.',
+                    'text': back['Error Message']
+                });
+
+        } else {
+            ipcRenderer.send('login',
+                {
+                    'type': 'happy',
+                    'message': 'Sucesso.',
+                    'text': 'Transferência realizada.'
+                });
+            location.reload();
+        }
+    })
+});
 
 // Chama quando aperta enter
 lblQnt.keypress(function (event) {
