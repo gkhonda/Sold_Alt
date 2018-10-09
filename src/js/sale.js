@@ -62,7 +62,7 @@ $("#saleTable").on('click', "tr td .del", function (e) {
     atualiza_venda(5)
 });
 
-// Funções para o botão de diminui/aumenta a quantidade 
+// Funções para o botão de diminui/aumenta a quantidade
 $('.btn-success').click(function (e) {
     // Stop acting like a button
     e.preventDefault();
@@ -361,6 +361,8 @@ $('#end-sale').click(function () {
             'sale_payments': current_payment,
             'installment': installment
         };
+        send['discount'] = discount;
+        send['change'] = change;
         $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
         ).done(function (back) {
             if (back['Online'] === false) {
@@ -384,6 +386,7 @@ $('#end-sale').click(function () {
                 send['productList'] = list_of_products;
                 send['client'] = $('#spam-name-customer').text();
                 ipcRenderer.send('pdf', send);
+                console.log(send);
 
                 reset_sell();
                 back_start();
