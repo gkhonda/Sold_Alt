@@ -167,7 +167,28 @@
 
 <div class="second-page">
 
-        <h2>R$ <span id="to-pay">00.00</span></h2>
+    <div id="myModal2" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 class="modal-h2">Dar Desconto</h2>
+            </div>
+            <div class="modal-body2">
+                <div class="slidecontainer">
+                    <input type="range" min="0" max="6" value="0" class="slider" id="myRange" name="myRange" oninput="amount.value=myRange.value">
+                    <output id="amount" name="amount" for="myRange">0</output>%
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="btn btn-lg btn-orange" id="btnAddDesconto"> Dar Desconto  </p>
+            </div>
+        </div>
+    </div>
+
+        <h2>R$ <span id="to-pay">00.00</span><span id="new-value"></span></h2>
+        <a class="h-link" id="desconto"> Dar desconto </a>
 
         <!-- <h1>Selecione a forma de pagamento</h1> -->
 

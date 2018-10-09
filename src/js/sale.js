@@ -15,7 +15,7 @@ let to_pay;
 let received = 0;
 let to_receive;
 let change = 0;
-
+let discount = 0;
 // Página superior
 
 // Lista de names
@@ -47,6 +47,10 @@ let update_div = function (product) {
 
 $('.add-client').click(function () {
     $('#myModal').css('display', 'block');
+});
+
+$('#desconto').click(function () {
+    $('#myModal2').css('display', 'block');
 });
 
 // Apaga name da compra
@@ -169,7 +173,7 @@ $('.finish-sale').on('click', function () {
 
     to_pay = parseFloat(totalValueSale.text());
 
-    if (to_pay !== 0){
+    if (to_pay !== 0) {
         let name;
         let qnt;
         let price;
@@ -192,7 +196,7 @@ $('.finish-sale').on('click', function () {
 
         go_end();
 
-        
+
     } else {
         ipcRenderer.send('login',
             {
@@ -224,8 +228,7 @@ let add_payment = function () {
 
     let tipo = dict_of_values[payment_method];
     let price_sell = parseFloat($("#lblValor").val());
-    if (payment_method === 'Cheque')
-    {
+    if (payment_method === 'Cheque') {
         installment = parseFloat($("#lblParcelas").val());
     }
 
@@ -313,13 +316,11 @@ $(".btn-toolbar .btn").click(function () {
     $('.btn').removeClass('active');
     $(this).addClass('active');
     payment_method = $(this).attr('id');
-    if (payment_method === 'Cheque')
-    {
+    if (payment_method === 'Cheque') {
         $('<input type="text" class="form-control" id="lblParcelas" placeholder="Parcelas">').appendTo('#paymentMethod');
         return false;
     }
-    else
-    {
+    else {
         $('input').remove('#lblParcelas');
         return false;
     }
@@ -341,7 +342,7 @@ $("#lblValor").keypress(function (event) {
 });
 
 $('#back-sale').click(function () {
-   back_start();
+    back_start();
 });
 
 $('#end-sale').click(function () {
@@ -358,17 +359,17 @@ $('#end-sale').click(function () {
             'sale_details': venda,
             'sale_itens': current_sale,
             'sale_payments': current_payment,
-            'installment' : installment
+            'installment': installment
         };
         $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
         ).done(function (back) {
             if (back['Online'] === false) {
                 ipcRenderer.send('login',
-                {
-                    'type': 'sad',
-                    'message': 'Erro.',
-                    'text': 'Problemas na conexão, a venda será guardada para processar depois.'
-                })
+                    {
+                        'type': 'sad',
+                        'message': 'Erro.',
+                        'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                    })
             }
             else if (back['Error'] === true) {
                 ipcRenderer.send('login',
@@ -409,6 +410,7 @@ let update_table = function (list_of_clients) {
 
 $('.close').click(function () {
     $('#myModal').css('display', 'none');
+    $('#myModal2').css('display', 'block');
 });
 
 $("#btnRead").on("click", function () {
@@ -501,16 +503,16 @@ let reset_sell = function () {
 
 let back_start = function () {
     $('html,body').animate({
-        scrollTop: $(".first-page").offset().top
-    },
-    'slow');
+            scrollTop: $(".first-page").offset().top
+        },
+        'slow');
 };
 
-let go_end = function() {
-   $('html,body').animate({
-                scrollTop: $(".second-page").offset().top
-    },
-    'slow'); 
+let go_end = function () {
+    $('html,body').animate({
+            scrollTop: $(".second-page").offset().top
+        },
+        'slow');
 };
 
 function getKeyByValue(object, value) {
@@ -521,9 +523,24 @@ function get_from_table(line, key) {
     let to_return;
     line.find('td').each(function (index) {
         if (index === key) {
-            to_return =  $(this).html()
+            to_return = $(this).html()
         }
     });
 
     return to_return;
 }
+
+$("#btnAddDesconto").on('click', function () {
+    let apply_discount = $("#myRange").val();
+    if ((discount + apply_discount) <= 6) {
+        to_pay = to_receive * ((1 - (apply_discount) / 100));
+        to_pay = parseFloat(to_pay.toFixed(2));
+        to_receive = to_pay - received;
+        to_receive = parseFloat(to_receive.toFixed(2));
+        discount += apply_discount;
+        $('#to-pay').addClass("line-through");
+        $("#new-value").text(" " + to_pay);
+        $('#to-receive').text(to_receive);
+    }
+    $('#myModal2').css('display', 'none');
+});
