@@ -1,3 +1,27 @@
-h2 {
+.container {
+    margin: 200px auto;
     text-align: center;
+}
+
+#title {
+    margin-bottom: 50px;
+}
+
+#paragraph {
+    margin: 50px auto;
+    max-width: 500px;
+    word-wrap: normal;
+}
+
+.orange {
+    background-color: #ff8a37;
+}
+
+.btn {
+    color: white;
+    padding: 0;
+}
+
+.btn:hover {
+    background-color: #F3E2A9;
 }

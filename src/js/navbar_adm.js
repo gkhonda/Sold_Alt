@@ -3,7 +3,6 @@ const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
 
 $.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getGlobal('Vendedor_id')}).done(function(back){
-    console.log(back)
     if (!back.error && back.avatar && back.user_name){
         $('.profile_picture').attr('src', back.avatar);
     } else {
@@ -46,6 +45,10 @@ $('#to-report').on('click', function () {
 
 $('#to-storage').on('click', function () {
     ipcRenderer.send('update-window', {'url': 'storage.html'})
+});
+
+$('#to-prediction').on('click', function() {
+    ipcRenderer.send('update-window', {'url': 'previsao.html'})
 });
 
 $('#logout').on('click', function () {

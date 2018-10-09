@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/product_report.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-filter">
+    <h1>Vendas do mês de <span id="mes"></span></h1>
+</div>
+
+<div id="kkk"></div>
+
+<div class="max-size">
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Tamanho</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script src="../../../public/vendor/chartjs/Chart.bundle.min.js"></script>
+
+<script>
+
+    // You can also require other files to run in this process
+    require('../js/predictions_report.js')
+</script>
+
+
+</body>
+
+</html>
+
+
