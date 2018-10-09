@@ -49,12 +49,34 @@ $('#sangria').on('click', function () {
 });
 
 $('#storage').on('click', function () {
-    ipcRenderer.send('login',
-        {
-            'type': 'ok-face',
-            'message': 'Essa página não foi implementada ainda.',
-            'text': 'Espere a próxima atualização.'
-        });
+    // Cria o get request para pegar os produtos
+    $.get(remote.getGlobal('default_url') + "product/read").done(function (back) {
+        if (back['Error'] === true) {
+            ipcRenderer.send('login',
+                {
+                    'type': 'sad',
+                    'message': 'Erro.',
+                    'text': 'Não foi possível encontrar produtos no BD'
+                });
+        }
+        else {
+            back['url'] = 'storage_transfer.html';
+            ipcRenderer.send('update-window', back)
+        }
+    }).fail(function () {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Erro.',
+                'text': 'Verifique a conexão'
+            })
+    });
+    // ipcRenderer.send('login',
+    //     {
+    //         'type': 'ok-face',
+    //         'message': 'Essa página não foi implementada ainda.',
+    //         'text': 'Espere a próxima atualização.'
+    //     });
 });
 
 $('#search-sale').on('click', function () {
