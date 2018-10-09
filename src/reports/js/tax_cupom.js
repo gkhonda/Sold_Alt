@@ -5,6 +5,16 @@ window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 const saleDetails = window.__args__['sale_details'];
 const saleItens = window.__args__['sale_itens'];
 const productList = window.__args__['productList'];
+const payments = window.__args__['sale_payments'];
+var change = window.__args__['change'];
+var discount = window.__args__['discount'];
+discount = eval(discount);
+var discountedTotal = saleDetails['Total'] * (1 - discount / 100);
+var discountValue = saleDetails['Total'] * discount / 100;
+change = parseFloat(String(Math.round(change * 100) / 100)).toFixed(2);
+discountValue = parseFloat(String(Math.round(discountValue * 100) / 100)).toFixed(2);
+discountedTotal = parseFloat(String(Math.round(discountedTotal * 100) / 100)).toFixed(2);
+
 
 let now = new Date();
 let day = ("0" + now.getDate()).slice(-2);
@@ -19,21 +29,38 @@ Object.keys(saleItens).forEach(function (id) {
    })
 });
 
-$('#totalSale').text(saleDetails['Total']);
+$('#totalSale').text(discountedTotal);
 $('#vendedor-id').text(remote.getGlobal('Vendedor'));
 $('#loja').text(saleDetails['LojaNome']);
 $('#time').text(today);
 
-
 function addInTable(obj, qnt) {
-    $('#customerTable').append("<tr><th>" + obj.name + "</th>" +
-        "<th>" + obj.size + "</th><th>"
-        + qnt + "</th><th>"
-        + (obj.price_sell).toFixed(2) + "</th><th>"
-        + (qnt * obj.price_sell).toFixed(2) + "</th></tr>")
+    $('#customerTable').append("<tr><td>" + obj.name + "</td>" +
+        "<td>" + obj.size + "</td><td>"
+        + qnt + "</td><td>"
+        + (obj.price_sell).toFixed(2) + "</td><td>"
+        + (qnt * obj.price_sell).toFixed(2) + "</td></tr>")
 
 }
 
 function format(n){
     return n > 9 ? "" + n: "0" + n;
 }
+
+var paymentMethods = [
+  'Dinheiro',
+  'Cheque',
+  'Débito',
+  'Crédito',
+  'Transferência'
+];
+
+paymentMethods.forEach( function (pm) {
+  if (pm in payments) {
+    $('#paymentData').append(`<td>${payments[pm]}</td>`);
+  } else {
+    $('#paymentData').append('<td>0.00</td>');
+  }
+});
+
+$('#paymentData').append(`<td>${change}</td><td>${discountValue}(${discount}%)</td>`);
