@@ -94,17 +94,8 @@ $('#search-sale').on('click', function () {
 
 $('#reports-menu').on('click', function () {
     if (navigator.onLine) {
-        if (remote.getGlobal('is_admin') === true) {
-            ipcRenderer.send('update-window', {'url': 'reports_menu.html'});
-        }
-        else {
-            ipcRenderer.send('login',
-                {
-                    'type': 'sad',
-                    'message': 'Erro de Autorização.',
-                    'text': 'Somente um administrador pode ver essa tela!'
-                })
-        }
+        ipcRenderer.send('update-window', {'url': 'reports_menu.html'});
+
     }
     else {
         ipcRenderer.send('login',

@@ -62,7 +62,7 @@ $("#saleTable").on('click', "tr td .del", function (e) {
     atualiza_venda(5)
 });
 
-// Funções para o botão de diminui/aumenta a quantidade 
+// Funções para o botão de diminui/aumenta a quantidade
 $('.btn-success').click(function (e) {
     // Stop acting like a button
     e.preventDefault();
@@ -359,8 +359,11 @@ $('#end-sale').click(function () {
             'sale_details': venda,
             'sale_itens': current_sale,
             'sale_payments': current_payment,
-            'installment': installment
+            'installment': installment,
+            'discount': discount
         };
+        send['discount'] = discount;
+        send['change'] = change;
         $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
         ).done(function (back) {
             if (back['Online'] === false) {
@@ -384,6 +387,7 @@ $('#end-sale').click(function () {
                 send['productList'] = list_of_products;
                 send['client'] = $('#spam-name-customer').text();
                 ipcRenderer.send('pdf', send);
+                console.log(send);
 
                 reset_sell();
                 back_start();
@@ -410,7 +414,7 @@ let update_table = function (list_of_clients) {
 
 $('.close').click(function () {
     $('#myModal').css('display', 'none');
-    $('#myModal2').css('display', 'block');
+    $('#myModal2').css('display', 'none');
 });
 
 $("#btnRead").on("click", function () {
@@ -496,6 +500,9 @@ let reset_sell = function () {
     $('#paymentTable tr').remove();
     $('#totalValuePayment').text('0.00');
     $('#saleTable tr').remove();
+    $('#to-pay').removeClass("line-through");
+    $("#new-value").text(" ");
+    discount = 0;
     totalValueSale.text('0.00');
     current_sale = {};
     current_payment = {};
@@ -506,6 +513,9 @@ let back_start = function () {
             scrollTop: $(".first-page").offset().top
         },
         'slow');
+    $("#new-value").text(" ");
+    discount = 0;
+    $('#to-pay').removeClass("line-through");
 };
 
 let go_end = function () {
