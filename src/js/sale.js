@@ -496,6 +496,9 @@ let reset_sell = function () {
     $('#paymentTable tr').remove();
     $('#totalValuePayment').text('0.00');
     $('#saleTable tr').remove();
+    $('#to-pay').removeClass("line-through");
+    $("#new-value").text(" ");
+    discount = 0;
     totalValueSale.text('0.00');
     current_sale = {};
     current_payment = {};
@@ -506,6 +509,9 @@ let back_start = function () {
             scrollTop: $(".first-page").offset().top
         },
         'slow');
+    $("#new-value").text(" ");
+    discount = 0;
+    $('#to-pay').removeClass("line-through");
 };
 
 let go_end = function () {
