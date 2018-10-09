@@ -1,5 +1,4 @@
 const {ipcRenderer} = require('electron');
-const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
 
 $.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getGlobal('Vendedor_id')}).done(function(back){
@@ -18,9 +17,9 @@ $.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getG
         $('.user_name').text('Usuário desconhecido');
     }
 
-    if (!back.error && back.email){
+    if (!back.error && back.email) {
         $('#user_email').text(back.email);
-    } else{
+    } else {
         $('#user_email').text('e-mail desconhecido');
     }
 });
@@ -61,10 +60,10 @@ $('#logout').on('click', function () {
 
     // Dropdown
     try {
-        var menu = $('.js-item-menu');
-        var sub_menu_is_showed = -1;
+        let menu = $('.js-item-menu');
+        let sub_menu_is_showed = -1;
 
-        for (var i = 0; i < menu.length; i++) {
+        for (let i = 0; i < menu.length; i++) {
             $(menu[i]).on('click', function (e) {
                 e.preventDefault();
                 $('.js-right-sidebar').removeClass("show-sidebar");
@@ -73,7 +72,7 @@ $('#logout').on('click', function () {
                     sub_menu_is_showed = -1;
                 }
                 else {
-                    for (var i = 0; i < menu.length; i++) {
+                    for (let i = 0; i < menu.length; i++) {
                         $(menu[i]).removeClass("show-dropdown");
                     }
                     $(this).toggleClass('show-dropdown');
@@ -86,7 +85,7 @@ $('#logout').on('click', function () {
         });
 
         $("body,html").on("click", function () {
-            for (var i = 0; i < menu.length; i++) {
+            for (let i = 0; i < menu.length; i++) {
                 menu[i].classList.remove("show-dropdown");
             }
             sub_menu_is_showed = -1;
@@ -96,14 +95,13 @@ $('#logout').on('click', function () {
         console.log(error);
     }
 
-    var wW = $(window).width();
     // Right Sidebar
-    var right_sidebar = $('.js-right-sidebar');
-    var sidebar_btn = $('.js-sidebar-btn');
+    let right_sidebar = $('.js-right-sidebar');
+    let sidebar_btn = $('.js-sidebar-btn');
 
     sidebar_btn.on('click', function (e) {
         e.preventDefault();
-        for (var i = 0; i < menu.length; i++) {
+        for (let i = 0; i < menu.length; i++) {
             menu[i].classList.remove("show-dropdown");
         }
         sub_menu_is_showed = -1;
@@ -122,9 +120,9 @@ $('#logout').on('click', function () {
 
     // Sublist Sidebar
     try {
-        var arrow = $('.js-arrow');
+        let arrow = $('.js-arrow');
         arrow.each(function () {
-            var that = $(this);
+            let that = $(this);
             that.on('click', function (e) {
                 e.preventDefault();
                 that.find(".arrow").toggleClass("up");
@@ -145,7 +143,7 @@ $('#logout').on('click', function () {
             $('.navbar-mobile').slideToggle('500');
         });
         $('.navbar-mobile__list li.has-dropdown > a').on('click', function () {
-            var dropdown = $(this).siblings('ul.navbar-mobile__dropdown');
+            let dropdown = $(this).siblings('ul.navbar-mobile__dropdown');
             $(this).toggleClass('active');
             $(dropdown).slideToggle('500');
             return false;
