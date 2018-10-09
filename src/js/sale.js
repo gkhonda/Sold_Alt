@@ -359,7 +359,8 @@ $('#end-sale').click(function () {
             'sale_details': venda,
             'sale_itens': current_sale,
             'sale_payments': current_payment,
-            'installment': installment
+            'installment': installment,
+            'discount': discount
         };
         $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
         ).done(function (back) {
@@ -410,7 +411,7 @@ let update_table = function (list_of_clients) {
 
 $('.close').click(function () {
     $('#myModal').css('display', 'none');
-    $('#myModal2').css('display', 'block');
+    $('#myModal2').css('display', 'none');
 });
 
 $("#btnRead").on("click", function () {
