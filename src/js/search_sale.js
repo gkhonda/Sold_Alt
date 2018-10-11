@@ -69,6 +69,7 @@ tableSearch.on('click', 'tr td img', function () {
         $('#span-venda').text(id);
         clienteModal.text(sale.client__name);
         valorModal.text(sale.value);
+        $(".modal-table tr").remove();
         products_of_sale.forEach(function (c) {
             modalTable.append('<tr><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.size + '</td><td>' + c.quantity + '</td></tr>')
         });
