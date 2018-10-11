@@ -9,6 +9,7 @@ const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
 const mainReport = require('./mainReport');
 const mainSale = require('./mainSale');
+const mainClient = require('./mainClient');
 const updater = require('./updater');
 
 // para mexer com o config file
@@ -113,7 +114,7 @@ ipcMain.on('add-client-to-sale', (e, args) => {
 
 // Tela de criar cliente
 ipcMain.on('new-client', (e, args) => {
-    mainWindow.createWindow({'url': 'client_create.html'})
+    mainClient.createWindow({'url': 'client_create.html'})
 });
 
 // Tela de venda
