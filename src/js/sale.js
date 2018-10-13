@@ -56,7 +56,7 @@ $('#desconto').click(function () {
 // Apaga name da compra
 $("#saleTable").on('click', "tr td .del", function (e) {
     // Pega o código e deleta ele
-    delete current_sale[$("#saleTable tr td:first").text()];
+    delete current_sale[$(this).parent().first().text()];
     $(this).parent().parent().remove();
     e.stopPropagation();
     atualiza_venda(5)
