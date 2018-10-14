@@ -16,6 +16,7 @@ let received = 0;
 let to_receive;
 let change = 0;
 let discount = 0;
+let client = {};
 // Página superior
 
 // Lista de names
@@ -385,9 +386,8 @@ $('#end-sale').click(function () {
             } else {
                 send['url'] = 'tax_cupom.html';
                 send['productList'] = list_of_products;
-                send['client'] = $('#spam-name-customer').text();
+                send['client'] = client;
                 ipcRenderer.send('pdf', send);
-                console.log(send);
 
                 reset_sell();
                 back_start();
@@ -408,7 +408,7 @@ $('#end-sale').click(function () {
 let update_table = function (list_of_clients) {
     $("#customerTable tr").remove();
     list_of_clients.forEach(function (c) {
-        $('#customerTable').append('<tr class="table-search"><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.cpf + '</td></tr>')
+        $('#customerTable').append('<tr class="table-search"><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.email + '</td><td>' + c.cpf + '</td></tr>')
     })
 };
 
@@ -418,9 +418,9 @@ $('.close').click(function () {
 });
 
 $("#btnRead").on("click", function () {
-    let client = {};
     client['id'] = $('.selected').find('td:eq(0)').text();
     client['name'] = $('.selected').find('td:eq(1)').text();
+    client['email'] = $('.selected').find('td:eq(2)').text();
 
     if (client.id === "") {
         ipcRenderer.send('login',
