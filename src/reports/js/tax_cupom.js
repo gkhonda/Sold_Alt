@@ -66,11 +66,11 @@ var paymentMethods = [
 let list_of_payments = []
 paymentMethods.forEach( function (pm) {
   if (pm in payments) {
-    $('#paymentData').append(`<td>${payments[pm]}</td>`);
-      list_of_payments.push(payments[pm].toFixed(2));
+    $('#paymentData').append(`<td>R$ ${payments[pm]}</td>`);
+      list_of_payments.push('R$ ' + payments[pm].toFixed(2));
   } else {
-    $('#paymentData').append('<td>0.00</td>');
-      list_of_payments.push("00.00");
+    $('#paymentData').append('<td>R$ 0.00</td>');
+      list_of_payments.push("R$ 00.00");
   }
 });
 
@@ -85,8 +85,6 @@ let data = {
     'total': discountedTotal,
     'email': client.email
 };
-
-console.log(client)
 
 $.post(remote.getGlobal('default_url') + "sale/email", JSON.stringify(data)).done(function (back) {
     console.log(back);
