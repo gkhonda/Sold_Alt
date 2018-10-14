@@ -6,16 +6,18 @@ const saleDetails = window.__args__['sale_details'];
 const saleItens = window.__args__['sale_itens'];
 const productList = window.__args__['productList'];
 const payments = window.__args__['sale_payments'];
-var change = window.__args__['change'];
-var discount = window.__args__['discount'];
+let change = window.__args__['change'];
+let discount = window.__args__['discount'];
 discount = eval(discount);
-var discountedTotal = saleDetails['Total'] * (1 - discount / 100);
-var discountValue = saleDetails['Total'] * discount / 100;
+let discountedTotal = saleDetails['Total'] * (1 - discount / 100);
+let discountValue = saleDetails['Total'] * discount / 100;
 change = parseFloat(String(Math.round(change * 100) / 100)).toFixed(2);
 discountValue = parseFloat(String(Math.round(discountValue * 100) / 100)).toFixed(2);
 discountedTotal = parseFloat(String(Math.round(discountedTotal * 100) / 100)).toFixed(2);
-let client = window.__args__['client']
-
+let client = window.__args__['client'];
+if (client.name === "Cliente"){
+    client.name = "";
+}
 
 let now = new Date();
 let day = ("0" + now.getDate()).slice(-2);
@@ -41,6 +43,10 @@ $('#totalSale').text(discountedTotal);
 $('#vendedor-id').text(remote.getGlobal('Vendedor'));
 $('#loja').text(saleDetails['LojaNome']);
 $('#time').text(today);
+if (client.name){
+    $('#client-id').text("Cliente: " + client.name);
+}
+
 
 function addInTable(obj, qnt) {
     $('#customerTable').append("<tr><td>" + obj.name + "</td>" +
@@ -55,7 +61,7 @@ function format(n){
     return n > 9 ? "" + n: "0" + n;
 }
 
-var paymentMethods = [
+let paymentMethods = [
   'Dinheiro',
   'Cheque',
   'Débito',
@@ -73,6 +79,9 @@ paymentMethods.forEach( function (pm) {
       list_of_payments.push("R$ 00.00");
   }
 });
+
+$('#paymentData').append('<td>' + change + '</td>');
+$('#paymentData').append(`<td>${discount} %</td>`);
 
 let data = {
     'list_of_products': list_of_products,

@@ -11,6 +11,15 @@ h3 {
     font-size: 15px;
 }
 
+.infos {
+    margin-top: 50px;
+}
+
+.table {
+    margin-bottom: 40px;
+ }
+
 .loja {
     float: right;
+    text-align: center;
 }

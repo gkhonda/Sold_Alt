@@ -506,6 +506,10 @@ let reset_sell = function () {
     totalValueSale.text('0.00');
     current_sale = {};
     current_payment = {};
+    client = {};
+    $('#span-id-customer').text(0);
+    $('#spam-name-customer').text("Cliente");
+
 };
 
 let back_start = function () {
