@@ -35,7 +35,7 @@ btnPesquisa.on('click', function () {
         'initial_date': datepicker1.val(),
         'final_date': datepicker2.val(),
         'unique': false,
-        'only_order': eval($('#order').prop('checked') ? $('#order').prop('checked') : null)
+        'only_order': $('#order').prop('checked') ? $('#order').prop('checked') : null
     };
     $.get(remote.getGlobal('default_url') + "sale/read", data).done(function (back) {
         update_table(back['sale'])
