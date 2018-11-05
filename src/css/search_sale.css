@@ -1,5 +1,5 @@
 .div-table {
-    width: 75%;
+    width: 90%;
     margin: auto;
 }
 
@@ -48,9 +48,13 @@ h4 {
 
 .input-group {
     margin-top: 1%;
-    width: 30%;
+    width: 20%;
     padding: 0 2%;
     display: inline-table;
+}
+
+#order {
+    margin-left: 10px;
 }
 
 .border-orange {

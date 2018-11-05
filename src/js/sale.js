@@ -199,6 +199,7 @@ $('.finish-sale').on('click', function () {
 
             go_end();
         } else {
+            venda['products'] = current_sale;
             $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done( function (back) {
                 if (back.error) {
                     ipcRenderer.send('login',
