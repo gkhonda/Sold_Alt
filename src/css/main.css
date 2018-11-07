@@ -115,7 +115,7 @@ body{
 }
 
 .block {
-    display: block;
+    display: block !important;
 }
 
 .invisible {

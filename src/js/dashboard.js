@@ -21,7 +21,7 @@ const remote = require('electron').remote;
 
 var user_request = {
     'Vendedor_id': remote.getGlobal('Vendedor_id')
-}
+};
 
 $.get(remote.getGlobal('default_url') + 'login/get', user_request).done(function(back) {
     if (!back.error && back.first_name && back.last_name) {

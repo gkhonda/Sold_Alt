@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pueri Store - Venda e Gerenciamento</title>
+    <meta charset="UTF-8">
+    <link href="../../public/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<section class="p-t-25">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title-4">Notificações</h1>
+                <hr class="line-seprate">
+            </div>
+        </div>
+    </div>
+</section>
+
+<ul class="notification-list">
+</ul>
+
+
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2 class="modal-h2"><span id="modal-notification-title"></span></h2>
+        </div>
+        <div class="modal-body">
+            <div class="container-modal">
+                <p id="modal-notification-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Jquery
+
+    $ = require('jquery');
+
+    // You can also require other files to run in this process
+    require('../js/notification.js')
+</script>
+</body>
+<link rel="stylesheet" type="text/css" href="../css/notification.css">
+</html>

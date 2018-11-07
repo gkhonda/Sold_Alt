@@ -972,7 +972,6 @@ section {
 
 .mess__footer a, .email__footer a, .notifi__footer a {
     display: block;
-    text-transform: capitalize;
     text-align: center;
     font-size: 14px;
     color: #4272d7;
