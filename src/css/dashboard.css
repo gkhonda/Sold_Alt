@@ -1507,17 +1507,25 @@ section {
     position: relative;
 }
 
+.myclass:after {
+    content: attr(data-content) !important;
+}
+
 .has-noti > i:after {
     content: '';
-    height: 8px;
-    width: 8px;
+    color: white;
+    height: 16px;
+    width: 16px;
+    padding-left: 4px;
+    padding-top: 2px;
     background: #ff4b5a;
     position: absolute;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
-    top: 0;
-    right: -6px;
+    top: -5px;
+    font-size: 12px;
+    right: -11px;
 }
 
 .search-dropdown {

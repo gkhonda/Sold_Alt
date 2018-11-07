@@ -9,6 +9,8 @@ $.get(remote.getGlobal('default_url') + 'login/get', {'Vendedor_id': remote.getG
     }
     $('.profile_picture').attr('alt', back.user_name);
 
+    $('#zmdi-notification').addClass('myclass').attr('data-content', back.unseen_notifications);
+
     if (!back.error && back.first_name && back.last_name) {
         $('.user_name').text(`${back.first_name} ${back.last_name}`);
     } else if (!back.error && back.first_name) {
