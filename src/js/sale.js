@@ -185,17 +185,47 @@ $('.finish-sale').on('click', function () {
             'Total': totalValueSale.text(),
             'Vendedor': remote.getGlobal('Vendedor_id'),
             'Cliente': $('#span-id-customer').text(),
-            'LojaNome': remote.getGlobal('LojaNome')
+            'LojaNome': remote.getGlobal('LojaNome'),
+            'encomenda': $('#order').prop('checked')
         };
 
-        // to_pay = parseFloat(totalValueSale.text());
-        $("#to-pay").text(to_pay.toFixed(2));
-        // received = 0;
-        to_receive = to_pay - received;
-        change = 0;
-        $("#to-receive").text(to_receive.toFixed(2));
+        if (!venda.encomenda) {
+            // to_pay = parseFloat(totalValueSale.text());
+            $("#to-pay").text(to_pay.toFixed(2));
+            // received = 0;
+            to_receive = to_pay - received;
+            change = 0;
+            $("#to-receive").text(to_receive.toFixed(2));
 
-        go_end();
+            go_end();
+        } else {
+            venda['products'] = current_sale;
+            $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done( function (back) {
+                if (back.error) {
+                    ipcRenderer.send('login',
+                    {
+                        'type': 'sad',
+                        'message': 'Erro.',
+                        'text': 'Não foi possível realizar a encomenda.'
+                    });
+                } else {
+                    ipcRenderer.send('login',
+                    {
+                        'type': 'happy',
+                        'message': 'Sucesso',
+                        'text': 'Encomenda registrada com sucesso.'
+                    });
+                    win.reload();
+                }
+            }).fail(function () {
+                ipcRenderer.send('login',
+                    {
+                        'type': 'sad',
+                        'message': 'Erro na comunicação com o servidor.',
+                        'text': "Verifique sua conexão com a internet."
+                    });
+            });;
+        }
 
 
     } else {
