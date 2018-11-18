@@ -1,7 +1,8 @@
-// import { ipcRenderer } from 'electron';
 // This is the renderer
 const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
+// const Store = require('./storage.js').remote;
+const Store = remote.require('./storage.js')
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
@@ -79,10 +80,15 @@ var login = function () {
 
 // Chama quando clica
 btnLogin.on("click", function () {
-    if(!$(this).hasClass("disabled")) {
-        login()
+    if (!$(this).hasClass("disabled")) {
+        if (navigator.onLine) {
+            login()
+        } else {
+            offlineLogin()
+        }
     }
 });
+
 
 // Chama quando aperta enter
 $(".form-control").keypress(function (event) {
@@ -90,3 +96,45 @@ $(".form-control").keypress(function (event) {
         login();
     }
 });
+
+if (navigator.onLine) {
+    updateJsonFromDatabase();
+}
+
+function updateJsonFromDatabase() {
+    ipcRenderer.send('update-json', {});
+}
+
+function offlineLogin() {
+    const users = new Store({
+        configName: 'users',
+        defaults: []
+    });
+
+    users_in_system = users.get().map(function (item) {
+        return JSON.parse(item)
+    });
+
+    var data = $('#form').serializeArray().reduce(function (obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+
+    user = users_in_system.filter(function (obj) {
+        return obj.username === data.name
+    });
+
+    if (user.length) {
+        ipcRenderer.send('login',
+            {
+                'type': 'ok-face',
+                'message': 'Offline!',
+                'text': 'Foi detectado que você está sem conexão! Quer continuar mesmo assim? Você terá ',
+                'confirmation': 'Offline',
+                'User': data.username,
+                'User_id': data.id
+            });
+
+    }
+
+}
