@@ -152,20 +152,30 @@ ipcMain.on('update-json', (e, args) => {
         configName: 'users',
         defaults: []
     });
+    const products = new Store({
+        configName: 'products',
+        defaults: []
+    });
+    const clients = new Store({
+        configName: 'clients',
+        defaults: []
+    });
+
+    let buffers = '';
 
     try {
         const request = net.request(global['default_url'] + 'login/get-all');
 
         request.on('response', (response) => {
             response.on('data', (chunk) => {
-                console.log(Object.keys(JSON.parse(chunk)).length === 0)
-                if (! (Object.keys(JSON.parse(chunk)).length === 0)){
-                    console.log('I am here')
-                    users.set(JSON.parse(chunk)['response'])
-                }
+                buffers += chunk
             });
             response.on('end', () => {
-                console.log('No more data in response.')
+                full_response = JSON.parse(buffers);
+                users.set(full_response['users']);
+                products.set(full_response['products']);
+                clients.set(full_response['clients']);
+
             })
         });
         request.end();

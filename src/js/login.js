@@ -1,7 +1,6 @@
 // This is the renderer
 const {getCurrentWindow} = require('electron').remote;
 const remote = require('electron').remote;
-// const Store = require('./storage.js').remote;
 const Store = remote.require('./storage.js')
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
@@ -93,7 +92,11 @@ btnLogin.on("click", function () {
 // Chama quando aperta enter
 $(".form-control").keypress(function (event) {
     if (event.which === 13 && !btnLogin.hasClass("disabled")) {
-        login();
+        if (navigator.onLine) {
+            login()
+        } else {
+            offlineLogin()
+        }
     }
 });
 
@@ -129,12 +132,18 @@ function offlineLogin() {
             {
                 'type': 'ok-face',
                 'message': 'Offline!',
-                'text': 'Foi detectado que você está sem conexão! Quer continuar mesmo assim? Você terá ',
+                'text': 'Foi detectado que você está sem conexão! Quer continuar mesmo assim? Você terá funcionalidades reduzidas',
                 'confirmation': 'Offline',
                 'User': data.username,
                 'User_id': data.id
             });
-
+    } else {
+        ipcRenderer.send('login',
+            {
+                'type': 'sad',
+                'message': 'Usuário ou senha inexistentes',
+                'text': 'Obs: você está offline. Será considerado os usuários existentes da última vez que você acessou o sistema.',
+            });
     }
 
 }
