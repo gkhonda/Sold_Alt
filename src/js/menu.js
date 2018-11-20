@@ -9,6 +9,7 @@ let win;
 win = getCurrentWindow();
 
 if (!navigator.onLine) {
+    console.log('hey');
     $('.btn').addClass('disabled');
     $('#sale').removeClass('disabled');
     $('#offline').removeClass('invisible')
@@ -141,7 +142,3 @@ $('#log-out').on('click', function () {
 var user = remote.getGlobal('Vendedor');
 var headerText = "Bem Vinda/o " + user + "!";
 $('#user').text(headerText);
-<<<<<<< HEAD
-=======
-
->>>>>>> 7f7bb6a5e6d7841cfd16389ad063ad13a42d8b25
