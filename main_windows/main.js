@@ -1,7 +1,7 @@
 const electron = require('electron');
 
 // Module to control application life.
-const {app, ipcMain} = electron;
+const {app, ipcMain, net} = electron;
 // Essa a gente que criou
 const mainWindow = require('./mainWindow');
 const mainWithdraw = require('./mainWithdraw');
@@ -11,6 +11,7 @@ const mainReport = require('./mainReport');
 const mainSale = require('./mainSale');
 const mainClient = require('./mainClient');
 const updater = require('./updater');
+const Store = require('./storage.js');
 
 // para mexer com o config file
 const ini = require('ini');
@@ -53,11 +54,12 @@ global['LojaCEP'] = decrypt(config.storeCEP);
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app.on('ready', () => {
     mainWindow.createWindow({'url': 'login.html'});
 
     // Check for updates after 2 seconds
-    setTimeout(updater.check, 2000);
+    // setTimeout(updater.check, 2000);
 });
 
 // Quit when all windows are closed.
@@ -144,3 +146,50 @@ ipcMain.on('pdf', (e, args) => {
 ipcMain.on('update-window', (e, args) => {
     mainWindow.showUrl(args);
 });
+
+ipcMain.on('update-json', (e, args) => {
+    const users = new Store({
+        configName: 'users',
+        defaults: []
+    });
+    const products = new Store({
+        configName: 'products',
+        defaults: []
+    });
+    const clients = new Store({
+        configName: 'clients',
+        defaults: []
+    });
+
+    let buffers = '';
+
+    try {
+        const request = net.request(global['default_url'] + 'login/get-all');
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffers += chunk
+            });
+            response.on('end', () => {
+                full_response = JSON.parse(buffers);
+                users.set(full_response['users']);
+                products.set(full_response['products']);
+                clients.set(full_response['clients']);
+
+            })
+        });
+        request.end();
+    } catch (e) {
+        console.log(e)
+    }
+
+});
+
+ipcMain.on('get-json', (e, args) => {
+    const users = new Store({
+        configName: args['from'],
+        defaults: []
+    });
+
+    ipcMain.send('retreive-json', {'back': users.get()})
+})

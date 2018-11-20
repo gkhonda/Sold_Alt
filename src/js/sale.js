@@ -1,12 +1,14 @@
 const {getCurrentWindow} = require('electron').remote;
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, remote} = require('electron');
+const Store = remote.require('./storage.js');
+
 
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
-let win;
+console.log(window.__args__)
 
-const remote = require('electron').remote;
+let win;
 
 // Para manipular a Janela Atual
 win = getCurrentWindow();
@@ -217,21 +219,21 @@ $('.finish-sale').on('click', function () {
             go_end();
         } else {
             venda['products'] = current_sale;
-            $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done( function (back) {
+            $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done(function (back) {
                 if (back.error) {
                     ipcRenderer.send('login',
-                    {
-                        'type': 'sad',
-                        'message': 'Erro.',
-                        'text': 'Não foi possível realizar a encomenda.'
-                    });
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Não foi possível realizar a encomenda.'
+                        });
                 } else {
                     ipcRenderer.send('login',
-                    {
-                        'type': 'happy',
-                        'message': 'Sucesso',
-                        'text': 'Encomenda registrada com sucesso.'
-                    });
+                        {
+                            'type': 'happy',
+                            'message': 'Sucesso',
+                            'text': 'Encomenda registrada com sucesso.'
+                        });
                     win.reload();
                 }
             }).fail(function () {
@@ -241,7 +243,7 @@ $('.finish-sale').on('click', function () {
                         'message': 'Erro na comunicação com o servidor.',
                         'text': "Verifique sua conexão com a internet."
                     });
-            });;
+            });
         }
 
 
@@ -530,31 +532,42 @@ let client_read = function (button) {
     data['cpf'] = $('#inputSearch-client').val();
 
     // Cria o get request para pegar o cliente
-    $.get(remote.getGlobal('default_url') + "client/read", data).done(function (back) {
-        if (back['Error'] === true) {
+    if (navigator.onLine) {
+        $.get(remote.getGlobal('default_url') + "client/read", data).done(function (back) {
+            if (back['Exists'] === true) {
+                if (button === "Read") {
+                    update_table(back['Clients']);
+                } else if (button === "Update") {
+                    back['url'] = 'client_update.html';
+                    ipcRenderer.send('update-window', back);
 
-        } else if (back['Exists'] === true) {
-            if (button === "Read") {
-                update_table(back['Clients']);
-
-            } else if (button === "Update") {
-                back['url'] = 'client_update.html';
+                }
+            } else {
+                back['url'] = 'client_read.html';
                 ipcRenderer.send('update-window', back);
 
             }
-        } else {
-            back['url'] = 'client_read.html'
+        }).fail(function () {
+            ipcRenderer.send('login',
+                {
+                    'type': 'sad',
+                    'message': 'Erro na comunicação com o servidor.',
+                    'text': "Verifique sua conexão com a internet."
+                });
+        });
+    } else {
+        const clients = new Store({
+            configName: 'clients',
+            defaults: []
+        });
+        if (button === "Read") {
+            update_table(clients.get().map(JSON.parse))
+        } else if (button === "Update") {
+            back['url'] = 'client_update.html';
             ipcRenderer.send('update-window', back);
 
         }
-    }).fail(function () {
-        ipcRenderer.send('login',
-            {
-                'type': 'sad',
-                'message': 'Erro na comunicação com o servidor.',
-                'text': "Verifique sua conexão com a internet."
-            });
-    });
+    }
 };
 
 let reset_sell = function () {
