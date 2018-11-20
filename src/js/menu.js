@@ -9,7 +9,6 @@ let win;
 win = getCurrentWindow();
 
 if (!navigator.onLine) {
-    console.log('hey');
     $('.btn').addClass('disabled');
     $('#sale').removeClass('disabled');
     $('#offline').removeClass('invisible')
@@ -51,7 +50,6 @@ $('#sale').on('click', function (e) {
             'url': 'sale.html',
             'Product': products.get().map(JSON.parse)
         };
-        console.log(back)
         ipcRenderer.send('new-sale', back);
     }
 });

@@ -1,6 +1,9 @@
 // Imports do electron
 const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
+const {getCurrentWindow} = require('electron').remote;
+let win = getCurrentWindow();
+
 
 // Variaveis para trabalhar com data -> já deixa setado os calendários na data atual (pesquisar venda do dia)
 let now = new Date();
@@ -129,6 +132,7 @@ $('#btn-order').on('click', function (e) {
     send['url'] = 'sale.html';
     send['finish_order'] = true;
     ipcRenderer.send('new-sale', send);
+    win.reload();
 });
 
 // TODO: Abre tela de troca

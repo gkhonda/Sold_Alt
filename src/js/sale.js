@@ -6,7 +6,6 @@ const Store = remote.require('./storage.js');
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
-console.log(window.__args__)
 
 let win;
 
@@ -455,11 +454,36 @@ $('#end-sale').click(function () {
                 'sale_payments': current_payment,
                 'sale_id': order.id,
                 'discount': discount,
-                'installment': installment
+                'installment': installment,
+                'store_name': remote.getGlobal('LojaNome')
             }
 
             $.post(remote.getGlobal('default_url') + 'sale/finish_order', JSON.stringify(send)).done(function (back) {
-                console.log(back);
+                if (back.error) {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Não foi possível realizar a venda.'
+                        });
+                } else {
+                    var to_pdf = {
+                        'sale_itens': back.sale_itens,
+                        'client': back.client,
+                        'url': 'tax_cupom.html',
+                        'productList': back.all_products,
+                        'sale_payments': current_payment,
+                        'change': change,
+                        'discount': discount,
+                        'sale_details': {
+                            'LojaNome': remote.getGlobal('LojaNome'),
+                            'Total': back.total,
+                            'Vendedor': remote.getGlobal('Vendedor_id')
+                        }
+                    };
+                    ipcRenderer.send('pdf', to_pdf);
+                    window.close();
+                }
             }).fail(function () {
                 ipcRenderer.send('login',
                     {
