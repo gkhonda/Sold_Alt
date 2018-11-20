@@ -22,6 +22,7 @@ $('#sale').on('click', function (e) {
         }
         else {
             back['url'] = 'sale.html';
+            back['finish_order'] = false;
             ipcRenderer.send('new-sale', back);
         }
     }).fail(function () {

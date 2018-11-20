@@ -18,27 +18,44 @@ let change = 0;
 let discount = 0;
 let client = {};
 // Página superior
-
-// Lista de names
-let list_of_products = window.__args__['Product'];
-
-let product_dictionary = {};
-let current_sale = {};
-
+let finish_order = window.__args__['finish_order'];
 const productId = $("#productId");
 const inpQnt = $('.quantity');
 const totalValueSale = $('#totalValueSale');
 const red = $('#red');
+var list_of_products, product_dictionary, current_sale, order;
 
+var go_end = function () {
+    $('html,body').animate({
+            scrollTop: $(".second-page").offset().top
+        },
+        'slow');
+};
 
-productId.val(list_of_products[0].id);
-$('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
+// Lista de names
+if (!finish_order) {
+    list_of_products = window.__args__['Product'];
+    product_dictionary = {};
+    current_sale = {};
 
-// Coloca os names na tabela
-list_of_products.forEach(function (p) {
-    $('.search-table').append('<tr class="table-search"><td>' + p.id + '</td><td>' + p.name + '</td><td>' + p.size + '</td><td>' + p.price_sell + '</td></tr>');
-    product_dictionary[p.id] = p
-});
+    productId.val(list_of_products[0].id);
+    $('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
+
+    // Coloca os names na tabela
+    list_of_products.forEach(function (p) {
+        $('.search-table').append('<tr class="table-search"><td>' + p.id + '</td><td>' + p.name + '</td><td>' + p.size + '</td><td>' + p.price_sell + '</td></tr>');
+        product_dictionary[p.id] = p;
+    });
+
+} else {
+    order = __args__['sale'];
+    $('#to-pay').text(order.value);
+    $('#to-receive').text(order.value);
+    to_pay = Number(order.value);
+    to_receive = to_pay;
+    $('#back-sale').css('display', 'none');
+    go_end();
+}
 
 // Faz o painel ser preenchido
 let update_div = function (product) {
@@ -386,50 +403,70 @@ $('#end-sale').click(function () {
             });
 
     } else {
-        let send = {
-            'sale_details': venda,
-            'sale_itens': current_sale,
-            'sale_payments': current_payment,
-            'installment': installment,
-            'discount': discount
-        };
-        send['discount'] = discount;
-        send['change'] = change;
-        $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
-        ).done(function (back) {
-            if (back['Online'] === false) {
+        if (!finish_order) {
+            let send = {
+                'sale_details': venda,
+                'sale_itens': current_sale,
+                'sale_payments': current_payment,
+                'installment': installment,
+                'discount': discount
+            };
+            send['discount'] = discount;
+            send['change'] = change;
+            $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
+            ).done(function (back) {
+                if (back['Online'] === false) {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                        })
+                }
+                else if (back['Error'] === true) {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Não foi possível realizar a venda.'
+                        });
+
+                } else {
+                    send['url'] = 'tax_cupom.html';
+                    send['productList'] = list_of_products;
+                    send['client'] = client;
+                    ipcRenderer.send('pdf', send);
+
+                    reset_sell();
+                    back_start();
+                }
+            }).fail(function () {
                 ipcRenderer.send('login',
                     {
                         'type': 'sad',
                         'message': 'Erro.',
-                        'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                        'text': 'Verifique a conexão'
                     })
+            })
+        } else {
+            let send = {
+                'sale_payments': current_payment,
+                'sale_id': order.id,
+                'discount': discount,
+                'installment': installment
             }
-            else if (back['Error'] === true) {
+
+            $.post(remote.getGlobal('default_url') + 'sale/finish_order', JSON.stringify(send)).done(function (back) {
+                console.log(back);
+            }).fail(function () {
                 ipcRenderer.send('login',
                     {
                         'type': 'sad',
                         'message': 'Erro.',
-                        'text': 'Não foi possível realizar a venda.'
-                    });
-
-            } else {
-                send['url'] = 'tax_cupom.html';
-                send['productList'] = list_of_products;
-                send['client'] = client;
-                ipcRenderer.send('pdf', send);
-
-                reset_sell();
-                back_start();
-            }
-        }).fail(function () {
-            ipcRenderer.send('login',
-                {
-                    'type': 'sad',
-                    'message': 'Erro.',
-                    'text': 'Verifique a conexão'
-                })
-        })
+                        'text': 'Verifique a conexão'
+                    })
+            });
+        }
     }
 });
 
@@ -550,13 +587,6 @@ let back_start = function () {
     $("#new-value").text(" ");
     discount = 0;
     $('#to-pay').removeClass("line-through");
-};
-
-let go_end = function () {
-    $('html,body').animate({
-            scrollTop: $(".second-page").offset().top
-        },
-        'slow');
 };
 
 function getKeyByValue(object, value) {
