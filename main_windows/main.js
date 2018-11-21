@@ -18,6 +18,7 @@ const ini = require('ini');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const async = require("async");
 const config_path = path.resolve(__dirname, '..', 'config', 'config.ini');
 const config = ini.parse(fs.readFileSync(config_path, 'utf-8'));
 const crypto = require('crypto');
@@ -25,16 +26,14 @@ const cryptoAlgo = 'aes-128-cbc';
 const cryptoPassword = 'soldalt';
 
 // funções de crypto
-function encrypt(text)
-{
+function encrypt(text) {
     let cipher = crypto.createCipher(cryptoAlgo, cryptoPassword);
     let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
     return crypted
 }
 
-function decrypt(crypted)
-{
+function decrypt(crypted) {
     let decipher = crypto.createDecipher(cryptoAlgo, cryptoPassword);
     let text = decipher.update(crypted, 'hex', 'utf8');
     text += decipher.final('utf8');
@@ -103,6 +102,7 @@ ipcMain.on('menu_admin', (e, args) => {
 
 // Comunicacao menu vendedor
 ipcMain.on('menu_not_admin', (e, args) => {
+    console.log('Aqui', args['User_id']);
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
     global['is_admin'] = false;
@@ -185,11 +185,48 @@ ipcMain.on('update-json', (e, args) => {
 
 });
 
-ipcMain.on('get-json', (e, args) => {
-    const users = new Store({
-        configName: args['from'],
+ipcMain.on('send-json', (e, args) => {
+    const sales = new Store({
+        configName: 'new_sales',
         defaults: []
     });
 
-    ipcMain.send('retreive-json', {'back': users.get()})
-})
+    array_of_sales = sales.get().map(JSON.parse);
+
+    async.each(array_of_sales, function (sale, callback) {
+
+        const request = net.request({
+            method: 'POST',
+            url: global['default_url'] + 'sale/create',
+        });
+        request.write(JSON.stringify(sale));
+
+        let buffer = '';
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffer += chunk
+            });
+
+            response.on('end', () => {
+                try {
+                    if (JSON.parse(buffer)['Submitted']) {
+                        sales.shift();
+                    }
+                    callback();
+                } catch (e) {
+                    callback();
+                }
+
+            });
+
+            response.on('error', () => {
+                callback()
+            });
+        });
+
+        request.end();
+    }, function () {
+        console.log('acabou')
+    });
+});

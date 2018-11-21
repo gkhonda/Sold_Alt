@@ -1,7 +1,7 @@
 const {getCurrentWindow} = require('electron').remote;
 const {ipcRenderer} = require('electron');
 const remote = require('electron').remote;
-const Store = remote.require('./storage.js')
+const Store = remote.require('./storage.js');
 
 let win;
 
@@ -136,7 +136,7 @@ $('#log-out').on('click', function () {
             'text': 'Deseja voltar para tela de login?',
             'confirmation': 'True'
         })
-})
+});
 
 var user = remote.getGlobal('Vendedor');
 var headerText = "Bem Vinda/o " + user + "!";

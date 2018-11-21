@@ -30,19 +30,34 @@ class Store {
     }
 
     set(array) {
-        jsonfile.writeFileSync(this.path, array, { spaces:2, EOL: '\r\n' })
+        jsonfile.writeFileSync(this.path, array, {spaces: 2, EOL: '\r\n'})
     }
 
     update(obj) {
+        console.log(1)
         let jsonArray;
         try {
-            jsonArray = this.get();
+            jsonArray = this.get().map(JSON.parse);
+            // Nao apagar esse console.log ele faz funcionar o em todos os casos
+            console.log(jsonArray.length)
         } catch (e) {
             jsonfile.writeFileSync(this.path, []);
-            jsonArray = this.get();
+            jsonArray = this.get().map(JSON.parse);
         }
         jsonArray.push(obj);
-        jsonfile.writeFileSync(this.path, jsonArray, { spaces:2, EOL: '\r\n' })
+        jsonfile.writeFileSync(this.path, jsonArray, {spaces: 2, EOL: '\r\n'})
+    }
+
+    shift() {
+        try {
+            let jsonArray = this.get().map(JSON.parse);
+            if (jsonArray.length) {
+                jsonArray.shift();
+            }
+            jsonfile.writeFileSync(this.path, jsonArray)
+        } catch (e) {
+
+        }
     }
 }
 
@@ -51,7 +66,7 @@ function parseDataFile(filePath, defaults) {
     // `fs.readFileSync` will return a JSON string which we then parse into a Javascript object
     try {
         return JSON.parse(fs.readFileSync(filePath));
-    } catch(error) {
+    } catch (error) {
         // if there was some kind of error, return the passed in defaults instead.
         return defaults;
     }

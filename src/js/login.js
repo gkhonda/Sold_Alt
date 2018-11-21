@@ -105,7 +105,8 @@ if (navigator.onLine) {
 }
 
 function updateJsonFromDatabase() {
-    ipcRenderer.send('update-json', {});
+    ipcRenderer.send('send-json', {});
+    // ipcRenderer.send('update-json', {});
 }
 
 function offlineLogin() {
@@ -134,8 +135,8 @@ function offlineLogin() {
                 'message': 'Offline!',
                 'text': 'Foi detectado que você está sem conexão! Quer continuar mesmo assim? Você terá funcionalidades reduzidas',
                 'confirmation': 'Offline',
-                'User': data.username,
-                'User_id': data.id
+                'User': user[0].username,
+                'User_id': user[0].id
             });
     } else {
         ipcRenderer.send('login',

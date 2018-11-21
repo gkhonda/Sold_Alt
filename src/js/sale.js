@@ -6,8 +6,6 @@ const Store = remote.require('./storage.js');
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
-console.log(window.__args__)
-
 let win;
 
 // Para manipular a Janela Atual
@@ -31,7 +29,6 @@ const productId = $("#productId");
 const inpQnt = $('.quantity');
 const totalValueSale = $('#totalValueSale');
 const red = $('#red');
-
 
 productId.val(list_of_products[0].id);
 $('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
@@ -397,41 +394,55 @@ $('#end-sale').click(function () {
         };
         send['discount'] = discount;
         send['change'] = change;
-        $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
-        ).done(function (back) {
-            if (back['Online'] === false) {
+        if (navigator.onLine) {
+            $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)).done(function (back) {
+                if (back['Online'] === false) {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                        })
+                } else if (back['Error'] === true) {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Não foi possível realizar a venda.'
+                        });
+
+                } else {
+                    send['url'] = 'tax_cupom.html';
+                    send['productList'] = list_of_products;
+                    send['client'] = client;
+                    ipcRenderer.send('pdf', send);
+
+                    reset_sell();
+                    back_start();
+                }
+            }).fail(function () {
                 ipcRenderer.send('login',
                     {
                         'type': 'sad',
                         'message': 'Erro.',
-                        'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                        'text': 'Verifique a conexão'
                     })
-            }
-            else if (back['Error'] === true) {
-                ipcRenderer.send('login',
-                    {
-                        'type': 'sad',
-                        'message': 'Erro.',
-                        'text': 'Não foi possível realizar a venda.'
-                    });
+            })
+        } else {
+            const sales = new Store({
+                configName: 'new_sales',
+                defaults: []
+            });
+            sales.update(send);
+            send['url'] = 'tax_cupom.html';
+            send['productList'] = list_of_products;
+            send['client'] = client;
 
-            } else {
-                send['url'] = 'tax_cupom.html';
-                send['productList'] = list_of_products;
-                send['client'] = client;
-                ipcRenderer.send('pdf', send);
+            ipcRenderer.send('pdf', send);
+            reset_sell();
+            back_start();
+        }
 
-                reset_sell();
-                back_start();
-            }
-        }).fail(function () {
-            ipcRenderer.send('login',
-                {
-                    'type': 'sad',
-                    'message': 'Erro.',
-                    'text': 'Verifique a conexão'
-                })
-        })
     }
 });
 
@@ -524,7 +535,9 @@ let client_read = function (button) {
             defaults: []
         });
         if (button === "Read") {
-            update_table(clients.get().map(JSON.parse))
+            update_table(clients.get().map(JSON.parse).filter(function (client) {
+                return client.name.toLowerCase().includes(data['cpf'])
+            }))
         } else if (button === "Update") {
             back['url'] = 'client_update.html';
             ipcRenderer.send('update-window', back);
