@@ -174,14 +174,12 @@ $('.finish-sale').on('click', function () {
     to_pay = parseFloat(totalValueSale.text());
 
     if (to_pay !== 0) {
-        let name;
-        let qnt;
-        let price;
 
         tabela = {};
 
         venda = {
             'Total': totalValueSale.text(),
+            'CPFCliente': client['cpf'] || "000.000.000-00",
             'Vendedor': remote.getGlobal('Vendedor_id'),
             'Cliente': $('#span-id-customer').text(),
             'LojaNome': remote.getGlobal('LojaNome'),
@@ -464,6 +462,7 @@ $("#btnRead").on("click", function () {
     client['id'] = $('.selected').find('td:eq(0)').text();
     client['name'] = $('.selected').find('td:eq(1)').text();
     client['email'] = $('.selected').find('td:eq(2)').text();
+    client['cpf'] = $('.selected').find('td:eq(3)').text();
 
     if (client.id === "") {
         ipcRenderer.send('login',
@@ -534,10 +533,16 @@ let client_read = function (button) {
             configName: 'clients',
             defaults: []
         });
+        const new_clients = new Store({
+            configName: 'new_clients',
+            defaults: []
+        });
+        let allClients = clients.get().map(JSON.parse).concat(new_clients.get().map(JSON.parse));
         if (button === "Read") {
-            update_table(clients.get().map(JSON.parse).filter(function (client) {
+            update_table(allClients.filter(function (client) {
+                console.log(client)
                 return client.name.toLowerCase().includes(data['cpf'])
-            }))
+            }));
         } else if (button === "Update") {
             back['url'] = 'client_update.html';
             ipcRenderer.send('update-window', back);

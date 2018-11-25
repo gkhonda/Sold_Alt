@@ -186,12 +186,60 @@ ipcMain.on('update-json', (e, args) => {
 });
 
 ipcMain.on('send-json', (e, args) => {
+    const clients = new Store({
+        configName: 'new_clients',
+        defaults: []
+    });
+
+    let array_of_clients = clients.get().map(JSON.parse);
+
+    async.each(array_of_clients, function (client, callback) {
+
+        const request = net.request({
+            method: 'POST',
+            url: global['default_url'] + 'client/create',
+        });
+        console.log(JSON.stringify(client));
+        request.write(JSON.stringify(client));
+
+        let buffer = '';
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffer += chunk
+            });
+
+            response.on('end', () => {
+                try {
+                    if (JSON.parse(buffer)['Submitted']) {
+                        clients.shift();
+                    }
+                    callback();
+                } catch (e) {
+                    callback();
+                }
+
+            });
+
+            response.on('error', () => {
+                callback()
+            });
+        });
+
+        request.end();
+    }, function () {
+        console.log('Acabou parte de clientes')
+        sendSale();
+    });
+});
+
+function sendSale() {
     const sales = new Store({
         configName: 'new_sales',
         defaults: []
     });
 
-    array_of_sales = sales.get().map(JSON.parse);
+    let array_of_sales = sales.get().map(JSON.parse);
 
     async.each(array_of_sales, function (sale, callback) {
 
@@ -227,6 +275,6 @@ ipcMain.on('send-json', (e, args) => {
 
         request.end();
     }, function () {
-        console.log('acabou')
+        console.log('Acabou a parte de vendas')
     });
-});
+}

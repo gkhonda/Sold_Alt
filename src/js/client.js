@@ -1,5 +1,6 @@
 const {BrowserWindow, getCurrentWindow} = require('electron').remote
 const remote = require('electron').remote;
+const Store = remote.require('./storage.js');
 
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
@@ -49,46 +50,62 @@ var client_create = function () {
         return
     }
 
-    if (!data['complete_name']) {
-        $('#div-complete_name')
+    if (!data['name']) {
+        $('#div-name')
             .addClass('has-error')
             .append('<span id="helpBlock" class="help-block"> Nome não pode estar em branco.</span>')
         return
     }
 
     // Cria o post request para criar cliente
-    $.post(remote.getGlobal('default_url') + "client/create", data).done(function (back) {
-        if (back['Error'] === true) {
+    if (navigator.onLine) {
+        $.post(remote.getGlobal('default_url') + "client/create", JSON.stringify(data)).done(function (back) {
+            if (back['Error'] === true) {
+                ipcRenderer.send('login',
+                    {
+                        'type': 'sad',
+                        'message': 'Já existe um cliente com este CPF.',
+                        'text': 'Digite um CPF válido'
+                    })
+                return
+            }
+            else if (back['Submitted'] === true) {
+                ipcRenderer.send('login',
+                    {
+                        'type': 'happy',
+                        'message': 'Cliente Cadastrado com Sucesso!',
+                        'text': 'Aperte Ok para fechar'
+                    });
+                return
+            }
+            else {
+                back['url'] = 'client_create.html';
+                ipcRenderer.send('update-window', back);
+            }
+        }).fail(function () {
             ipcRenderer.send('login',
                 {
                     'type': 'sad',
-                    'message': 'Já existe um cliente com este CPF.',
-                    'text': 'Digite um CPF válido'
+                    'message': 'Erro na comunicação com o servidor.',
+                    'text': "Verifique sua conexão com a internet."
                 })
-            return
-        }
-        else if (back['Submitted'] === true) {
-            ipcRenderer.send('login',
-                {
-                    'type': 'happy',
-                    'message': 'Cliente Cadastrado com Sucesso!',
-                    'text': 'Aperte Ok para fechar'
-                })
-            return
-        }
-        else {
-            back['url'] = 'client_create.html';
-            ipcRenderer.send('update-window', back);
-        }
-    }).fail(function () {
+        })
+    } else {
+        const newClient = new Store({
+            configName: 'new_clients',
+            defaults: []
+        });
+        data['id'] = 'X';
+        newClient.update(data);
         ipcRenderer.send('login',
             {
-                'type': 'sad',
-                'message': 'Erro na comunicação com o servidor.',
-                'text': "Verifique sua conexão com a internet."
-            })
-    })
-}
+                'type': 'happy',
+                'message': 'Cliente Cadastrado com Sucesso!',
+                'text': 'Aperte Ok para fechar'
+            });
+    }
+
+};
 
 // Função que consulta o cliente no BD, se sucesso retorna um json com os dados indexados do cliente
 // (id, cpf, name, email, tel, cep)
@@ -152,8 +169,8 @@ var client_update = function () {
         return
     }
 
-    if (!data['complete_name']) {
-        $('#div-complete_name')
+    if (!data['name']) {
+        $('#div-name')
             .addClass('has-error')
             .append('<span id="helpBlock" class="help-block"> Nome não pode estar em branco.</span>')
         return
@@ -197,7 +214,7 @@ var client_delete = function () {
     var data = $('#form').serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
-    }, {})
+    }, {});
 
     $.get(remote.getGlobal('default_url') + "client/delete", data).done(function (back) {
         if (back['Error'] === true) {
@@ -206,7 +223,7 @@ var client_delete = function () {
                     'type': 'sad',
                     'message': 'Erro ao tentar deletar cliente.',
                     'text': 'Verifique o CPF ou o nome'
-                })
+                });
             return
         }
         else if (back['Deleted'] === true) {
@@ -270,33 +287,33 @@ $("#btnCreate").on("click", function (e) {
 
 // Botão de ler um cliente
 $("#btnRead").on("click", function (e) {
-    var client = {}
-    client['id'] = $('.selected').find('td:eq(0)').text()
-    client['name'] = $('.selected').find('td:eq(1)').text()
-    ipcRenderer.send('add-client-to-sale', client)
+    var client = {};
+    client['id'] = $('.selected').find('td:eq(0)').text();
+    client['name'] = $('.selected').find('td:eq(1)').text();
+    ipcRenderer.send('add-client-to-sale', client);
     win.close()
-})
+});
 
 // Botão que checa o input para fazer alteração
 $("#btnReadUpdate").on("click", function (e) {
     client_read("Update")
-})
+});
 
 // Botão que realiza a alteração
 $("#btnUpdate").on("click", function (e) {
     client_update()
-})
+});
 
 // Botão de deletar um cliente
 $("#btnDelete").on("click", function (e) {
     client_delete()
-})
+});
 
 // Chama quando aperta enter
 $(".form-control").keypress(function (event) {
     if (event.which == 13) {
-        if ($("#btnCreate").length > 0) client_create()
-        else if ($("#btnUpdate").length > 0) client_update()
-        else if ($("#btnDelete").length > 0) client_delete()
+        if ($("#btnCreate").length > 0) client_create();
+        else if ($("#btnUpdate").length > 0) client_update();
+        else if ($("#btnDelete").length > 0) client_delete();
     }
-})
+});
