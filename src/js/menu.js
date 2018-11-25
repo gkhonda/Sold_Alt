@@ -30,6 +30,7 @@ $('#sale').on('click', function (e) {
             }
             else {
                 back['url'] = 'sale.html';
+                back['finish_order'] = false;
                 ipcRenderer.send('new-sale', back);
             }
         }).fail(function () {
@@ -49,10 +50,8 @@ $('#sale').on('click', function (e) {
             'url': 'sale.html',
             'Product': products.get().map(JSON.parse)
         };
-        console.log(back)
         ipcRenderer.send('new-sale', back);
     }
-
 });
 
 $('#sangria').on('click', function () {
@@ -141,4 +140,3 @@ $('#log-out').on('click', function () {
 var user = remote.getGlobal('Vendedor');
 var headerText = "Bem Vinda/o " + user + "!";
 $('#user').text(headerText);
-
