@@ -147,7 +147,7 @@ ipcMain.on('update-window', (e, args) => {
     mainWindow.showUrl(args);
 });
 
-ipcMain.on('update-json', (e, args) => {
+function getData() {
     const users = new Store({
         configName: 'users',
         defaults: []
@@ -183,7 +183,7 @@ ipcMain.on('update-json', (e, args) => {
         console.log(e)
     }
 
-});
+}
 
 ipcMain.on('send-json', (e, args) => {
     const clients = new Store({
@@ -199,7 +199,6 @@ ipcMain.on('send-json', (e, args) => {
             method: 'POST',
             url: global['default_url'] + 'client/create',
         });
-        console.log(JSON.stringify(client));
         request.write(JSON.stringify(client));
 
         let buffer = '';
@@ -212,7 +211,7 @@ ipcMain.on('send-json', (e, args) => {
             response.on('end', () => {
                 try {
                     if (JSON.parse(buffer)['Submitted']) {
-                        clients.shift();
+                        clients.shift(client, 'client');
                     }
                     callback();
                 } catch (e) {
@@ -259,7 +258,7 @@ function sendSale() {
             response.on('end', () => {
                 try {
                     if (JSON.parse(buffer)['Submitted']) {
-                        sales.shift();
+                        sales.shift(sale, 'sale');
                     }
                     callback();
                 } catch (e) {
@@ -275,6 +274,7 @@ function sendSale() {
 
         request.end();
     }, function () {
-        console.log('Acabou a parte de vendas')
+        console.log('Acabou a parte de vendas');
+        getData();
     });
 }

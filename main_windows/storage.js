@@ -34,7 +34,6 @@ class Store {
     }
 
     update(obj) {
-        console.log(1)
         let jsonArray;
         try {
             jsonArray = this.get().map(JSON.parse);
@@ -48,13 +47,27 @@ class Store {
         jsonfile.writeFileSync(this.path, jsonArray, {spaces: 2, EOL: '\r\n'})
     }
 
-    shift() {
+    shift(obj, opt) {
         try {
             let jsonArray = this.get().map(JSON.parse);
             if (jsonArray.length) {
-                jsonArray.shift();
+                let index;
+                switch (opt) {
+                    case 'client':
+                        index = jsonArray.findIndex(i => (i.name === obj.name));
+                        break;
+                    case 'sale':
+                        index = jsonArray.findIndex(i => (i.sale_details.CPFCliente === obj.sale_details.CPFCliente && i.sale_details.Total === obj.sale_details.Total));
+                        break;
+                }
+
+                console.log(index);
+                console.log(obj.name);
+                if (index != -1){
+                    jsonArray.splice(index, 1);
+                }
             }
-            jsonfile.writeFileSync(this.path, jsonArray)
+            jsonfile.writeFileSync(this.path, jsonArray, {spaces: 2, EOL: '\r\n'})
         } catch (e) {
 
         }

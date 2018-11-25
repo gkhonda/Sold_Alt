@@ -197,31 +197,48 @@ $('.finish-sale').on('click', function () {
             go_end();
         } else {
             venda['products'] = current_sale;
-            $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done(function (back) {
-                if (back.error) {
+            if (navigator.onLine) {
+                $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done(function (back) {
+                    if (back.error) {
+                        ipcRenderer.send('login',
+                            {
+                                'type': 'sad',
+                                'message': 'Erro.',
+                                'text': 'Não foi possível realizar a encomenda.'
+                            });
+                    } else {
+                        ipcRenderer.send('login',
+                            {
+                                'type': 'happy',
+                                'message': 'Sucesso',
+                                'text': 'Encomenda registrada com sucesso.'
+                            });
+                        win.reload();
+                    }
+                }).fail(function () {
                     ipcRenderer.send('login',
                         {
                             'type': 'sad',
-                            'message': 'Erro.',
-                            'text': 'Não foi possível realizar a encomenda.'
+                            'message': 'Erro na comunicação com o servidor.',
+                            'text': "Verifique sua conexão com a internet."
                         });
-                } else {
-                    ipcRenderer.send('login',
-                        {
-                            'type': 'happy',
-                            'message': 'Sucesso',
-                            'text': 'Encomenda registrada com sucesso.'
-                        });
-                    win.reload();
-                }
-            }).fail(function () {
+                });
+            } else {
+                venda['products'] = current_sale;
+                const sales = new Store({
+                    configName: 'new_sales',
+                    defaults: []
+                });
+                sales.update(venda);
                 ipcRenderer.send('login',
                     {
-                        'type': 'sad',
-                        'message': 'Erro na comunicação com o servidor.',
-                        'text': "Verifique sua conexão com a internet."
+                        'type': 'happy',
+                        'message': 'Sucesso',
+                        'text': 'Encomenda registrada com sucesso.'
                     });
-            });
+                win.reload();
+            }
+
         }
 
 
@@ -540,7 +557,6 @@ let client_read = function (button) {
         let allClients = clients.get().map(JSON.parse).concat(new_clients.get().map(JSON.parse));
         if (button === "Read") {
             update_table(allClients.filter(function (client) {
-                console.log(client)
                 return client.name.toLowerCase().includes(data['cpf'])
             }));
         } else if (button === "Update") {
