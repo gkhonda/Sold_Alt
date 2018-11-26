@@ -45,7 +45,7 @@ $('#dashboad-options').on('click', 'li', function () {
     $.get(remote.getGlobal('default_url') + "sale/return_infos", {'loja': store}).done(function (back) {
         back['url'] = 'dashboard.html';
         ipcRenderer.send('update-window', back)
-    })
+    });
 });
 
 $('#to-product').on('click', function () {

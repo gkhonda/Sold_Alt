@@ -16,7 +16,7 @@ const remote = require('electron').remote;
     // USE STRICT
     "use strict";
     $("#navbar").load("../html/navbar_adm.html");
-    initializePage(back, "");
+    initializePage(back, "Verbo Divino");
 })(jQuery);
 
 var user_request = {
@@ -50,11 +50,16 @@ $('#dashboad-options').on('click', 'li', function () {
 });
 
 function initializePage(back, store) {
+    console.log(back)
     initializeChart(back, store);
     soldItens.text(back['itens']);
     profit.text("R$ " + back['lucro'].toFixed(2));
     dinheiro.text("R$ " + back['dinheiro_caixa'].toFixed(2));
     cheque.text("R$ " + back['cheque_caixa'].toFixed(2));
+    if (back['loja_atual'])
+        $('#lojaAtual').text(back['loja_atual']);
+    else
+        $('#lojaAtual').text("Todas as lojas");
 
     updateTable(back)
 
@@ -132,7 +137,7 @@ function initializeChart(data, store) {
         // Percent Chart 2
         let ctx2 = document.getElementById("percent-chart2");
         if (ctx2) {
-            ctx2.height = 209;
+            ctx2.height = 249;
             let myChart2 = new Chart(ctx2, {
                 type: 'doughnut',
                 data: {
