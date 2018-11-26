@@ -54,10 +54,13 @@ class Store {
                 let index;
                 switch (opt) {
                     case 'client':
-                        index = jsonArray.findIndex(i => (i.name === obj.name));
+                        index = jsonArray.findIndex(i => (i.name === obj.name && i.cpf === obj.cpf));
                         break;
                     case 'sale':
                         index = jsonArray.findIndex(i => (i.sale_details.CPFCliente === obj.sale_details.CPFCliente && i.sale_details.Total === obj.sale_details.Total));
+                        break;
+                    case 'order':
+                        index = jsonArray.findIndex(i => (i.Total === obj.Total && i.CPFCliente === obj.CPFCliente));
                         break;
                 }
 

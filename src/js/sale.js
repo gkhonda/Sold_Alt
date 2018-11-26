@@ -242,11 +242,11 @@ $('.finish-sale').on('click', function () {
                 });
             } else {
                 venda['products'] = current_sale;
-                const sales = new Store({
-                    configName: 'new_sales',
+                const orders = new Store({
+                    configName: 'new_order',
                     defaults: []
                 });
-                sales.update(venda);
+                orders.update(venda);
                 ipcRenderer.send('login',
                     {
                         'type': 'happy',

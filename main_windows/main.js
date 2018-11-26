@@ -275,6 +275,53 @@ function sendSale() {
         request.end();
     }, function () {
         console.log('Acabou a parte de vendas');
+        sendOrder();
+    });
+}
+
+function sendOrder() {
+    const orders = new Store({
+        configName: 'new_order',
+        defaults: []
+    });
+
+    let array_of_sales = orders.get().map(JSON.parse);
+
+    async.each(array_of_sales, function (sale, callback) {
+
+        const request = net.request({
+            method: 'POST',
+            url: global['default_url'] + 'sale/order',
+        });
+        request.write(JSON.stringify(sale));
+
+        let buffer = '';
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffer += chunk
+            });
+
+            response.on('end', () => {
+                try {
+                    if (JSON.parse(buffer)['error'] == false) {
+                        orders.shift(sale, 'order');
+                    }
+                    callback();
+                } catch (e) {
+                    callback();
+                }
+
+            });
+
+            response.on('error', () => {
+                callback()
+            });
+        });
+
+        request.end();
+    }, function () {
+        console.log('Acabou a parte de encomendas');
         getData();
     });
 }
