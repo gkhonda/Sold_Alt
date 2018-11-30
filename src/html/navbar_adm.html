@@ -21,15 +21,15 @@
                 <ul class="list-unstyled">
                     <li class="has-sub">
                         <a href="#" class="p-r-5 p-l-5">
-                            <i class="fas fa-tachometer-alt"></i><span id="text-dash">Central</span>
+                            <i class="fas fa-tachometer-alt"></i><span id="text-dash">Dashboard</span>
                             <span class="bot-line"></span>
                         </a>
                         <ul class="header3-sub-list list-unstyled" id="dashboad-options">
-                            <li><a href="#">Central</a></li>
                             <li><a href="#">Verbo Divino</a></li>
                             <li><a href="#">Itaim</a></li>
                             <li><a href="#">Aldeia da Serra</a></li>
                             <li><a href="#">Aclimação</a></li>
+                            <li><a href="#">Central</a></li>
                         </ul>
                     </li>
                     <li class="has-sub">
@@ -56,40 +56,10 @@
             </div>
             <div class="header__tool">
                 <div class="header-button-item has-noti js-item-menu">
-                    <i class="zmdi zmdi-notifications"></i>
-                    <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" style="float: left">
+                    <i class="zmdi zmdi-notifications" id="zmdi-notification"></i>
+                    <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" id="notification" style="float: left">
                         <div class="notifi__title">
-                            <p>1 NOTIFICAÇÃO EM ABERTO</p>
-                        </div>
-                        <div class="notifi__item">
-                            <div class="bg-c1 img-cir img-40">
-                                <i class="zmdi zmdi-email"></i>
-                            </div>
-                            <div class="content">
-                                <p>CAMISETA PP: ACABOU UNIDADE VERBO DIVINO</p>
-                                <span class="date">April 12, 2018 06:50</span>
-                            </div>
-                        </div>
-                        <div class="notifi__item">
-                            <div class="bg-c2 img-cir img-40">
-                                <i class="zmdi zmdi-email-open"></i>
-                            </div>
-                            <div class="content">
-                                <p>Produzir: Camiseta P (faltam 3 unidades) </p>
-                                <span class="date">April 12, 2018 06:50</span>
-                            </div>
-                        </div>
-                        <div class="notifi__item">
-                            <div class="bg-c2 img-cir img-40">
-                                <i class="zmdi zmdi-email-open"></i>
-                            </div>
-                            <div class="content">
-                                <p>You got a new file</p>
-                                <span class="date">April 12, 2018 06:50</span>
-                            </div>
-                        </div>
-                        <div class="notifi__footer">
-                            <a href="#">All notifications</a>
+                            <p> <span id="unseen-notifications">X</span> NOTIFICAÇÕES EM ABERTO</p>
                         </div>
                     </div>
                 </div>

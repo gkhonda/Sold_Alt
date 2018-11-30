@@ -52,6 +52,7 @@
         <div class="modal-footer">
             <p class="btn btn-lg btn-orange" id="btn-delete"> Apagar venda </p>
             <p class="btn btn-lg btn-orange" id="btn-change"> Realizar Troca </p>
+            <p class="btn btn-lg btn-orange" id="btn-order">Finalizar venda</p>
         </div>
     </div>
 
@@ -62,32 +63,35 @@
         <h2>Filtros</h2>
         <div>
             <div class="form-group">
-                <label class="sr-only" for="inputSearch">Pesquisar</label>
+                <label for="inputSearch">Cliente</label>
                 <div class="input-group">
                     <input type="text" class="form-control" id="inputSearch" placeholder="Nome">
-                    <div class="input-group-addon"><span class="icon is-small is-right">
-                                                <i class="fas fa-search"></i>
-                                        </span>
-                    </div>
+                    <span class="input-group-addon">
+                        <i class="fas fa-search"></i>
+                    </span>
                 </div>
 
-
+                <label for="datepicker1">De</label>
                 <div class='input-group'>
-                    <label class="sr-only" for="datepicker1">Datepicker1</label>
                     <input type="date" class="form-control " id="datepicker1" placeholder="saf"/>
                     <span class="input-group-addon">
-                <i class="fas fa-calendar"></i>
-            </span>
+                        <i class="fas fa-calendar"></i>
+                    </span>
                 </div>
 
+                <label for="datepicker2">Até</label>
                 <div class='input-group'>
-                    <label class="sr-only" for="datepicker2">Datepicker2</label>
                     <input type='date' class="form-control" id="datepicker2"/>
                     <span class="input-group-addon">
                         <i class="fas fa-calendar"></i>
                     </span>
-
                 </div>
+
+                <div class="input-group">
+                    <label for="order">Só encomenda</label>
+                    <input type="checkbox" name="order" id="order">
+                </div>
+
             </div>
 
         </div>
@@ -102,10 +106,11 @@
             <thead>
             <tr>
                 <th><abbr title="Codigo">C</abbr></th>
-                <th>Nome</th>
-                <th>CPF</th>
                 <th>Data</th>
+                <th>CPF</th>
+                <th>Cliente</th>
                 <th>Valor</th>
+                <th>Encomenda</th>
             </tr>
             </thead>
             <tbody class="search-table">

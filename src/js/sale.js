@@ -1,12 +1,12 @@
 const {getCurrentWindow} = require('electron').remote;
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, remote} = require('electron');
+const Store = remote.require('./storage.js');
+
 
 let hash = window.location.hash.slice(1);
 window.__args__ = Object.freeze(JSON.parse(decodeURIComponent(hash)));
 
 let win;
-
-const remote = require('electron').remote;
 
 // Para manipular a Janela Atual
 win = getCurrentWindow();
@@ -16,28 +16,45 @@ let received = 0;
 let to_receive;
 let change = 0;
 let discount = 0;
+let client = {};
 // Página superior
-
-// Lista de names
-let list_of_products = window.__args__['Product'];
-
-let product_dictionary = {};
-let current_sale = {};
-
+let finish_order = window.__args__['finish_order'];
 const productId = $("#productId");
 const inpQnt = $('.quantity');
 const totalValueSale = $('#totalValueSale');
 const red = $('#red');
+var list_of_products, product_dictionary, current_sale, order;
 
+var go_end = function () {
+    $('html,body').animate({
+            scrollTop: $(".second-page").offset().top
+        },
+        'slow');
+};
 
-productId.val(list_of_products[0].id);
-$('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
+// Lista de names
+if (!finish_order) {
+    list_of_products = window.__args__['Product'];
+    product_dictionary = {};
+    current_sale = {};
 
-// Coloca os names na tabela
-list_of_products.forEach(function (p) {
-    $('.search-table').append('<tr class="table-search"><td>' + p.id + '</td><td>' + p.name + '</td><td>' + p.size + '</td><td>' + p.price_sell + '</td></tr>');
-    product_dictionary[p.id] = p
-});
+    productId.val(list_of_products[0].id);
+    $('#productDesc').text(list_of_products[0].name + ' ' + list_of_products[0].size);
+
+    // Coloca os names na tabela
+    list_of_products.forEach(function (p) {
+        $('.search-table').append('<tr class="table-search"><td>' + p.id + '</td><td>' + p.name + '</td><td>' + p.size + '</td><td>' + p.price_sell + '</td></tr>');
+        product_dictionary[p.id] = p;
+    });
+} else {
+    order = __args__['sale'];
+    $('#to-pay').text(order.value);
+    $('#to-receive').text(order.value);
+    to_pay = Number(order.value);
+    to_receive = to_pay;
+    $('#back-sale').css('display', 'none');
+    go_end();
+}
 
 // Faz o painel ser preenchido
 let update_div = function (product) {
@@ -56,7 +73,7 @@ $('#desconto').click(function () {
 // Apaga name da compra
 $("#saleTable").on('click', "tr td .del", function (e) {
     // Pega o código e deleta ele
-    delete current_sale[$("#saleTable tr td:first").text()];
+    delete current_sale[$(this).parent().first().text()];
     $(this).parent().parent().remove();
     e.stopPropagation();
     atualiza_venda(5)
@@ -174,27 +191,72 @@ $('.finish-sale').on('click', function () {
     to_pay = parseFloat(totalValueSale.text());
 
     if (to_pay !== 0) {
-        let name;
-        let qnt;
-        let price;
 
         tabela = {};
 
         venda = {
             'Total': totalValueSale.text(),
+            'CPFCliente': client['cpf'] || "000.000.000-00",
             'Vendedor': remote.getGlobal('Vendedor_id'),
             'Cliente': $('#span-id-customer').text(),
-            'LojaNome': remote.getGlobal('LojaNome')
+            'LojaNome': remote.getGlobal('LojaNome'),
+            'encomenda': $('#order').prop('checked')
         };
 
-        // to_pay = parseFloat(totalValueSale.text());
-        $("#to-pay").text(to_pay.toFixed(2));
-        // received = 0;
-        to_receive = to_pay - received;
-        change = 0;
-        $("#to-receive").text(to_receive.toFixed(2));
+        if (!venda.encomenda) {
+            // to_pay = parseFloat(totalValueSale.text());
+            $("#to-pay").text(to_pay.toFixed(2));
+            // received = 0;
+            to_receive = to_pay - received;
+            change = 0;
+            $("#to-receive").text(to_receive.toFixed(2));
 
-        go_end();
+            go_end();
+        } else {
+            venda['products'] = current_sale;
+            if (navigator.onLine) {
+                $.post(remote.getGlobal('default_url') + "sale/order", JSON.stringify(venda)).done(function (back) {
+                    if (back.error) {
+                        ipcRenderer.send('login',
+                            {
+                                'type': 'sad',
+                                'message': 'Erro.',
+                                'text': 'Não foi possível realizar a encomenda.'
+                            });
+                    } else {
+                        ipcRenderer.send('login',
+                            {
+                                'type': 'happy',
+                                'message': 'Sucesso',
+                                'text': 'Encomenda registrada com sucesso.'
+                            });
+                        win.reload();
+                    }
+                }).fail(function () {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro na comunicação com o servidor.',
+                            'text': "Verifique sua conexão com a internet."
+                        });
+                });
+            } else {
+                venda['products'] = current_sale;
+                const orders = new Store({
+                    configName: 'new_order',
+                    defaults: []
+                });
+                orders.update(venda);
+                ipcRenderer.send('login',
+                    {
+                        'type': 'happy',
+                        'message': 'Sucesso',
+                        'text': 'Encomenda registrada com sucesso.'
+                    });
+                win.reload();
+            }
+
+        }
 
 
     } else {
@@ -355,51 +417,111 @@ $('#end-sale').click(function () {
             });
 
     } else {
-        let send = {
-            'sale_details': venda,
-            'sale_itens': current_sale,
-            'sale_payments': current_payment,
-            'installment': installment,
-            'discount': discount
-        };
-        send['discount'] = discount;
-        send['change'] = change;
-        $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
-        ).done(function (back) {
-            if (back['Online'] === false) {
-                ipcRenderer.send('login',
-                    {
-                        'type': 'sad',
-                        'message': 'Erro.',
-                        'text': 'Problemas na conexão, a venda será guardada para processar depois.'
-                    })
-            }
-            else if (back['Error'] === true) {
-                ipcRenderer.send('login',
-                    {
-                        'type': 'sad',
-                        'message': 'Erro.',
-                        'text': 'Não foi possível realizar a venda.'
-                    });
+        if (!finish_order) {
+            let send = {
+                'sale_details': venda,
+                'sale_itens': current_sale,
+                'sale_payments': current_payment,
+                'installment': installment,
+                'discount': discount
+            };
+            send['discount'] = discount;
+            send['change'] = change;
+            if (navigator.onLine) {
+                $.post(remote.getGlobal('default_url') + "sale/create", JSON.stringify(send)
+                ).done(function (back) {
+                    if (back['Online'] === false) {
+                        ipcRenderer.send('login',
+                            {
+                                'type': 'sad',
+                                'message': 'Erro.',
+                                'text': 'Problemas na conexão, a venda será guardada para processar depois.'
+                            })
+                    }
+                    else if (back['Error'] === true) {
+                        ipcRenderer.send('login',
+                            {
+                                'type': 'sad',
+                                'message': 'Erro.',
+                                'text': 'Não foi possível realizar a venda.'
+                            });
 
+                    } else {
+                        send['url'] = 'tax_cupom.html';
+                        send['productList'] = list_of_products;
+                        send['client'] = client;
+                        ipcRenderer.send('pdf', send);
+
+                        reset_sell();
+                        back_start();
+                    }
+                }).fail(function () {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Verifique a conexão'
+                        })
+                })
             } else {
+                const sales = new Store({
+                    configName: 'new_sales',
+                    defaults: []
+                });
+                sales.update(send);
                 send['url'] = 'tax_cupom.html';
                 send['productList'] = list_of_products;
-                send['client'] = $('#spam-name-customer').text();
-                ipcRenderer.send('pdf', send);
-                console.log(send);
+                send['client'] = client;
 
+                ipcRenderer.send('pdf', send);
                 reset_sell();
                 back_start();
             }
-        }).fail(function () {
-            ipcRenderer.send('login',
-                {
-                    'type': 'sad',
-                    'message': 'Erro.',
-                    'text': 'Verifique a conexão'
-                })
-        })
+        } else {
+
+            send = {
+                'sale_payments': current_payment,
+                'sale_id': order.id,
+                'discount': discount,
+                'installment': installment,
+                'store_name': remote.getGlobal('LojaNome')
+            }
+
+            $.post(remote.getGlobal('default_url') + 'sale/finish_order', JSON.stringify(send)).done(function (back) {
+                if (back.error) {
+                    ipcRenderer.send('login',
+                        {
+                            'type': 'sad',
+                            'message': 'Erro.',
+                            'text': 'Não foi possível realizar a venda.'
+                        });
+                } else {
+                    var to_pdf = {
+                        'sale_itens': back.sale_itens,
+                        'client': back.client,
+                        'url': 'tax_cupom.html',
+                        'productList': back.all_products,
+                        'sale_payments': current_payment,
+                        'change': change,
+                        'discount': discount,
+                        'sale_details': {
+                            'LojaNome': remote.getGlobal('LojaNome'),
+                            'Total': back.total,
+                            'Vendedor': remote.getGlobal('Vendedor_id')
+                        }
+                    };
+                    ipcRenderer.send('pdf', to_pdf);
+                    window.close();
+                }
+            }).fail(function () {
+                ipcRenderer.send('login',
+                    {
+                        'type': 'sad',
+                        'message': 'Erro.',
+                        'text': 'Verifique a conexão'
+                    })
+            });
+        }
     }
 });
 
@@ -408,7 +530,7 @@ $('#end-sale').click(function () {
 let update_table = function (list_of_clients) {
     $("#customerTable tr").remove();
     list_of_clients.forEach(function (c) {
-        $('#customerTable').append('<tr class="table-search"><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.cpf + '</td></tr>')
+        $('#customerTable').append('<tr class="table-search"><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.email + '</td><td>' + c.cpf + '</td></tr>')
     })
 };
 
@@ -418,9 +540,10 @@ $('.close').click(function () {
 });
 
 $("#btnRead").on("click", function () {
-    let client = {};
     client['id'] = $('.selected').find('td:eq(0)').text();
     client['name'] = $('.selected').find('td:eq(1)').text();
+    client['email'] = $('.selected').find('td:eq(2)').text();
+    client['cpf'] = $('.selected').find('td:eq(3)').text();
 
     if (client.id === "") {
         ipcRenderer.send('login',
@@ -463,31 +586,49 @@ let client_read = function (button) {
     data['cpf'] = $('#inputSearch-client').val();
 
     // Cria o get request para pegar o cliente
-    $.get(remote.getGlobal('default_url') + "client/read", data).done(function (back) {
-        if (back['Error'] === true) {
+    if (navigator.onLine) {
+        $.get(remote.getGlobal('default_url') + "client/read", data).done(function (back) {
+            if (back['Exists'] === true) {
+                if (button === "Read") {
+                    update_table(back['Clients']);
+                } else if (button === "Update") {
+                    back['url'] = 'client_update.html';
+                    ipcRenderer.send('update-window', back);
 
-        } else if (back['Exists'] === true) {
-            if (button === "Read") {
-                update_table(back['Clients']);
-
-            } else if (button === "Update") {
-                back['url'] = 'client_update.html';
+                }
+            } else {
+                back['url'] = 'client_read.html';
                 ipcRenderer.send('update-window', back);
 
             }
-        } else {
-            back['url'] = 'client_read.html'
+        }).fail(function () {
+            ipcRenderer.send('login',
+                {
+                    'type': 'sad',
+                    'message': 'Erro na comunicação com o servidor.',
+                    'text': "Verifique sua conexão com a internet."
+                });
+        });
+    } else {
+        const clients = new Store({
+            configName: 'clients',
+            defaults: []
+        });
+        const new_clients = new Store({
+            configName: 'new_clients',
+            defaults: []
+        });
+        let allClients = clients.get().map(JSON.parse).concat(new_clients.get().map(JSON.parse));
+        if (button === "Read") {
+            update_table(allClients.filter(function (client) {
+                return client.name.toLowerCase().includes(data['cpf'])
+            }));
+        } else if (button === "Update") {
+            back['url'] = 'client_update.html';
             ipcRenderer.send('update-window', back);
 
         }
-    }).fail(function () {
-        ipcRenderer.send('login',
-            {
-                'type': 'sad',
-                'message': 'Erro na comunicação com o servidor.',
-                'text': "Verifique sua conexão com a internet."
-            });
-    });
+    }
 };
 
 let reset_sell = function () {
@@ -506,6 +647,10 @@ let reset_sell = function () {
     totalValueSale.text('0.00');
     current_sale = {};
     current_payment = {};
+    client = {};
+    $('#span-id-customer').text(0);
+    $('#spam-name-customer').text("Cliente");
+
 };
 
 let back_start = function () {
@@ -516,13 +661,6 @@ let back_start = function () {
     $("#new-value").text(" ");
     discount = 0;
     $('#to-pay').removeClass("line-through");
-};
-
-let go_end = function () {
-    $('html,body').animate({
-            scrollTop: $(".second-page").offset().top
-        },
-        'slow');
 };
 
 function getKeyByValue(object, value) {

@@ -13,7 +13,10 @@
 <h1>Pueri Store</h1>
 
 <div class="infos clearfix">
-    <h3 class="vendedor">Vendedor: <span id="vendedor-id">Michel</span></h3>
+    <div class="pull-left">
+        <h3 class="vendedor">Vendedor: <span id="vendedor-id">Michel</span></h3>
+        <h3 class="vendedor"><span id="client-id"></span></h3>
+    </div>
 
     <div class="loja">
         <h3>Unidade: <span id="loja">Verbo Divino</span></h3>
@@ -28,7 +31,7 @@
     <table class="table table-striped" id="client-table">
         <thead>
         <tr>
-            <th><abbr title="Produto">Produto</abbr></th>
+            <th>Produto</th>
             <th>Tamanho</th>
             <th>Quantidade</th>
             <th>Preço</th>
@@ -41,18 +44,18 @@
 
     <table class="table table-striped" id="payments-table">
         <thead>
-            <tr>
-                <th>Pagamento em Dinheiro</th>
-                <th>Pagamento em Cheque</th>
-                <th>Pagamento em Débito</th>
-                <th>Pagamento em Crédito</th>
-                <th>Pagamento por Transferência</th>
-                <th>Troco(dinheiro)</th>
-                <th>Desconto</th>
-            </tr>
+        <tr>
+            <th>Pagamento em Dinheiro</th>
+            <th>Pagamento em Cheque</th>
+            <th>Pagamento em Débito</th>
+            <th>Pagamento em Crédito</th>
+            <th>Pagamento por Transferência</th>
+            <th>Troco (R$)</th>
+            <th>Desconto</th>
+        </tr>
         </thead>
         <tbody>
-            <tr id="paymentData"></tr>
+        <tr id="paymentData"></tr>
         </tbody>
     </table>
 </div>

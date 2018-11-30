@@ -1,6 +1,9 @@
 // Imports do electron
 const remote = require('electron').remote;
 const {ipcRenderer} = require('electron');
+const {getCurrentWindow} = require('electron').remote;
+let win = getCurrentWindow();
+
 
 // Variaveis para trabalhar com data -> já deixa setado os calendários na data atual (pesquisar venda do dia)
 let now = new Date();
@@ -25,6 +28,7 @@ const btnChange = $("#btn-change");
 // Seta as datas no calendario
 datepicker1.val(y);
 datepicker2.val(today);
+var sale;
 
 $("#navbar").load("../html/navbar-seller.html");
 
@@ -34,7 +38,8 @@ btnPesquisa.on('click', function () {
         'name_or_cpf': inputSearch.val(),
         'initial_date': datepicker1.val(),
         'final_date': datepicker2.val(),
-        'unique': false
+        'unique': false,
+        'only_order': $('#order').prop('checked') ? $('#order').prop('checked') : null
     };
     $.get(remote.getGlobal('default_url') + "sale/read", data).done(function (back) {
         update_table(back['sale'])
@@ -52,23 +57,33 @@ btnPesquisa.on('click', function () {
 let update_table = function (list_of_sales) {
     $("#tableSearch .plus-sale").remove();
     list_of_sales.slice().reverse().forEach(function (c) {
-        tableSearch.append('<tr class="plus-sale"><td class="details-control"><img src="../../public/images/plus-icon.png">' + c.id + '</td><td>' + c.datetime.substring(0, 10) + " " + c.datetime.substring(11, 16) + '</td><td>' + c.client__cpf + '</td><td>' + c.client__name + '</td><td>' + c.value + '</td></tr>')
+        tableSearch.append(
+            '<tr class="plus-sale"><td class="details-control"><img src="../../public/images/plus-icon.png">' +
+            c.id + '</td><td>' +
+            c.datetime.substring(0, 10) + " " + c.datetime.substring(11, 16) + '</td><td>' +
+            c.client__cpf + '</td><td>' +
+            c.client__name + '</td><td>' +
+            c.value + '</td><td>' +
+            '<img src="../../public/images/' + (c.finish_later ? 'checkmark.jpg"' : 'not.png') + '"></td></tr>'
+        );
     })
 };
 
 // Se clica no maiszinho abre o modal com detalhes da venda, para ver se quer apagar mesmo (ou realizar a troca)
-tableSearch.on('click', 'tr td img', function () {
+tableSearch.on('click', '.details-control img', function () {
     id = $(this).parent().text();
     let data = {
         'unique': true,
         'id': id
     };
     $.get(remote.getGlobal('default_url') + "sale/read", data).done(function (back) {
-        let sale = back['sale'];
+        sale = back['sale'];
         let products_of_sale = back['products_of_sale'];
+        $('#btn-order').css('display', sale.finish_later ? 'inline' : 'none');
         $('#span-venda').text(id);
         clienteModal.text(sale.client__name);
         valorModal.text(sale.value);
+        $(".modal-table tr").remove();
         products_of_sale.forEach(function (c) {
             modalTable.append('<tr><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.size + '</td><td>' + c.quantity + '</td></tr>')
         });
@@ -109,6 +124,15 @@ btnDelete.on('click', function () {
                 'text': "Você não tem permissão para isso. Peça para o administrador"
             })
     }
+});
+
+$('#btn-order').on('click', function (e) {
+    var send = {};
+    send['sale'] = sale;
+    send['url'] = 'sale.html';
+    send['finish_order'] = true;
+    ipcRenderer.send('new-sale', send);
+    win.reload();
 });
 
 // TODO: Abre tela de troca

@@ -1,0 +1,54 @@
+ul {
+    margin: 40px auto;
+    width: 80%;
+}
+
+.notification-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 60vh;
+}
+
+.notification-list li{
+    list-style: none;
+    text-align: justify;
+}
+
+.notification-list li:nth-of-type(odd) {
+    background: #f4f5f7;
+}
+
+.fa-external-link-alt {
+    cursor: pointer;
+    float: right;
+    padding-right: 3px;
+}
+
+.fa {
+    padding-left: 5px;
+}
+
+.modal-content {
+    margin: 20% 50px;
+}
+
+.modal-header {
+    padding: 2px 16px !important;
+    color: #ff8a37;
+    background-color: #393939;;
+    border: none;
+}
+
+.modal-header h2 {
+    color: #ff8a37;
+    font-family: "Microsoft JhengHei Light", sans-serif;
+    text-align: center;
+    padding: 12px;
+}
+
+#modal-notification-text {
+    font-size: 15px;
+    white-space: pre-line;
+    margin-top: -25px;
+    text-align: center;
+}

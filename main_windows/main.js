@@ -1,7 +1,7 @@
 const electron = require('electron');
 
 // Module to control application life.
-const {app, ipcMain} = electron;
+const {app, ipcMain, net} = electron;
 // Essa a gente que criou
 const mainWindow = require('./mainWindow');
 const mainWithdraw = require('./mainWithdraw');
@@ -9,13 +9,16 @@ const mainAlert = require('./mainAlert');
 const mainMenu_admin = require('./mainMenu_admin');
 const mainReport = require('./mainReport');
 const mainSale = require('./mainSale');
+const mainClient = require('./mainClient');
 const updater = require('./updater');
+const Store = require('./storage.js');
 
 // para mexer com o config file
 const ini = require('ini');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const async = require("async");
 const config_path = path.resolve(__dirname, '..', 'config', 'config.ini');
 const config = ini.parse(fs.readFileSync(config_path, 'utf-8'));
 const crypto = require('crypto');
@@ -23,24 +26,22 @@ const cryptoAlgo = 'aes-128-cbc';
 const cryptoPassword = 'soldalt';
 
 // funções de crypto
-function encrypt(text)
-{
+function encrypt(text) {
     let cipher = crypto.createCipher(cryptoAlgo, cryptoPassword);
     let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
     return crypted
 }
 
-function decrypt(crypted)
-{
+function decrypt(crypted) {
     let decipher = crypto.createDecipher(cryptoAlgo, cryptoPassword);
     let text = decipher.update(crypted, 'hex', 'utf8');
     text += decipher.final('utf8');
     return text
 }
 
-global['default_url'] = 'http://127.0.0.1:8000/';
-// global['default_url'] = 'http://www.pueristore.com.br/django_sold_alt/';
+// global['default_url'] = 'http://127.0.0.1:8000/';
+global['default_url'] = 'http://www.pueristore.com.br/django_sold_alt/';
 global['Vendedor'] = '';
 global['Vendedor_id'] = 0;
 global['is_admin'] = false;
@@ -52,6 +53,7 @@ global['LojaCEP'] = decrypt(config.storeCEP);
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app.on('ready', () => {
     mainWindow.createWindow({'url': 'login.html'});
 
@@ -100,6 +102,7 @@ ipcMain.on('menu_admin', (e, args) => {
 
 // Comunicacao menu vendedor
 ipcMain.on('menu_not_admin', (e, args) => {
+    console.log('Aqui', args['User_id']);
     global['Vendedor'] = args['User'];
     global['Vendedor_id'] = args['User_id'];
     global['is_admin'] = false;
@@ -113,7 +116,7 @@ ipcMain.on('add-client-to-sale', (e, args) => {
 
 // Tela de criar cliente
 ipcMain.on('new-client', (e, args) => {
-    mainWindow.createWindow({'url': 'client_create.html'})
+    mainClient.createWindow({'url': 'client_create.html'})
 });
 
 // Tela de venda
@@ -143,3 +146,182 @@ ipcMain.on('pdf', (e, args) => {
 ipcMain.on('update-window', (e, args) => {
     mainWindow.showUrl(args);
 });
+
+function getData() {
+    const users = new Store({
+        configName: 'users',
+        defaults: []
+    });
+    const products = new Store({
+        configName: 'products',
+        defaults: []
+    });
+    const clients = new Store({
+        configName: 'clients',
+        defaults: []
+    });
+
+    let buffers = '';
+
+    try {
+        const request = net.request(global['default_url'] + 'login/get-all');
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffers += chunk
+            });
+            response.on('end', () => {
+                full_response = JSON.parse(buffers);
+                users.set(full_response['users']);
+                products.set(full_response['products']);
+                clients.set(full_response['clients']);
+
+            })
+        });
+        request.end();
+    } catch (e) {
+        console.log(e)
+    }
+
+}
+
+ipcMain.on('send-json', (e, args) => {
+    const clients = new Store({
+        configName: 'new_clients',
+        defaults: []
+    });
+
+    let array_of_clients = clients.get().map(JSON.parse);
+
+    async.each(array_of_clients, function (client, callback) {
+
+        const request = net.request({
+            method: 'POST',
+            url: global['default_url'] + 'client/create',
+        });
+        request.write(JSON.stringify(client));
+
+        let buffer = '';
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffer += chunk
+            });
+
+            response.on('end', () => {
+                try {
+                    if (JSON.parse(buffer)['Submitted']) {
+                        clients.shift(client, 'client');
+                    }
+                    callback();
+                } catch (e) {
+                    callback();
+                }
+
+            });
+
+            response.on('error', () => {
+                callback()
+            });
+        });
+
+        request.end();
+    }, function () {
+        console.log('Acabou parte de clientes')
+        sendSale();
+    });
+});
+
+function sendSale() {
+    const sales = new Store({
+        configName: 'new_sales',
+        defaults: []
+    });
+
+    let array_of_sales = sales.get().map(JSON.parse);
+
+    async.each(array_of_sales, function (sale, callback) {
+
+        const request = net.request({
+            method: 'POST',
+            url: global['default_url'] + 'sale/create',
+        });
+        request.write(JSON.stringify(sale));
+
+        let buffer = '';
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffer += chunk
+            });
+
+            response.on('end', () => {
+                try {
+                    if (JSON.parse(buffer)['Submitted']) {
+                        sales.shift(sale, 'sale');
+                    }
+                    callback();
+                } catch (e) {
+                    callback();
+                }
+
+            });
+
+            response.on('error', () => {
+                callback()
+            });
+        });
+
+        request.end();
+    }, function () {
+        console.log('Acabou a parte de vendas');
+        sendOrder();
+    });
+}
+
+function sendOrder() {
+    const orders = new Store({
+        configName: 'new_order',
+        defaults: []
+    });
+
+    let array_of_sales = orders.get().map(JSON.parse);
+
+    async.each(array_of_sales, function (sale, callback) {
+
+        const request = net.request({
+            method: 'POST',
+            url: global['default_url'] + 'sale/order',
+        });
+        request.write(JSON.stringify(sale));
+
+        let buffer = '';
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+                buffer += chunk
+            });
+
+            response.on('end', () => {
+                try {
+                    if (JSON.parse(buffer)['error'] == false) {
+                        orders.shift(sale, 'order');
+                    }
+                    callback();
+                } catch (e) {
+                    callback();
+                }
+
+            });
+
+            response.on('error', () => {
+                callback()
+            });
+        });
+
+        request.end();
+    }, function () {
+        console.log('Acabou a parte de encomendas');
+        getData();
+    });
+}

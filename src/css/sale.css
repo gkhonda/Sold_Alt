@@ -63,7 +63,7 @@ h1 {
 /* Colunas da página de cima */
 
 .up-page {
-    padding: 40px 10px 10px 30px;
+    padding: 5px 10px 10px 30px;
     background-color: transparent;
 }
 
@@ -491,4 +491,13 @@ h3 span {
 
 .line-through {
     text-decoration: line-through;
+}
+
+#order-div {
+    text-align: right;
+    margin-top: 10px;
+}
+
+#order {
+    margin-right: 10px;
 }
