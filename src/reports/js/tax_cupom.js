@@ -95,6 +95,6 @@ let data = {
     'email': client.email
 };
 
-$.post(remote.getGlobal('default_url') + "sale/email", JSON.stringify(data)).done(function (back) {
-    console.log(back);
-});
+// $.post(remote.getGlobal('default_url') + "sale/email", JSON.stringify(data)).done(function (back) {
+//     console.log(back);
+// });

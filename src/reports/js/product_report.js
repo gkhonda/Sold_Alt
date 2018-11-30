@@ -7,7 +7,7 @@ const productDetails = window.__args__['list_of_products'];
 const store = window.__args__['store'];
 $('#to').text(window.__args__['to']);
 $('#from').text(window.__args__['from']);
-storeSpan.text(store);
+storeSpan.text(productDetails[0].qnt);
 
 productDetails.forEach(function (c) {
     productTable.append('<tr><td>' + c.id + '</td><td>' + c.name + '</td><td>' + c.size + '</td><td>' + c.qnt + '</td></tr>')
