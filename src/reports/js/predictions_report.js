@@ -19,7 +19,7 @@ var months = {
     12: 'dezembro'
 }
 
-$('#mes').text(months[month]);
+$('#mes').text('dezembro');
 
 var cols = ['product', 'size'];
 var storeRegex, store;

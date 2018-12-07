@@ -40,8 +40,8 @@ function decrypt(crypted) {
     return text
 }
 
-// global['default_url'] = 'http://127.0.0.1:8000/';
-global['default_url'] = 'http://www.pueristore.com.br/django_sold_alt/';
+global['default_url'] = 'http://127.0.0.1:8000/';
+// global['default_url'] = 'http://www.pueristore.com.br/django_sold_alt/';
 global['Vendedor'] = '';
 global['Vendedor_id'] = 0;
 global['is_admin'] = false;
@@ -58,7 +58,7 @@ app.on('ready', () => {
     mainWindow.createWindow({'url': 'login.html'});
 
     // Check for updates after 2 seconds
-    setTimeout(updater.check, 2000);
+    // setTimeout(updater.check, 2000);
 });
 
 // Quit when all windows are closed.

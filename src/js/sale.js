@@ -680,7 +680,7 @@ function get_from_table(line, key) {
 
 $("#btnAddDesconto").on('click', function () {
     let apply_discount = $("#myRange").val();
-    if ((discount + apply_discount) <= 6) {
+    if ((discount + apply_discount) <= 30) {
         to_pay = to_receive * ((1 - (apply_discount) / 100));
         to_pay = parseFloat(to_pay.toFixed(2));
         to_receive = to_pay - received;

@@ -1,6 +1,6 @@
 {
   "name": "electron_sold_alt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "main": "main_windows/main.js",
   "dependencies": {
@@ -39,8 +39,6 @@
       "publish": [
         "github"
       ],
-      "certificateFile": "private/soldalt.pfx",
-      "verifyUpdateCodeSignature": false,
       "publisherName": "soldalt"
     }
   },
