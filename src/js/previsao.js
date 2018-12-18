@@ -24,6 +24,7 @@ var months = {
 
 var date = new Date();
 var month = date.getMonth() + 2;
+if (month === 13) month = 1;
 var year = date.getFullYear();
 $('.mes').text(months[month]);
 
