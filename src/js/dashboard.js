@@ -16,7 +16,8 @@ const remote = require('electron').remote;
     // USE STRICT
     "use strict";
     $("#navbar").load("../html/navbar_adm.html");
-    initializePage(back, "Verbo Divino");
+    console.log(window.__args__['store'])
+    initializePage(back, window.__args__['store'] || "");
 })(jQuery);
 
 var user_request = {
@@ -95,6 +96,7 @@ function initializeChart(data, store) {
         var ctx = document.getElementById("widgetChart5");
         if (ctx) {
             ctx.height = 220;
+            console.log(store)
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
